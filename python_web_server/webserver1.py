@@ -3,6 +3,7 @@
 #  using python 2.7
 
 import socket
+import json
 
 HOST, PORT = '', 8888
 
@@ -15,11 +16,12 @@ while True:
     client_connection, client_address = listen_socket.accept()
     request = client_connection.recv(1024)
     print request
+    print client_address
 
-    http_response = """\
-HTTP/1.1 200 OK
+    json_reponse = {'type':'uninstall','package':'helloworld'}
+    #  json_reponse = {'type':'install','package':'helloworld'}
+    encoded_json = json.dumps(json_reponse)
+    print json_reponse
 
-Hello, World!
-"""
-    client_connection.sendall(http_response)
+    client_connection.sendall(encoded_json)
     client_connection.close()
