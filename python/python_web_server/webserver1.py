@@ -18,7 +18,7 @@ while True:
     print request
     print client_address
 
-    json_reponse = {'type':'uninstall','package':'helloworld'}
+    json_reponse = {'type':'install', "serial":121, 'package':['ubus_example']}
     #  json_reponse = {'type':'install','package':'helloworld'}
     encoded_json = json.dumps(json_reponse)
     print json_reponse
