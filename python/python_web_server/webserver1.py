@@ -18,7 +18,7 @@ while True:
     print request
     print client_address
 
-    json_reponse = {'type':'install', "serial":121, 'package':['ubus_example']}
+    json_reponse = {'type':'opkg', "serial":121, 'update':0, "url":'ftp://172.17.60.253/mt7620a/develop_package/opkg.conf'}
     #  json_reponse = {'type':'install','package':'helloworld'}
     encoded_json = json.dumps(json_reponse)
     print json_reponse
