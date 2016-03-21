@@ -1,0 +1,35 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CHAR_BIRD	flappy_bird.c	6;"	d	file:
+CHAR_BLANK	flappy_bird.c	8;"	d	file:
+CHAR_STONE	flappy_bird.c	7;"	d	file:
+Node	flappy_bird.c	/^}node,*Node;$/;"	t	typeref:struct:node	file:
+bird_x	flappy_bird.c	/^int bird_x,bird_y;$/;"	v
+bird_y	flappy_bird.c	/^int bird_x,bird_y;$/;"	v
+drop	flappy_bird.c	/^void drop(int sig)$/;"	f	signature:(int sig)
+drop	flappy_bird.c	/^void drop(int sig);$/;"	p	file:	signature:(int sig)
+head	flappy_bird.c	/^Node head,tail;$/;"	v
+init	flappy_bird.c	/^void init()$/;"	f
+init	flappy_bird.c	/^void init();$/;"	p	file:
+init_bird	flappy_bird.c	/^void init_bird()$/;"	f
+init_bird	flappy_bird.c	/^void init_bird();$/;"	p	file:
+init_draw	flappy_bird.c	/^void init_draw()$/;"	f
+init_draw	flappy_bird.c	/^void init_draw();$/;"	p	file:
+init_head	flappy_bird.c	/^void init_head() \/\/with header$/;"	f
+init_head	flappy_bird.c	/^void init_head();$/;"	p	file:
+init_wall	flappy_bird.c	/^void init_wall()$/;"	f
+init_wall	flappy_bird.c	/^void init_wall();$/;"	p	file:
+main	flappy_bird.c	/^int main()$/;"	f
+next	flappy_bird.c	/^    struct node *next;$/;"	m	struct:node	typeref:struct:node::node	file:
+node	flappy_bird.c	/^typedef struct node{$/;"	s	file:
+node	flappy_bird.c	/^}node,*Node;$/;"	t	typeref:struct:node	file:
+set_ticker	flappy_bird.c	/^int set_ticker(int n);$/;"	p	file:	signature:(int n)
+set_ticker	flappy_bird.c	/^int set_ticker(int n_msec)$/;"	f	signature:(int n_msec)
+tail	flappy_bird.c	/^Node head,tail;$/;"	v
+ticker	flappy_bird.c	/^int ticker;$/;"	v
+x	flappy_bird.c	/^    int x,y;$/;"	m	struct:node	file:
+y	flappy_bird.c	/^    int x,y;$/;"	m	struct:node	file:
