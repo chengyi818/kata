@@ -1,3 +1,2 @@
 #!/bin/bash
-find $(pwd) -name "main" | xargs -t -i rm -rf {}
-find $(pwd) -name "a.out" | xargs -t -i rm -rf {}
+find -type f -executable -exec sh -c "file -i '{}' | grep -q 'x-executable; charset=binary'" \; -print | xargs -t -i rm -rf {}
