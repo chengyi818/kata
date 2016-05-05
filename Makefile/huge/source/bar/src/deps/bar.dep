@@ -1,0 +1,1 @@
+objs/bar.o deps/bar.dep: bar.c /home/chengyi/code/kata/Makefile/huge/source/bar/inc/bar.h

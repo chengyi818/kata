@@ -1,0 +1,2 @@
+objs/main.o deps/main.dep: main.c /home/chengyi/code/kata/Makefile/huge/source/foo/inc/foo.h \
+ /home/chengyi/code/kata/Makefile/huge/source/bar/inc/bar.h
