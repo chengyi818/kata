@@ -18,10 +18,10 @@ int main(void)
     if(pid == -1)
         ERR_EXIT("fork error");
     if(pid == 0){
+        sleep(10);
         printf("this is child process and child's pid = %d,parent's pid = %d\n",getpid(),getppid());
     }
     if(pid > 0){
-        sleep(100);
         printf("this is parent process and pid =%d ,child's pid = %d\n",getpid(),pid);
     }
 
