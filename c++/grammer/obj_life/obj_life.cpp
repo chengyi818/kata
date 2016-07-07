@@ -3,22 +3,22 @@
 using namespace std;
 
 class A {
-  char string[50];
+    char string[50];
 public :
-  A(const char * st);
-  ~A( );
+    A(const char * st);
+    ~A( );
 };
 
 A::A(const char * st)
 {
-   strcpy(string, st);
-   cout << string << "-->C.被创建时调用构造函数 ! " << endl;
+    strcpy(string, st);
+    cout << string << "-->C.被创建时调用构造函数 ! " << endl;
 }
 
 A::~A( )
 {
     cout << string <<
-    "-->D.被撤消时调用析构函数 ! " << endl;
+        "-->D.被撤消时调用析构函数 ! " << endl;
 }
 
 void fun( )

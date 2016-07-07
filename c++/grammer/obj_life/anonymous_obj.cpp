@@ -4,21 +4,21 @@ using namespace std;
 
 class Cat
 {
-    public:
-        Cat()
-        {
-            cout<<"Cat类 无参构造函数"<<endl;
-        }
+public:
+    Cat()
+    {
+        cout<<"Cat类 无参构造函数"<<endl;
+    }
 
-        //Cat(Cat& obj)
-        //{
-            //cout<<"Cat类 拷贝构造函数"<<endl;
-        //}
+    //Cat(Cat& obj)
+    //{
+    //cout<<"Cat类 拷贝构造函数"<<endl;
+    //}
 
-        ~Cat()
-        {
-            cout<<"Cat类 析构函数 "<<endl;
-        }
+    ~Cat()
+    {
+        cout<<"Cat类 析构函数 "<<endl;
+    }
 
 };
 
