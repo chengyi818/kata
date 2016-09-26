@@ -56,7 +56,6 @@ ListDG::ListDG(char vexs[], int vlen, char edges[][2], int elen) {
     char c1, c2;
     int i, p1, p2;
     ENode *node1;
-    //ENode *node2;
 
     //初始化"顶点数"和"边数"
     mVexNum = vlen;
