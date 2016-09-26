@@ -18,9 +18,9 @@ int main(void) {
     ListDG *pDG;
 
     //手动输入
-    pDG = new ListDG();
+    //pDG = new ListDG();
     //采用已有的图
-    //pDG = new ListDG(vexs, vlen, edges, elen);
+    pDG = new ListDG(vexs, vlen, edges, elen);
     pDG->print();
 
     return 0;
