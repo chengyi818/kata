@@ -1,0 +1,21 @@
+ !
+ ! Swap Caps_Lock and Control_L
+ !
+remove Lock = Caps_Lock
+remove Control = Control_L
+keysym Control_L = Caps_Lock
+keysym Caps_Lock = Control_L
+add Lock = Caps_Lock
+add Control = Control_L
+
+! swap BackSpace and backslash
+! old:
+! keycode  22 = BackSpace BackSpace BackSpace BackSpace
+! keycode  51 = backslash bar backslash bar
+! keycode 119 = Delete NoSymbol Delete
+! Method 1:
+keycode 22 = backslash bar backslash bar
+keycode 51 = BackSpace BackSpace BackSpace BackSpace
+! Method 2:
+!keysym backslash = 0x005c
+!keysym BackSpace = 0xff08
