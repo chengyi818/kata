@@ -16,63 +16,27 @@
 '''
 import multiprocessing
 import time
-import random
 import signal
-
-class SocketProcess(multiprocessing.Process):
-    def __init__(self, name, task_queue, result_queue):
-        multiprocessing.Process.__init__(self)
-        self.task_queue = task_queue
-        self.result_queue = result_queue
-        self.name = name
-
-    def run(self):
-        while True:
-            next_task = self.task_queue.get()
-            print "%s: testing %s" % (self.name, next_task)
-            answer = next_task()
-            self.task_queue.task_done()
-            self.result_queue.put(answer)
-
-class LogProcess(multiprocessing.Process):
-    def __init__(self, name, task_queue, result_queue):
-        multiprocessing.Process.__init__(self)
-        self.task_queue = task_queue
-        self.result_queue = result_queue
-        self.name = name
-
-    def run(self):
-        while True:
-            next_task = self.task_queue.get()
-            if next_task.result == -1:
-                print "%s: %s start log" % (self.name, next_task.name)
-            elif next_task.result == 1:
-                print "%s: %s drop log\n" % (self.name, next_task.name)
-            elif next_task.result == 0:
-                print "%s: %s save log\n" % (self.name, next_task.name)
-            self.task_queue.task_done()
-
-class Task(object):
-    def __init__(self, name):
-        self.name = name
-        self.result = -1
-
-    def __call__(self):
-        random_time = random.randint(1, 5)
-        time.sleep(random_time) # pretend to take some time to do the work
-        self.result = random.randint(0, 1) # simulate result True(1) or False(0)
-        return self
-
-    def __str__(self):
-        return self.name
-
-
-
+import commands
+from socket_process import SocketProcess
+from log_process import LogProcess
+from task import Task
 
 
 if __name__ == '__main__':
     def handler_timeout(signum, frame):
+        # pylint: disable=unused-argument
         raise AssertionError
+
+    def adb_forward():
+        cmd = 'adb forward tcp:11010 tcp:42178'
+        (status, _) = commands.getstatusoutput(cmd)
+        if status == 0:
+            print "adb forward success\n"
+            return True
+        else:
+            print "adb forward fail\n"
+            return False
 
 
     # Establish communication queues with Socket Process
@@ -88,6 +52,9 @@ if __name__ == '__main__':
     SOCKET_PROCESS.start()
     LOG_PROCESS.start()
 
+    # adb forward
+    # adb_forward()
+
     for i in range(10):
         LOG_TASK_QUEUE.put(Task("CVE_"+str(i)))
         SOCKET_TASK_QUEUE.put(Task("CVE_"+str(i)))
@@ -100,16 +67,14 @@ if __name__ == '__main__':
             socket_result = SOCKET_RESULT_QUEUE.get()
             if socket_result.result == 1:
                 print "MainProcess: %s Patched" % socket_result.name
-                #stop timer
                 LOG_TASK_QUEUE.put(socket_result)
             elif socket_result.result == 0:
                 print "MainProcess: %s Vulnerable" % socket_result.name
-                #stop timer
                 LOG_TASK_QUEUE.put(socket_result)
             signal.alarm(0)
             time.sleep(1)
         except AssertionError:
-            time.sleep(3)
+            time.sleep(2)
             socket_result = SOCKET_RESULT_QUEUE.get()
             print "handle timeout Case\n"
 
