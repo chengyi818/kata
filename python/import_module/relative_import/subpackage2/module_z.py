@@ -15,3 +15,12 @@
 # =============================================================================
 '''
 
+def func_z():
+    print "subpackage2-->module_z-->func_z()"
+
+class ModuleZ(object):
+    def __init__(self):
+        self.name = "ModuleZ"
+
+    def my_print(self):
+        print "subpackage2-->module_Z-->%s" % self.name

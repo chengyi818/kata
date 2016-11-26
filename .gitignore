@@ -13,6 +13,7 @@
 *.a
 *.la
 *.lo
+*.pyc
 
 # Shared objects (inc. Windows DLLs)
 *.dll
