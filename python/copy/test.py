@@ -2,34 +2,25 @@
 # -*- coding: UTF-8 -*-
 '''
 # =============================================================================
-#      FileName: assign.py
+#      FileName: test.py
 #          Desc:
 #        Author: ChengYi
 #         Email: chengyi@antiy.cn
 #      HomePage: http://www.antiy.com/
-#       Created: 2016-12-05 22:49:15
+#       Created: 2016-12-06 10:24:32
 #       Version: 0.0.1
-#    LastChange: 2016-12-05 22:49:15
+#    LastChange: 2016-12-06 10:24:32
 #       History:
 #                0.0.1 | ChengYi | init
 # =============================================================================
 '''
-def my_print(obj):
-    print id(obj)
-    print obj
-    print [id(ele) for ele in obj]
-    print "\n"
 
+import copy
 
-will = ["Will", 28, ["Python", "C++", "C"]]
-wilber = will
-
-
-my_print(will)
-my_print(wilber)
-
-will[0] = "Wilber"
-will[2].append("Java")
-my_print(will)
-my_print(wilber)
-
+a = ["chengyi"]
+b = a
+print a
+print b
+a[0] = "test"
+print a
+print b
