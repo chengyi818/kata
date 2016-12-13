@@ -14,15 +14,29 @@
 #                0.0.1 | ChengYi | init
 # =============================================================================
 '''
+class Counter(object):
+    def __init__(self, name, size):
+        self.name = name
+        self.size = size
 
-count = [0]
+    def print_size(self):
+        print "size: {0}".format(self.size)
+
+    def increase_size(self):
+        self.size += 1
+
+    def decrease_size(self):
+        self.size -= 1
+
+
+COUNTER = Counter('test', 0)
 
 def increase_count():
-    count[0] += 1
+    COUNTER.increase_size()
 
 def decrease_count():
-    count[0] -= 1
+    COUNTER.decrease_size()
 
 def print_count():
-    print "count: {0}".format(count[0])
+    COUNTER.print_size()
 
