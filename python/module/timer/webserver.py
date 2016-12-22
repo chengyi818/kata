@@ -15,10 +15,13 @@ print('Serving HTTP on port %s ...' % PORT)
 while True:
     client_connection, client_address = listen_socket.accept()
     request = client_connection.recv(1024)
+    random_time = random.randint(0, 7)
     print(request)
-    print(client_address)
+    print("random_time: ", random_time)
+    print(client_address, "\n")
 
-    time.sleep(random.randint(0, 10))
+
+    time.sleep(random_time)
 
     client_connection.sendall("world".encode())
     client_connection.close()

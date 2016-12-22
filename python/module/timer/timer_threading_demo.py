@@ -5,16 +5,36 @@ import socket
 import queue
 
 class ReceiveThread(threading.Thread):
-    def __init__(self, sock, my_queue):
+    def __init__(self, sock, tmp_queue):
         threading.Thread.__init__(self)
         self.sock = sock
-        self.my_queue = my_queue
+        self.tmp_queue = tmp_queue
 
     def run(self):
         self.sock.sendall('hello'.encode())
         data = self.sock.recv(8096).decode()
-        self.my_queue.put(data)
+        self.tmp_queue.put(data)
 
+class ControlThread(threading.Thread):
+    def __init__(self, sock, my_queue, time_out):
+        threading.Thread.__init__(self)
+        self.sock = sock
+        self.my_queue = my_queue
+        self.time_out = time_out
+
+    def run(self):
+        tmp_queue = queue.Queue(1)
+        receive_thread = ReceiveThread(self.sock, tmp_queue)
+        receive_thread.setDaemon(True)
+        receive_thread.start()
+
+        receive_thread.join(self.time_out)
+        try:
+            tmp_data = tmp_queue.get(block=False)
+        except queue.Empty:
+            self.my_queue.put([])
+        else:
+            self.my_queue.put(tmp_data)
 
 
 def main():
@@ -22,18 +42,13 @@ def main():
     sock.connect(('localhost', 8888))
     my_queue = queue.Queue(1)
 
-    receive_thread = ReceiveThread(sock, my_queue)
-    receive_thread.start()
-    try:
-        data = my_queue.get(block=True, timeout=5)
-    except queue.Empty:
-        # if receive_thread.is_alive():
-            # receive_thread.terminate()
-
-        print("timeout")
-
+    control_thread = ControlThread(sock, my_queue, 5)
+    control_thread.start()
+    data = my_queue.get(block=True)
     if data:
         print("receive data: ", data)
+    else:
+        print("timeout")
 
 
 
