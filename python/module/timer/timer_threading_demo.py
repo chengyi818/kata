@@ -3,6 +3,7 @@
 import threading
 import socket
 import queue
+import time
 
 class ReceiveThread(threading.Thread):
     def __init__(self, sock, tmp_queue):
@@ -12,8 +13,10 @@ class ReceiveThread(threading.Thread):
 
     def run(self):
         self.sock.sendall('hello'.encode())
-        data = self.sock.recv(8096).decode()
-        self.tmp_queue.put(data)
+        time.sleep(6)
+        # data = self.sock.recv(8096).decode()
+        self.tmp_queue.put('world')
+        print("ReceiveThread end")
 
 class ControlThread(threading.Thread):
     def __init__(self, sock, my_queue, time_out):
