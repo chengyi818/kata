@@ -25,6 +25,7 @@ class ControlThread(threading.Thread):
     def run(self):
         tmp_queue = queue.Queue(1)
         receive_thread = ReceiveThread(self.sock, tmp_queue)
+        receive_thread.setDaemon(True)
         receive_thread.start()
 
         receive_thread.join(self.time_out)
