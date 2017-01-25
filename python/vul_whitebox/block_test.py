@@ -49,10 +49,8 @@ def block_test():
                 raw_code += line
 
     #Step 3: code preprocess
-    print("raw_code:")
-    print(raw_code)
-    print('after code_preprocess:')
-    print(code_preprocess(raw_code))
+    print("raw_code:\n", raw_code)
+    print('after code_preprocess: ', code_preprocess(raw_code))
 
     #Step 4: compare with template
     vul_template = 'data.read(*buffer.get());intslot;intresult=attachBuffer(&slot,buffer);'
