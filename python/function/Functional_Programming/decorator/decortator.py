@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 '''
 # =============================================================================
@@ -14,17 +14,18 @@
 #                0.0.1 | ChengYi | init
 # =============================================================================
 '''
-
+from functools import wraps
 
 def my_log(func):
+    @wraps(func)
     def wrapper(*args, **kw):
-        print ('call %s():' % func.__name__)
+        print('call %s():' % func.__name__)
         return func(*args, **kw)
     return wrapper
 
 @my_log
 def now():
-    print "now"
-
+    print("now")
 
 now()
+print(now)
