@@ -14,6 +14,8 @@
 *.la
 *.lo
 *.pyc
+*.tmp
+*.dep
 
 # Shared objects (inc. Windows DLLs)
 *.dll
