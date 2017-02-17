@@ -18,6 +18,7 @@ UINT32 MemInit(void *pMemAddr, UINT32 ulMemSize) {
         pMem_Manager->BlkArray[i].id = i;
         pMem_Manager->BlkArray[i].addr = (void *)(((char *)pMemAddr) + (MANAGER_MEMORY_SIZE + i*BLOCK_SIZE));
     }
+    printf("Mem_Manager: %lu\n", sizeof(struct Mem_Manager));
 
     return 0;
 }
