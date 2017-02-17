@@ -10,4 +10,4 @@ all:
 clean:
 	rm *.o *.ko *.mod.c
 
-.PHONY:clean 
+.PHONY:clean
