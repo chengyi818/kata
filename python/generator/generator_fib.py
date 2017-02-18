@@ -25,4 +25,4 @@ def fib(max):
 
 f = fib(6)
 for x in f:
-    print x
+    print(x)
