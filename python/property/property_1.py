@@ -27,6 +27,7 @@ class BoundedResistance(Resistor):
 
 R3 = BoundedResistance(1)
 print(R3.__dict__)
+print(BoundedResistance.__mro__)
 # print(R3.ohms)
 # print(R3._ohms)
 # R3.ohms = 2
