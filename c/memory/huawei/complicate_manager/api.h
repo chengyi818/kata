@@ -24,7 +24,7 @@ typedef struct Bmu_PhyPool_INFO {
 //uwPyhPoolIndex always be zero,means Physical pool only one
 UINT64 BMU_PyhPoolInit(UINT64 uwPyhPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle);
 
-UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine);
+UINT64 BMU_LogicPoolCreate(UINT64 uwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64* puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine);
 
 UINT64 BMU_LogicPoolDel(UINT64 uwLogicPoolHandle);
 

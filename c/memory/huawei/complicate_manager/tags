@@ -1,0 +1,102 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+$	Makefile	/^	sed 's,\\(.*\\)\\.o[ :]*,objs\/\\1.o $@: ,g' < $@.tmp > $@ ; \\$/;"	v	language:C++
+$	tags	/^BMU_PhyPoolInit	api.c	\/^UINT64 BMU_PhyPoolInit(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle) {$\/;"	f	language:C++	signature:(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle)$/;"	m	language:C++	struct:__anon2	file:	access:public
+a.out	exes/a.out	1;"	F	language:C++
+api.c	api.c	1;"	F	language:C++
+api.dep	deps/api.dep	1;"	F	language:C++
+api.dep.tmp	deps/api.dep.tmp	1;"	F	language:C++
+api.h	api.h	1;"	F	language:C++
+api.o	objs/api.o	1;"	F	language:C++
+base_addr	manager.h	/^    UINT64 base_addr;$/;"	m	language:C++	struct:physical_block	access:public
+block_base_addr	manager.h	/^    UINT64 block_base_addr;$/;"	m	language:C++	struct:physical_manager	access:public
+block_id	manager.h	/^    UINT64 block_id;$/;"	m	language:C++	struct:physical_block	access:public
+BLOCK_SIZE	api.c	8;"	d	language:C++	file:
+block_status	manager.h	/^    UINT64 block_status; \/\/ 0 means free, 1 means be allocated$/;"	m	language:C++	struct:physical_block	access:public
+BMU_LogicPoolCreate	api.c	/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)
+BMU_LogicPoolCreate	api.h	/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine);$/;"	p	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)
+BMU_LogicPoolDel	api.h	/^UINT64 BMU_LogicPoolDel(UINT64 uwLogicPoolHandle);$/;"	p	language:C++	signature:(UINT64 uwLogicPoolHandle)
+Bmu_LogicPool_Info	api.h	/^typedef struct Bmu_LogicPool_Info {$/;"	s	language:C++
+Bmu_LogicPool_Info::uwFreeBuffNum	api.h	/^    UINT64 uwFreeBuffNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+Bmu_LogicPool_Info::uwLogicPoolHandle	api.h	/^    UINT64 uwLogicPoolHandle;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+Bmu_LogicPool_Info::uwUsdBuffNum	api.h	/^    UINT64 uwUsdBuffNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+Bmu_LogicPool_Info::uwUsdTotalBlockNum	api.h	/^    UINT64 uwUsdTotalBlockNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+BMU_LOGICPOOL_INFO_STRU	api.h	/^} BMU_LOGICPOOL_INFO_STRU;$/;"	t	language:C++	typeref:struct:Bmu_LogicPool_Info
+BMU_MemAlloc	api.h	/^UINT64 BMU_MemAlloc(UINT64 puwLogicPoolHandle, UINT64* puwMemAddr);$/;"	p	language:C++	signature:(UINT64 puwLogicPoolHandle, UINT64* puwMemAddr)
+BMU_MemFree	api.h	/^UINT64 BMU_MemFree(UINT64 uwLogicPoolHandle, UINT64* puwMemAddr);$/;"	p	language:C++	signature:(UINT64 uwLogicPoolHandle, UINT64* puwMemAddr)
+BMU_PhyPoolInfoShow	api.h	/^UINT64 BMU_PhyPoolInfoShow(UINT64 puwPhyPoolHandle, BMU_PHYPOOL_INFO_STRU* pstrPhyPoolInfo);$/;"	p	language:C++	signature:(UINT64 puwPhyPoolHandle, BMU_PHYPOOL_INFO_STRU* pstrPhyPoolInfo)
+BMU_PhyPoolInit	api.c	/^UINT64 BMU_PhyPoolInit(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle) {$/;"	f	language:C++	signature:(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle)
+Bmu_PhyPool_INFO	api.h	/^typedef struct Bmu_PhyPool_INFO {$/;"	s	language:C++
+Bmu_PhyPool_INFO::pstrLogicPoolInfo	api.h	/^    BMU_LOGICPOOL_INFO_STRU* pstrLogicPoolInfo;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+Bmu_PhyPool_INFO::uwFreeBlockNum	api.h	/^    UINT64 uwFreeBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+Bmu_PhyPool_INFO::uwLogicBlockNum	api.h	/^    UINT64 uwLogicBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+Bmu_PhyPool_INFO::uwPhyPoolHandle	api.h	/^    UINT64 uwPhyPoolHandle;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+Bmu_PhyPool_INFO::uwTotalBlockNum	api.h	/^    UINT64 uwTotalBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+BMU_PHYPOOL_INFO_STRU	api.h	/^} BMU_PHYPOOL_INFO_STRU;$/;"	t	language:C++	typeref:struct:Bmu_PhyPool_INFO
+BMU_PyhPoolInit	api.h	/^UINT64 BMU_PyhPoolInit(UINT64 uwPyhPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle);$/;"	p	language:C++	signature:(UINT64 uwPyhPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle)
+cscope.files	cscope.files	1;"	F	language:C++
+cscope.in.out	cscope.in.out	1;"	F	language:C++
+cscope.out	cscope.out	1;"	F	language:C++
+cscope.po.out	cscope.po.out	1;"	F	language:C++
+format	tags	/^!_TAG_FILE_FORMAT	2	\/extended format; --format=1 will not append ;" to lines\/$/;"	v	language:C++
+free_block_num	manager.h	/^    UINT64 free_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+language	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+LowLine	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+main	api.c	/^int main() {$/;"	f	language:C++	signature:()
+main	tags	/^main	api.c	\/^int main() {$\/;"	f	language:C++	signature:()$/;"	f	language:C++	struct:__anon2	access:public	signature:()
+Makefile	Makefile	1;"	F	language:C++
+manager.h	manager.h	1;"	F	language:C++
+memory_manager	manager.h	/^typedef struct memory_manager {$/;"	s	language:C++
+memory_manager::puwPhyPoolHandle	manager.h	/^    UINT64* puwPhyPoolHandle;$/;"	m	language:C++	struct:memory_manager	access:public
+MEMORY_MANAGER_T	manager.h	/^} MEMORY_MANAGER_T;$/;"	t	language:C++	typeref:struct:memory_manager
+next	manager.h	/^    struct physical_block* next;$/;"	m	language:C++	struct:physical_block	typeref:struct:physical_block::physical_block	access:public
+pBlock_Free	manager.h	/^    PHYSICAL_BLOCK_T* pBlock_Free;$/;"	m	language:C++	struct:physical_manager	access:public
+pBlock_Used	manager.h	/^    PHYSICAL_BLOCK_T* pBlock_Used;$/;"	m	language:C++	struct:physical_manager	access:public
+PHYPOOLSIZE	api.c	7;"	d	language:C++	file:
+physical_block	manager.h	/^typedef struct physical_block {$/;"	s	language:C++
+physical_block::base_addr	manager.h	/^    UINT64 base_addr;$/;"	m	language:C++	struct:physical_block	access:public
+physical_block::block_id	manager.h	/^    UINT64 block_id;$/;"	m	language:C++	struct:physical_block	access:public
+physical_block::block_status	manager.h	/^    UINT64 block_status; \/\/ 0 means free, 1 means be allocated$/;"	m	language:C++	struct:physical_block	access:public
+physical_block::next	manager.h	/^    struct physical_block* next;$/;"	m	language:C++	struct:physical_block	typeref:struct:physical_block::physical_block	access:public
+PHYSICAL_BLOCK_T	manager.h	/^} PHYSICAL_BLOCK_T;$/;"	t	language:C++	typeref:struct:physical_block
+physical_manager	manager.h	/^typedef struct physical_manager {$/;"	s	language:C++
+physical_manager::block_base_addr	manager.h	/^    UINT64 block_base_addr;$/;"	m	language:C++	struct:physical_manager	access:public
+physical_manager::free_block_num	manager.h	/^    UINT64 free_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+physical_manager::pBlock_Free	manager.h	/^    PHYSICAL_BLOCK_T* pBlock_Free;$/;"	m	language:C++	struct:physical_manager	access:public
+physical_manager::pBlock_Used	manager.h	/^    PHYSICAL_BLOCK_T* pBlock_Used;$/;"	m	language:C++	struct:physical_manager	access:public
+physical_manager::total_block_num	manager.h	/^    UINT64 total_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+physical_manager::used_block_num	manager.h	/^    UINT64 used_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+PHYSICAL_MANAGER_T	manager.h	/^} PHYSICAL_MANAGER_T;$/;"	t	language:C++	typeref:struct:physical_manager
+pstrLogicPoolInfo	api.h	/^    BMU_LOGICPOOL_INFO_STRU* pstrLogicPoolInfo;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+puwLogicPoolHandle	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+puwPhyPoolHandle	manager.h	/^    UINT64* puwPhyPoolHandle;$/;"	m	language:C++	struct:memory_manager	access:public
+tags	tags	1;"	F	language:C++
+total_block_num	manager.h	/^    UINT64 total_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+tUINT64	cscope.out	/^	tUINT64$/;"	v	language:C++
+UINT32	api.h	/^typedef uint32_t UINT32;$/;"	t	language:C++
+UINT64	api.h	/^typedef uint64_t UINT64;$/;"	t	language:C++
+used_block_num	manager.h	/^    UINT64 used_block_num;$/;"	m	language:C++	struct:physical_manager	access:public
+uwBuffNum	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+uwBuffSize	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+uwFreeBlockNum	api.h	/^    UINT64 uwFreeBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+uwFreeBuffNum	api.h	/^    UINT64 uwFreeBuffNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+uwLogicBlockNum	api.h	/^    UINT64 uwLogicBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+uwLogicPoolHandle	api.h	/^    UINT64 uwLogicPoolHandle;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+uwPhyPoolHandle	api.h	/^    UINT64 uwPhyPoolHandle;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+uwTotalBlockNum	api.h	/^    UINT64 uwTotalBlockNum;$/;"	m	language:C++	struct:Bmu_PhyPool_INFO	access:public
+uwUsdBuffNum	api.h	/^    UINT64 uwUsdBuffNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+uwUsdTotalBlockNum	api.h	/^    UINT64 uwUsdTotalBlockNum;$/;"	m	language:C++	struct:Bmu_LogicPool_Info	access:public
+__anon2::$	tags	/^BMU_PhyPoolInit	api.c	\/^UINT64 BMU_PhyPoolInit(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle) {$\/;"	f	language:C++	signature:(UINT64 uwPhyPoolIndex, UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* puwPhyPoolHandle)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__anon2::language	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__anon2::LowLine	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__anon2::main	tags	/^main	api.c	\/^int main() {$\/;"	f	language:C++	signature:()$/;"	f	language:C++	struct:__anon2	access:public	signature:()
+__anon2::puwLogicPoolHandle	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__anon2::uwBuffNum	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__anon2::uwBuffSize	tags	/^BMU_LogicPoolCreate	api.c	\/^UINT64 BMU_LogicPoolCreate(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine) {$\/;"	f	language:C++	signature:(UINT64 puwPhyPoolHandle, UINT64 uwBuffSize, UINT64 uwBuffNum, UINT64 *puwLogicPoolHandle, UINT64 LowLine, UINT64 HighLine)$/;"	m	language:C++	struct:__anon2	file:	access:public
+__API_H__	api.h	4;"	d	language:C++
+__MANAGER_H__	manager.h	2;"	d	language:C++
+__TEST__	api.c	9;"	d	language:C++	file:
