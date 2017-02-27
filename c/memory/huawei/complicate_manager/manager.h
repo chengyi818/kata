@@ -3,7 +3,6 @@
 
 #include "api.h"
 
-
 typedef struct physical_block {
     UINT64 base_addr;
     UINT64 block_id;
@@ -53,4 +52,9 @@ typedef struct memory_manager {
     LOGICAL_MANAGER_T* pLogical_manager;
 } MEMORY_MANAGER_T;
 
+UINT64 check_BMU_PhyPoolInit_parm(UINT64 uwPhyPoolIndex);
+
+UINT64 calculate_PhyPoolInit_block_num(UINT64 uwMemAddr, UINT64 uwMemSize, UINT64* pTotal_block_num, UINT64* pBlock_base_addr);
+
+UINT64 check_PhyPool_after_init(MEMORY_MANAGER_T* pMemory_Manager);
 #endif /* __MANAGER_H__ */

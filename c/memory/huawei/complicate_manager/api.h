@@ -5,6 +5,7 @@
 
 typedef uint32_t UINT32;
 typedef uint64_t UINT64;
+#define BLOCK_SIZE (1024*1024*1) // 1M
 
 typedef struct Bmu_LogicPool_Info {
     UINT64 uwLogicPoolHandle;
