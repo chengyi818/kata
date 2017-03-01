@@ -40,8 +40,6 @@
             NORMAL
             FIFO
         能执行的CPU位掩码 cpus_allowed
-        重新调度标志位 flags
-            TIF_NEED_RESHED 
 
 
 [重要函数]
@@ -79,6 +77,3 @@
 
     schedule()
         选择要被执行的新进程
-
-    load_balance()
-        维持多处理器中运行队列的平衡
