@@ -33,7 +33,7 @@ typedef struct task_struct {
     PROC_ID pid;
     PROC_STAT state;
     SCHED_TYPE type;
-    INT8 cpuset_msk;
+    UINT32 affinity;
     UINT32 belong_core_id;
 
     UINT32 exec_start;
@@ -76,14 +76,17 @@ UINT32 check_AddProc_parm(PROC_ID pid, ProcInfo proc_info);
 Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info);
 UINT32 insert_proc(Task_Struct * pTask_Struct);
 
-UINT32 check_SetAffinity_parm(PROC_ID pid, INT8 cpuset_msk);
-UINT32 set_proc_affinity(PROC_ID pid, INT8 cpuset_msk);
+UINT32 check_SetAffinity_parm(PROC_ID pid, UINT32 affinity);
+UINT32 set_proc_affinity(PROC_ID pid, UINT32 affinity);
+
+UINT32 __check_proc_info_parm(ProcInfo proc_info);
 
 UINT32 try_to_clear_core_list();
 UINT32 try_to_clear_runqueue();
 
 UINT32 __effective_prio(Task_Struct*);
 Task_Struct* __select_task_struct(PROC_ID pid);
+Core* __select_core_by_id(UINT32 core_id);
 
 UINT32 is_runqueue_over();
 UINT32 is_time_window();
@@ -97,7 +100,7 @@ void sort_for_all_core();
 
 Task_Struct* select_first_no_dispatch_proc();
 void dispatch_proc(Task_Struct* pTask_Struct_temp);
-UINT32 __is_allowed_by_cpuset_msk(Core* pCore_temp, Task_Struct* pTask_Struct_temp);
+UINT32 __is_allowed_by_affinity(Core* pCore_temp, Task_Struct* pTask_Struct_temp);
 
 void scheduler_tick();
 void update_all_core_timestamp();

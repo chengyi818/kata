@@ -18,6 +18,16 @@
 extern Proc_Manager *pProc_Manager;
 
 UINT32 check_Enable_Core_parm(UINT32 core_id) {
+    if(core_id > LIMIT_OF_CORES) {
+        printf("input core_id: %u out of range\n", core_id);
+        return API_RTN_ERROR;
+    }
+    Core* pCore_temp = __select_core_by_id(core_id);
+    if(pCore_temp) {
+        printf("input core_id: %u dumplicate\n", core_id);
+        return API_RTN_ERROR;
+    }
+
     return API_RTN_OK;
 }
 
@@ -50,7 +60,25 @@ UINT32 insert_core(Core* pCore_temp) {
 
 
 UINT32 check_AddProc_parm(PROC_ID pid, ProcInfo proc_info) {
+    if(pid < 0) {
+        printf("input pid: %d out of range\n", pid);
+        return API_RTN_ERROR;
+    }
+    Task_Struct* pTask_Struct_temp = __select_task_struct(pid);
+    if(pTask_Struct_temp) {
+        printf("input pid: %d dumplicate\n", pid);
+        return API_RTN_ERROR;
+    }
+    if(!__check_proc_info_parm(proc_info)) {
+        printf("check proc_info parm fail\n");
+        return API_RTN_ERROR;
+    }
+
     return API_RTN_OK;
+}
+
+UINT32 __check_proc_info_parm(ProcInfo proc_info) {
+    return 1;
 }
 
 Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info) {
@@ -59,7 +87,7 @@ Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info) {
     pTask_Struct_temp->pid = pid;
     pTask_Struct_temp->state = PREPARE;
     pTask_Struct_temp->type = proc_info.type;
-    pTask_Struct_temp->cpuset_msk = 0xFF;
+    pTask_Struct_temp->affinity = 0xFFFFFFFF;
     pTask_Struct_temp->belong_core_id = 0xFFFFFFFF;
     pTask_Struct_temp->be_dispatched = 0;
 
@@ -97,13 +125,13 @@ UINT32 insert_proc(Task_Struct * pTask_Struct) {
 }
 
 
-UINT32 check_SetAffinity_parm(PROC_ID pid, INT8 cpuset_msk) {
+UINT32 check_SetAffinity_parm(PROC_ID pid, UINT32 affinity) {
     return API_RTN_OK;
 }
 
-UINT32 set_proc_affinity(PROC_ID pid, INT8 cpuset_msk) {
+UINT32 set_proc_affinity(PROC_ID pid, UINT32 affinity) {
     Task_Struct* pTask_Struct_temp = __select_task_struct(pid);
-    pTask_Struct_temp->cpuset_msk = cpuset_msk;
+    pTask_Struct_temp->affinity = (UINT32)affinity;
     return API_RTN_OK;
 }
 
@@ -395,7 +423,7 @@ void dispatch_proc(Task_Struct* pTask_Struct_temp) {
     } else {
         Core* pCore_temp = pProc_Manager->pCore;
         while(pCore_temp != NULL) {
-            if(pCore_temp->curr == NULL && __is_allowed_by_cpuset_msk(pCore_temp, pTask_Struct_temp)) {
+            if(pCore_temp->curr == NULL && __is_allowed_by_affinity(pCore_temp, pTask_Struct_temp)) {
                 pCore_temp->curr = pTask_Struct_temp;
                 break;
             }
@@ -405,10 +433,10 @@ void dispatch_proc(Task_Struct* pTask_Struct_temp) {
     }
 }
 
-UINT32 __is_allowed_by_cpuset_msk(Core* pCore_temp, Task_Struct* pTask_Struct_temp) {
+UINT32 __is_allowed_by_affinity(Core* pCore_temp, Task_Struct* pTask_Struct_temp) {
     UINT32 core_id = pCore_temp->core_id;
-    INT8 cpuset_msk = pTask_Struct_temp->cpuset_msk;
-    if( (1<<core_id) & cpuset_msk)
+    UINT32 affinity = pTask_Struct_temp->affinity;
+    if( (1<<core_id) & affinity)
         return 1;
     else
         return 0;
@@ -589,3 +617,4 @@ void __show_dispatch_result() {
     }
     printf("*****************************");
 }
+

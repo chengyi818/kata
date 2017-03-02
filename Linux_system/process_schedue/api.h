@@ -21,7 +21,7 @@ INT32 EnableCore(UINT32 core_id);
 
 INT32 AddProc(PROC_ID pid, ProcInfo proc_info);
 
-INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk);
+INT32 SetAffinity(PROC_ID pid, INT8 affinity);
 
 void SimuSchedule(void);
 

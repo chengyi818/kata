@@ -39,12 +39,12 @@ INT32 AddProc(PROC_ID pid, ProcInfo proc_info) {
 }
 
 
-INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk) {
-    if(check_SetAffinity_parm(pid, cpuset_msk)) {
+INT32 SetAffinity(PROC_ID pid, INT8 affinity) {
+    if(check_SetAffinity_parm(pid, affinity)) {
         printf("check SetAffinity parm fail\n");
         return API_RTN_ERROR;
     }
-    set_proc_affinity(pid, cpuset_msk);
+    set_proc_affinity(pid, affinity);
 
     return API_RTN_OK;
 }
@@ -92,6 +92,24 @@ void SimuSchedule(void) {
         scheduler_tick();
     }
     show_history();
+}
+
+INT32 QueryCpuStat(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[]) {
+    //check parm
+
+    Core* pCore_temp = __select_core_by_id(core_id);
+    History *pHistory_Temp = pCore_temp->pHistory;
+    UINT32 index = 0;
+    while(begin_tick > 0) {
+        pHistory_Temp = pHistory_Temp->Next;
+    }
+
+    for(index = 0; index < length; index++) {
+        array[index] = pHistory_Temp->pid;
+        pHistory_Temp = pHistory_Temp->Next;
+    }
+
+    return API_RTN_OK;
 }
 
 void Clear(void) {
