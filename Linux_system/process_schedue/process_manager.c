@@ -78,6 +78,9 @@ UINT32 check_AddProc_parm(PROC_ID pid, ProcInfo proc_info) {
 }
 
 UINT32 __check_proc_info_parm(ProcInfo proc_info) {
+    /*
+     *if(pr)
+     */
     return 1;
 }
 
@@ -355,7 +358,6 @@ void show_history() {
     }
 }
 
-
 void __show_history_per_core(Core* pCore) {
     History* pHistory_Temp = pCore->pHistory;
     printf("Core_id: %d\n", pCore->core_id);
@@ -365,7 +367,6 @@ void __show_history_per_core(Core* pCore) {
     }
     printf("\n");
 }
-
 
 UINT32 is_core_free() {
     UINT32 ret = 0;
@@ -618,3 +619,6 @@ void __show_dispatch_result() {
     printf("*****************************");
 }
 
+UINT32 check_QueryCpuStat_parm(UINT32 core_id) {
+    return 1;
+}

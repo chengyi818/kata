@@ -95,18 +95,26 @@ void SimuSchedule(void) {
 }
 
 INT32 QueryCpuStat(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[]) {
-    //check parm
+    if(check_QueryCpuStat_parm(core_id)) {
+        printf("check SetAffinity parm fail\n");
+        return API_RTN_ERROR;
+    }
 
     Core* pCore_temp = __select_core_by_id(core_id);
     History *pHistory_Temp = pCore_temp->pHistory;
     UINT32 index = 0;
-    while(begin_tick > 0) {
+    while(begin_tick > 0 && pHistory_Temp != NULL) {
         pHistory_Temp = pHistory_Temp->Next;
+        begin_tick -= 1;
     }
 
     for(index = 0; index < length; index++) {
-        array[index] = pHistory_Temp->pid;
-        pHistory_Temp = pHistory_Temp->Next;
+        if(pHistory_Temp != NULL) {
+            array[index] = pHistory_Temp->pid;
+            pHistory_Temp = pHistory_Temp->Next;
+        } else {
+            array[index] = -1;
+        }
     }
 
     return API_RTN_OK;

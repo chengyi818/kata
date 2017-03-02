@@ -80,6 +80,7 @@ UINT32 check_SetAffinity_parm(PROC_ID pid, UINT32 affinity);
 UINT32 set_proc_affinity(PROC_ID pid, UINT32 affinity);
 
 UINT32 __check_proc_info_parm(ProcInfo proc_info);
+UINT32 check_QueryCpuStat_parm(UINT32 core_id);
 
 UINT32 try_to_clear_core_list();
 UINT32 try_to_clear_runqueue();

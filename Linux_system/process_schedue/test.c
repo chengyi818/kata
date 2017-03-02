@@ -26,7 +26,7 @@ void test_demo_0() {
 
     //添加pid信息
     for(pid = 0; pid < (INT8)(sizeof(aPIF)/sizeof(aPIF[0])); pid++) {
-        ret = AddProc(pid, aPIF[0]);
+        ret = AddProc(pid, aPIF[(UINT32)pid]);
         if(API_RTN_OK != ret) {
             printf("AddProc Test fail, pid %u\n", pid);
         }
@@ -56,6 +56,7 @@ void test_demo_0() {
 }
 
 void exam1() {
+    //Exam 1 Pass
     ProcInfo procA;
     procA.type = SCHED_FIFO;
     procA.exec_start = 0;
@@ -68,7 +69,6 @@ void exam1() {
     procB.exec_length = 10;
     procB.weight = WEIGHT_MID;
 
-    //Exam 1 Pass
     EnableCore(0);
     AddProc(0, procA);
     SimuSchedule();
@@ -77,6 +77,7 @@ void exam1() {
 }
 
 void exam2() {
+    //Exam 2 pass
     ProcInfo procA;
     procA.type = SCHED_FIFO;
     procA.exec_start = 0;
@@ -89,7 +90,6 @@ void exam2() {
     procB.exec_length = 10;
     procB.weight = WEIGHT_MID;
 
-    //Exam 2 pass
     EnableCore(0);
     AddProc(2, procB);
     SetAffinity(2, 0x1);
@@ -99,6 +99,7 @@ void exam2() {
 
 
 void exam3() {
+    //Exam 3 pass
     ProcInfo procA;
     procA.type = SCHED_FIFO;
     procA.exec_start = 0;
@@ -111,7 +112,6 @@ void exam3() {
     procB.exec_length = 10;
     procB.weight = WEIGHT_MID;
 
-    //Exam 3 pass
     EnableCore(0);
     EnableCore(1);
     AddProc(0, procA);
@@ -122,6 +122,7 @@ void exam3() {
 
 
 void exam4() {
+    //Exam 4 pass
     ProcInfo procA;
     procA.type = SCHED_FIFO;
     procA.exec_start = 0;
@@ -134,7 +135,6 @@ void exam4() {
     procB.exec_length = 10;
     procB.weight = WEIGHT_MID;
 
-    //Exam 4
     EnableCore(0);
     EnableCore(1);
     EnableCore(3);
@@ -145,6 +145,69 @@ void exam4() {
     AddProc(5, procB);
 
     SetAffinity(3, 0x1);
+
+    SimuSchedule();
+
+    Clear();
+}
+
+void exam5() {
+    ProcInfo procA;
+    procA.type = SCHED_FIFO;
+    procA.exec_start = 0;
+    procA.exec_length = 5;
+    procA.priority = 1;
+
+    ProcInfo procB;
+    procB.type = SCHED_FIFO;
+    procB.exec_start = 0;
+    procB.exec_length = 5;
+    procB.priority = 3;
+
+    EnableCore(0);
+    EnableCore(1);
+
+    AddProc(0, procA);
+    AddProc(1, procB);
+
+    SetAffinity(0, 0x3);
+    SetAffinity(1, 0x1);
+
+    SimuSchedule();
+
+    Clear();
+}
+
+void exam6() {
+    ProcInfo procA;
+    procA.type = SCHED_FIFO;
+    procA.exec_start = 0;
+    procA.exec_length = 5;
+    procA.priority = 1;
+
+    ProcInfo procB;
+    procB.type = SCHED_FIFO;
+    procB.exec_start = 0;
+    procB.exec_length = 5;
+    procB.priority = 2;
+
+    ProcInfo procC;
+    procC.type = SCHED_FIFO;
+    procC.exec_start = 0;
+    procC.exec_length = 5;
+    procC.priority = 3;
+
+    EnableCore(0);
+    EnableCore(1);
+    EnableCore(2);
+
+    AddProc(0, procA);
+    AddProc(1, procB);
+    AddProc(2, procC);
+
+    SetAffinity(0, 0x7);
+    SetAffinity(1, 0x3);
+    SetAffinity(2, 0x1);
 
     SimuSchedule();
 

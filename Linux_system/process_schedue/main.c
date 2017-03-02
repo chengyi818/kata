@@ -26,7 +26,7 @@ int main(void) {
     pProc_Manager->pRunQueue = NULL;
     pProc_Manager->pCore = NULL;
 
-    exam4();
+    test_demo_0();
 
     return 0;
 }
