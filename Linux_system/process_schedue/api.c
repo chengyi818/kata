@@ -52,12 +52,6 @@ INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk) {
 void SimuSchedule(void) {
     printf("begin SimuSchedule");
     while(1) {
-        //检查整个runqueue是否还有进程需要运行
-        if(is_runqueue_over()) {
-            printf("all proc run over\n");
-            break;
-        }
-
         //检查当前是否是时间窗口
         if(is_time_window()) {
             clear_proc_belong_cpu();
@@ -85,6 +79,12 @@ void SimuSchedule(void) {
             Task_Struct* pTask_Struct_temp = select_first_no_dispatch_proc();
             //考虑过的进程,将be_dispatch置位
             dispatch_proc(pTask_Struct_temp);
+        }
+
+        //检查整个runqueue是否还有进程需要运行
+        if(is_runqueue_over()) {
+            printf("all proc run over\n");
+            break;
         }
 
         __show_dispatch_result();

@@ -45,7 +45,7 @@ int main(void) {
      *Clear();
      */
 
-    //Exam 2
+    //Exam 2 pass
     /*
      *EnableCore(0);
      *AddProc(2, procB);
@@ -54,31 +54,31 @@ int main(void) {
      *Clear();
      */
 
-    //Exam 3
+    //Exam 3 pass
+    /*
+     *EnableCore(0);
+     *EnableCore(1);
+     *AddProc(0, procA);
+     *AddProc(1, procB);
+     *SimuSchedule();
+     *Clear();
+     */
+
+    //Exam 4
     EnableCore(0);
     EnableCore(1);
-    AddProc(0, procA);
-    AddProc(1, procB);
-    SimuSchedule();
-    Clear();
+    EnableCore(3);
 
-    //Exam
-/*
- *    EnableCore(0);
- *    EnableCore(1);
- *    EnableCore(3);
- *
- *    AddProc(0, procA);
- *    AddProc(3, procB);
- *    AddProc(4, procA);
- *    AddProc(5, procB);
- *
- *    SetAffinity(0, 0x1);
- *
- *    SimuSchedule();
- *
- *    Clear();
- */
+    AddProc(0, procA);
+    AddProc(3, procB);
+    AddProc(4, procA);
+    AddProc(5, procB);
+
+    SetAffinity(3, 0x1);
+
+    SimuSchedule();
+
+    Clear();
 
     return 0;
 }

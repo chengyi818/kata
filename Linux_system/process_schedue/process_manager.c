@@ -267,12 +267,13 @@ Core* __select_core_by_id(UINT32 core_id) {
     if( pCore_Temp == NULL) {
         return pCore_Temp;
     } else {
-        if(pCore_Temp->core_id == core_id)
-            return pCore_Temp;
-        pProc_Manager->pCore = pCore_Temp->Next;
+        while(pCore_Temp != NULL) {
+            if(pCore_Temp->core_id == core_id)
+                return pCore_Temp;
+            pCore_Temp = pCore_Temp->Next;
+        }
     }
-    return pCore_Temp;
-
+    return NULL;
 }
 
 void __try_to_clear_core(Core* pCore_Temp) {
@@ -392,14 +393,15 @@ void dispatch_proc(Task_Struct* pTask_Struct_temp) {
             return;
         }
     } else {
-        Core* pCore = pProc_Manager->pCore;
-        while(pCore != NULL) {
-            if(pCore->curr == NULL && __is_allowed_by_cpuset_msk(pCore, pTask_Struct_temp)) {
-                pCore->curr = pTask_Struct_temp;
+        Core* pCore_temp = pProc_Manager->pCore;
+        while(pCore_temp != NULL) {
+            if(pCore_temp->curr == NULL && __is_allowed_by_cpuset_msk(pCore_temp, pTask_Struct_temp)) {
+                pCore_temp->curr = pTask_Struct_temp;
                 break;
             }
-            pCore = pCore->Next;
+            pCore_temp = pCore_temp->Next;
         }
+        return;
     }
 }
 
