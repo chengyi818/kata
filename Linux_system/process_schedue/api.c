@@ -50,8 +50,7 @@ INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk) {
 }
 
 void SimuSchedule(void) {
-    UINT8 curr_timestamp_dispatch_over = 0;
-
+    printf("begin SimuSchedule");
     while(1) {
         //检查整个runqueue是否还有进程需要运行
         if(is_runqueue_over()) {
@@ -67,8 +66,9 @@ void SimuSchedule(void) {
         //更新所有进程的实时优先级和状态
         refresh_all_proc();
 
-        //为所有进程排序
+        //为所有进程排序,优先级数值小的靠前
         sort_for_all_proc();
+        __show_runqueue();
 
         //恢复所有core的curr
         refresh_all_core();
@@ -78,16 +78,18 @@ void SimuSchedule(void) {
 
         //为所有core排序,优先级数值大的靠前
         sort_for_all_core();
+        __show_core_list();
 
-        while(!is_core_free() || !is_proc_need_dispatch()) {
+        while(is_core_free() && is_proc_need_dispatch()) {
             //从优先级数值最低的一个进程选择核
+            Task_Struct* pTask_Struct_temp = select_first_no_dispatch_proc();
+            //考虑过的进程,将be_dispatch置位
+            dispatch_proc(pTask_Struct_temp);
         }
 
+        __show_dispatch_result();
         //process_manager的curr_timestamp向前推进一个
-
-        //更新所有core的历史记录
-            //更新所有被运行的进程的时间片和所属cpu
-
+        scheduler_tick();
     }
     show_history();
 }

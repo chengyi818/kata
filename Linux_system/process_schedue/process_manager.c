@@ -27,10 +27,9 @@ Core* create_core(UINT32 core_id) {
 
     pCore_temp->core_id = core_id;
     pCore_temp->pHistory = NULL;
-    pCore_temp->curr_prio = 0xFFFFFFFF;
+    pCore_temp->curr_rq_prio = 0xFFFFFFFF;
     pCore_temp->curr = NULL;
     pCore_temp->Next = NULL;
-    pCore_temp->Pre = NULL;
 
     return pCore_temp;
 }
@@ -43,7 +42,6 @@ UINT32 insert_core(Core* pCore_temp) {
         while(pTemp->Next != NULL)
             pTemp=pTemp->Next;
         pTemp->Next = pCore_temp;
-        pCore_temp->Pre = pTemp;
     }
 
     pProc_Manager->core_num += 1;
@@ -63,10 +61,12 @@ Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info) {
     pTask_Struct_temp->type = proc_info.type;
     pTask_Struct_temp->cpuset_msk = 0xFF;
     pTask_Struct_temp->belong_core_id = 0xFFFFFFFF;
+    pTask_Struct_temp->be_dispatched = 0;
 
     pTask_Struct_temp->exec_start = proc_info.exec_start;
     pTask_Struct_temp->exec_length = proc_info.exec_length;
     pTask_Struct_temp->exec_used = 0;
+    pTask_Struct_temp->exex_used_per_window = 0;
 
     if(proc_info.type == SCHED_NORMAL) {
         pTask_Struct_temp->weight = proc_info.weight;
@@ -78,7 +78,6 @@ Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info) {
     __effective_prio(pTask_Struct_temp);
 
     pTask_Struct_temp->Next = NULL;
-    pTask_Struct_temp->Pre = NULL;
 
     return pTask_Struct_temp;
 }
@@ -91,7 +90,6 @@ UINT32 insert_proc(Task_Struct * pTask_Struct) {
         while(pTemp->Next != NULL)
             pTemp=pTemp->Next;
         pTemp->Next = pTask_Struct;
-        pTask_Struct->Pre = pTemp;
     }
     pProc_Manager->proc_num += 1;
 
@@ -109,15 +107,15 @@ UINT32 set_proc_affinity(PROC_ID pid, INT8 cpuset_msk) {
     return API_RTN_OK;
 }
 
-bool is_runqueue_over() {
-    bool ret = true;
+UINT32 is_runqueue_over() {
+    UINT32 ret = 1;
     Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
     if(pTask_Struct_temp == NULL) {
-        ret = true;
+        ret = 1;
     } else {
         while(pTask_Struct_temp != NULL) {
             if(pTask_Struct_temp->state != STOPPED) {
-                ret = false;
+                ret = 0;
                 break;
             }
             pTask_Struct_temp = pTask_Struct_temp->Next;
@@ -126,11 +124,11 @@ bool is_runqueue_over() {
     return ret;
 }
 
-bool is_time_window() {
+UINT32 is_time_window() {
     if(pProc_Manager->curr_timestamp % VRUNTIME_WINDOW == 0) {
-        return true;
+        return 1;
     } else {
-        return false;
+        return 0;
     }
 }
 
@@ -141,6 +139,7 @@ void clear_proc_belong_cpu() {
     } else {
         while(pTask_Struct_temp != NULL) {
             pTask_Struct_temp->belong_core_id = 0xFFFFFFFF;
+            pTask_Struct_temp->exex_used_per_window = 0;
             pTask_Struct_temp = pTask_Struct_temp->Next;
         }
     }
@@ -153,7 +152,7 @@ void refresh_all_core() {
     } else {
         while(pCore_temp != NULL) {
             pCore_temp->curr = NULL;
-            pCore_temp->curr_prio = 0xFFFFFFFF;
+            pCore_temp->curr_rq_prio = 0xFFFFFFFF;
             pCore_temp = pCore_temp->Next;
         }
     }
@@ -165,6 +164,7 @@ void refresh_all_proc() {
         return;
     } else {
         while(pTask_Struct_temp != NULL) {
+            pTask_Struct_temp->be_dispatched = 0;
             __effective_prio(pTask_Struct_temp);
             pTask_Struct_temp = pTask_Struct_temp->Next;
         }
@@ -172,65 +172,11 @@ void refresh_all_proc() {
 }
 
 void sort_for_all_proc() {
-    Task_Struct* pTask_Struct_start = pProc_Manager->pRunQueue;
-    if(pTask_Struct_start == NULL) {
-        return;
-    } else {
-        Task_Struct* pTask_Struct_end = pTask_Struct_start->Next;
-        while(pTask_Struct_start->Next != NULL) {
-            while(pTask_Struct_end != NULL) {
-                if(pTask_Struct_start->real_priority > pTask_Struct_end->real_priority) {
-                    __switch_task_struct(pTask_Struct_start, pTask_Struct_end);
-                }
-                pTask_Struct_end = pTask_Struct_end->Next;
-            }
-            pTask_Struct_start = pTask_Struct_start->Next;
-            pTask_Struct_end = pTask_Struct_start->Next;
-        }
-    }
-
-    //Test
-    Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
-    if(pTask_Struct_temp == NULL) {
-        return;
-    } else {
-        printf("after sort_for_all_proc\n");
-        while(pTask_Struct_temp != NULL) {
-            printf("pid: %d, real_priority: %d\n", pTask_Struct_temp->pid, pTask_Struct_temp->real_priority);
-            pTask_Struct_temp = pTask_Struct_temp->Next;
-        }
-    }
+    pProc_Manager->pRunQueue = listMergeSort_Proc(pProc_Manager->pRunQueue);
 }
 
 void sort_for_all_core() {
-    Core* pCore_start = pProc_Manager->pCore;
-    if(pCore_start == NULL) {
-        return;
-    } else {
-        Core* pCore_end = pCore_start->Next;
-        while(pCore_start->Next != NULL) {
-            while(pCore_end != NULL) {
-                if(pCore_start->curr_prio < pCore_end->curr_prio) {
-                    __switch_core(pCore_start, pCore_end);
-                }
-                pCore_end = pCore_end->Next;
-            }
-            pCore_start = pCore_start->Next;
-            pCore_end = pCore_start->Next;
-        }
-    }
-
-    //Test
-    Core* pCore_temp = pProc_Manager->pCore;
-    if(pCore_temp == NULL) {
-        return;
-    } else {
-        printf("after sort_for_all_proc\n");
-        while(pCore_temp != NULL) {
-            printf("core_id: %d, curr_prio: %d\n", pCore_temp->core_id, pCore_temp->curr_prio);
-            pCore_temp = pCore_temp->Next;
-        }
-    }
+    pProc_Manager->pCore = listMergeSort_Core(pProc_Manager->pCore);
 }
 
 void update_prio_all_core() {
@@ -247,14 +193,16 @@ void update_prio_all_core() {
 }
 
 void __update_prio_per_core(Core* pCore_temp) {
+    pCore_temp->curr_rq_prio = 0xFFFFFFFF;
     Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
     if(pTask_Struct_temp == NULL) {
         return;
     } else {
         while(pTask_Struct_temp != NULL) {
-            if(pTask_Struct_temp->belong_core_id == pCore_temp->core_id) {
-                if(pCore_temp->curr_prio > pTask_Struct_temp->real_priority) {
-                    pCore_temp->curr_prio = pTask_Struct_temp->real_priority;
+            if(pTask_Struct_temp->belong_core_id == pCore_temp->core_id &&
+                    pTask_Struct_temp->state == RUNNING) {
+                if(pCore_temp->curr_rq_prio > pTask_Struct_temp->real_priority) {
+                    pCore_temp->curr_rq_prio = pTask_Struct_temp->real_priority;
                 }
             }
             pTask_Struct_temp = pTask_Struct_temp->Next;
@@ -286,7 +234,7 @@ UINT32 __effective_prio(Task_Struct* pTask_Struct) {
         //进程已经运行完了
         pTask_Struct->real_priority = 0xFFFFFFFF;
         pTask_Struct->state = STOPPED;
-    } else if (pTask_Struct->exec_start < pProc_Manager->curr_timestamp){
+    } else if (pTask_Struct->exec_start > pProc_Manager->curr_timestamp){
         //进程还没有准备好
         pTask_Struct->real_priority = 0xFFFFFFFF;
         pTask_Struct->state = PREPARE;
@@ -294,12 +242,12 @@ UINT32 __effective_prio(Task_Struct* pTask_Struct) {
         if(pTask_Struct->type == SCHED_FIFO) {
             pTask_Struct->real_priority = pTask_Struct->priority;
         } else {
-            pTask_Struct->real_priority = NORMAL_TASK_PRIO_OFFSET + (pTask_Struct->exec_used * 400) / pTask_Struct->weight;
+            pTask_Struct->real_priority = NORMAL_TASK_PRIO_OFFSET + (pTask_Struct->exex_used_per_window * 400) / pTask_Struct->weight;
         }
         pTask_Struct->state = RUNNING;
     }
 
-    printf("task: %d, real_priority: %u\n", pTask_Struct->pid, pTask_Struct->real_priority);
+    /*printf("task: %d, real_priority: %u\n", pTask_Struct->pid, pTask_Struct->real_priority);*/
 
     return API_RTN_OK;
 }
@@ -314,6 +262,19 @@ Task_Struct* __select_task_struct(PROC_ID pid) {
     return NULL;
 }
 
+Core* __select_core_by_id(UINT32 core_id) {
+    Core* pCore_Temp = pProc_Manager->pCore;
+    if( pCore_Temp == NULL) {
+        return pCore_Temp;
+    } else {
+        if(pCore_Temp->core_id == core_id)
+            return pCore_Temp;
+        pProc_Manager->pCore = pCore_Temp->Next;
+    }
+    return pCore_Temp;
+
+}
+
 void __try_to_clear_core(Core* pCore_Temp) {
     History* pHistory_Temp = __pop_history_list(pCore_Temp);
     while(pHistory_Temp != NULL) {
@@ -324,8 +285,8 @@ void __try_to_clear_core(Core* pCore_Temp) {
 }
 
 Core* __pop_core_list() {
-    Core* pCore_Temp = NULL;
-    if(pProc_Manager->pCore == NULL) {
+    Core* pCore_Temp = pProc_Manager->pCore;
+    if(pCore_Temp == NULL) {
         return pCore_Temp;
     } else {
         pCore_Temp = pProc_Manager->pCore;
@@ -358,6 +319,7 @@ Task_Struct* __pop_runqueue() {
 
 void show_history() {
     Core* pCore = pProc_Manager->pCore;
+    printf("show_history\n");
     while(pCore != NULL) {
         __show_history_per_core(pCore);
         pCore = pCore->Next;
@@ -367,7 +329,7 @@ void show_history() {
 
 void __show_history_per_core(Core* pCore) {
     History* pHistory_Temp = pCore->pHistory;
-    printf("Core_id: %d\t", pCore->core_id);
+    printf("Core_id: %d\n", pCore->core_id);
     while(pHistory_Temp != NULL) {
         printf("%d\t", pHistory_Temp->pid);
         pHistory_Temp = pHistory_Temp->Next;
@@ -376,47 +338,252 @@ void __show_history_per_core(Core* pCore) {
 }
 
 
-void __switch_task_struct(Task_Struct* pTask_Struct_start, Task_Struct* pTask_Struct_end) {
-    if(pTask_Struct_start->Pre != NULL) {
-        pTask_Struct_start->Pre->Next = pTask_Struct_end;
-    }
-    if(pTask_Struct_start->Next != pTask_Struct_end) {
-        pTask_Struct_start->Next->Pre = pTask_Struct_end;
-    }
-    if(pTask_Struct_end->Next != NULL) {
-        pTask_Struct_end->Next->Pre = pTask_Struct_start;
-    }
-    if(pTask_Struct_end->Pre != pTask_Struct_start) {
-        pTask_Struct_end->Pre->Next = pTask_Struct_start;
+UINT32 is_core_free() {
+    UINT32 ret = 0;
+    Core* pCore_temp = pProc_Manager->pCore;
+    while(pCore_temp != NULL) {
+        if(pCore_temp->curr == NULL) {
+            ret = 1;
+            break;
+        }
+        pCore_temp = pCore_temp->Next;
     }
 
-    Task_Struct* pTask_Struct_temp = NULL;
-    if(pTask_Struct_start->Next != pTask_Struct_end) {
-        pTask_Struct_temp = pTask_Struct_start->Pre;
-        pTask_Struct_start->Pre = pTask_Struct_end->Pre;
-        pTask_Struct_end->Pre = pTask_Struct_temp;
+    return ret;
+}
 
-        pTask_Struct_temp = pTask_Struct_start->Next;
-        pTask_Struct_start->Next = pTask_Struct_end->Next;
-        pTask_Struct_end->Next = pTask_Struct_temp;
+UINT32 is_proc_need_dispatch() {
+    UINT32 ret = 0;
+    Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
+    while(pTask_Struct_temp != NULL) {
+        if(pTask_Struct_temp->state == RUNNING && !pTask_Struct_temp->be_dispatched) {
+            ret = 1;
+            break;
+        }
+        pTask_Struct_temp = pTask_Struct_temp->Next;
+    }
+    return ret;
+}
+
+Task_Struct* select_first_no_dispatch_proc() {
+    Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
+    while(pTask_Struct_temp != NULL) {
+        if(pTask_Struct_temp->state == RUNNING && !pTask_Struct_temp->be_dispatched) {
+            break;
+        }
+        pTask_Struct_temp = pTask_Struct_temp->Next;
+    }
+    if(pTask_Struct_temp != NULL) {
+        printf("try to dispatch_proc: %d\n", pTask_Struct_temp->pid);
+    }
+    return pTask_Struct_temp;
+}
+
+void dispatch_proc(Task_Struct* pTask_Struct_temp) {
+    pTask_Struct_temp->be_dispatched = 1;
+    UINT32 belong_core_id = pTask_Struct_temp->belong_core_id;
+
+    if(belong_core_id != 0xFFFFFFFF) {
+        Core* pCore_temp = __select_core_by_id(belong_core_id);
+        if(pCore_temp->curr == NULL) {
+            pCore_temp->curr = pTask_Struct_temp;
+            return;
+        } else {
+            return;
+        }
     } else {
-        pTask_Struct_temp = pTask_Struct_start->Pre;
-        pTask_Struct_start->Pre = pTask_Struct_end;
-        pTask_Struct_end->Pre = pTask_Struct_temp;
-
-        pTask_Struct_temp = pTask_Struct_end->Next;
-        pTask_Struct_end->Next = pTask_Struct_start;
-        pTask_Struct_start->Next = pTask_Struct_temp;
+        Core* pCore = pProc_Manager->pCore;
+        while(pCore != NULL) {
+            if(pCore->curr == NULL && __is_allowed_by_cpuset_msk(pCore, pTask_Struct_temp)) {
+                pCore->curr = pTask_Struct_temp;
+                break;
+            }
+            pCore = pCore->Next;
+        }
     }
 }
 
-void __switch_core(Core* pCore_start, Core* pCore_end) {
-    Fix bug
-    Core* pCore_temp = pCore_start->Pre;
-    pCore_start->Pre = pCore_end->Pre;
-    pCore_temp->Pre = pCore_temp;
+UINT32 __is_allowed_by_cpuset_msk(Core* pCore_temp, Task_Struct* pTask_Struct_temp) {
+    UINT32 core_id = pCore_temp->core_id;
+    INT8 cpuset_msk = pTask_Struct_temp->cpuset_msk;
+    if( (1<<core_id) & cpuset_msk)
+        return 1;
+    else
+        return 0;
+}
 
-    pCore_temp = pCore_start->Next;
-    pCore_start->Next = pCore_end->Next;
-    pCore_end->Next = pCore_temp;
+void scheduler_tick(){
+    pProc_Manager->curr_timestamp += 1;
+    //更新所有core的历史记录
+    update_all_core_timestamp();
+}
+
+void update_all_core_timestamp() {
+    //更新所有被运行的进程的所有时间片信息和所属cpu,清除be_dispatch标志位
+    Core* pCore = pProc_Manager->pCore;
+    while(pCore != NULL) {
+        __add_history_for_curr(pCore);
+        __update_timestamp_for_curr_proc(pCore);
+        pCore = pCore->Next;
+    }
+}
+
+void __add_history_for_curr(Core* pCore) {
+    History* pHistory_Temp = (History*)malloc(sizeof(History));
+    pHistory_Temp->Next = NULL;
+
+    if(pCore->curr) {
+        pHistory_Temp->pid = pCore->curr->pid;
+    } else {
+        pHistory_Temp->pid = -1;
+    }
+
+    if(pCore->pHistory == NULL) {
+        pCore->pHistory = pHistory_Temp;
+    } else {
+        History* pTemp = pCore->pHistory;
+        while(pTemp->Next != NULL)
+            pTemp = pTemp->Next;
+
+        pTemp->Next = pHistory_Temp;
+    }
+}
+
+void __update_timestamp_for_curr_proc(Core* pCore) {
+    if(pCore->curr) {
+        pCore->curr->exec_used += 1;
+        pCore->curr->exex_used_per_window += 1;
+        pCore->curr->belong_core_id = pCore->core_id;
+    }
+}
+
+void __show_runqueue() {
+    Task_Struct* pTask_Struct_temp = pProc_Manager->pRunQueue;
+    if(pTask_Struct_temp == NULL) {
+        return;
+    } else {
+        printf("\n");
+        while(pTask_Struct_temp != NULL) {
+            printf("pid: %d, real_priority: 0x%x\n", pTask_Struct_temp->pid, pTask_Struct_temp->real_priority);
+            pTask_Struct_temp = pTask_Struct_temp->Next;
+        }
+    }
+}
+
+void __show_core_list() {
+    Core* pCore_temp = pProc_Manager->pCore;
+    if(pCore_temp == NULL) {
+        return;
+    } else {
+        printf("\n");
+        while(pCore_temp != NULL) {
+            printf("core_id: %d, curr_rq_prio: 0x%x\n", pCore_temp->core_id, pCore_temp->curr_rq_prio);
+            pCore_temp = pCore_temp->Next;
+        }
+    }
+}
+
+Task_Struct *mergeSortedList_Proc(Task_Struct *L1, Task_Struct *L2) {
+    Task_Struct dummy;
+    Task_Struct *p1 = &dummy;
+    Task_Struct *p2 = L2;
+    dummy.Next = L1;
+    while(p1->Next != NULL && p2 != NULL) {
+        if(p1->Next->real_priority > p2->real_priority) {
+            L2 = p2->Next;
+            p2->Next = p1->Next;
+            p1->Next = p2;
+            p1 = p2;
+            p2 = L2;
+        } else {
+            p1 = p1->Next;
+        }
+    }
+    if(p1->Next == NULL) {
+        p1->Next = p2;
+    }
+
+    return dummy.Next;
+}
+
+Task_Struct *listMergeSort_Proc(Task_Struct* head) {
+    if(head == NULL || head->Next == NULL) {
+        return head;
+    }
+    Task_Struct* slow = head;
+    Task_Struct* fast = head;
+    while(fast->Next != NULL && fast->Next->Next != NULL) {
+        fast = fast->Next->Next;
+        slow = slow->Next;
+    }
+
+    Task_Struct *leftHead = head;
+    Task_Struct *rightHead = slow->Next;
+    slow->Next = NULL;
+
+    leftHead = listMergeSort_Proc(leftHead);
+    rightHead = listMergeSort_Proc(rightHead);
+
+    return mergeSortedList_Proc(leftHead, rightHead);
+}
+
+
+Core *mergeSortedList_Core(Core *L1, Core *L2) {
+    Core dummy;
+    Core *p1 = &dummy;
+    Core *p2 = L2;
+    dummy.Next = L1;
+    while(p1->Next != NULL && p2 != NULL) {
+        if(p1->Next->curr_rq_prio < p2->curr_rq_prio) {
+            L2 = p2->Next;
+            p2->Next = p1->Next;
+            p1->Next = p2;
+            p1 = p2;
+            p2 = L2;
+        } else {
+            p1 = p1->Next;
+        }
+    }
+    if(p1->Next == NULL) {
+        p1->Next = p2;
+    }
+
+    return dummy.Next;
+}
+
+Core *listMergeSort_Core(Core* head) {
+    if(head == NULL || head->Next == NULL) {
+        return head;
+    }
+    Core* slow = head;
+    Core* fast = head;
+    while(fast->Next != NULL && fast->Next->Next != NULL) {
+        fast = fast->Next->Next;
+        slow = slow->Next;
+    }
+
+    Core *leftHead = head;
+    Core *rightHead = slow->Next;
+    slow->Next = NULL;
+
+    leftHead = listMergeSort_Core(leftHead);
+    rightHead = listMergeSort_Core(rightHead);
+
+    return mergeSortedList_Core(leftHead, rightHead);
+}
+
+
+void __show_dispatch_result() {
+    printf("curr_timestamp: %d, dispatch_result: \n", pProc_Manager->curr_timestamp);
+    Core* pCore_temp = pProc_Manager->pCore;
+    if(pCore_temp == NULL) {
+        return;
+    } else {
+        while(pCore_temp != NULL) {
+            if(pCore_temp->curr)
+                printf("core_id: %d\t, curr pid: %d\n", pCore_temp->core_id, pCore_temp->curr->pid);
+            pCore_temp = pCore_temp->Next;
+        }
+    }
+    printf("*****************************");
 }

@@ -25,32 +25,60 @@ int main(void) {
     pProc_Manager->pRunQueue = NULL;
     pProc_Manager->pCore = NULL;
 
+    ProcInfo procA;
+    procA.type = SCHED_FIFO;
+    procA.exec_start = 0;
+    procA.exec_length = 5;
+    procA.priority = 13;
+
+    ProcInfo procB;
+    procB.type = SCHED_NORMAL;
+    procB.exec_start = 3;
+    procB.exec_length = 10;
+    procB.weight = WEIGHT_MID;
+
+    //Exam 1 Pass
+    /*
+     *EnableCore(0);
+     *AddProc(0, procA);
+     *SimuSchedule();
+     *Clear();
+     */
+
+    //Exam 2
+    /*
+     *EnableCore(0);
+     *AddProc(2, procB);
+     *SetAffinity(2, 0x1);
+     *SimuSchedule();
+     *Clear();
+     */
+
+    //Exam 3
     EnableCore(0);
     EnableCore(1);
-    EnableCore(3);
-
-    ProcInfo proc0;
-    proc0.type = SCHED_FIFO;
-    proc0.exec_start = 0;
-    proc0.exec_length = 5;
-    proc0.priority = 13;
-
-    ProcInfo proc1;
-    proc1.type = SCHED_NORMAL;
-    proc1.exec_start = 3;
-    proc1.exec_length = 5;
-    proc1.weight = WEIGHT_MID;
-
-    AddProc(0, proc0);
-    AddProc(3, proc1);
-    AddProc(4, proc0);
-    AddProc(5, proc1);
-
-    SetAffinity(0, 0x1);
-
+    AddProc(0, procA);
+    AddProc(1, procB);
     SimuSchedule();
-
     Clear();
+
+    //Exam
+/*
+ *    EnableCore(0);
+ *    EnableCore(1);
+ *    EnableCore(3);
+ *
+ *    AddProc(0, procA);
+ *    AddProc(3, procB);
+ *    AddProc(4, procA);
+ *    AddProc(5, procB);
+ *
+ *    SetAffinity(0, 0x1);
+ *
+ *    SimuSchedule();
+ *
+ *    Clear();
+ */
 
     return 0;
 }
