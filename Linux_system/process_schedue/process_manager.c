@@ -28,6 +28,7 @@ UINT32 check_Enable_Core_parm(UINT32 core_id) {
         return API_RTN_ERROR;
     }
 
+
     return API_RTN_OK;
 }
 
