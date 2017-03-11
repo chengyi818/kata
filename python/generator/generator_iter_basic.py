@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env python3
 '''
 # =============================================================================
 #      FileName: test.py
@@ -30,4 +29,6 @@ def read_visits(data_path):
 
 it = read_visits('my_numbers')
 percentages = normalize(it)
-print percentages
+
+print(percentages)
+
