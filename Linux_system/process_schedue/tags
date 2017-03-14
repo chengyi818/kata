@@ -4,13 +4,11 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-a.out	a.out	1;"	F	language:C++
 AddProc	api.c	/^INT32 AddProc(PROC_ID pid, ProcInfo proc_info) {$/;"	f	language:C++	signature:(PROC_ID pid, ProcInfo proc_info)
 AddProc	api.h	/^INT32 AddProc(PROC_ID pid, ProcInfo proc_info);$/;"	p	language:C++	signature:(PROC_ID pid, ProcInfo proc_info)
 affinity	process_manager.h	/^    UINT32 affinity;$/;"	m	language:C++	struct:task_struct	access:public
 api.c	api.c	1;"	F	language:C++
 api.h	api.h	1;"	F	language:C++
-api.o	api.o	1;"	F	language:C++
 API_RTN_ERROR	basic.h	5;"	d	language:C++
 API_RTN_OK	basic.h	4;"	d	language:C++
 basic.h	basic.h	1;"	F	language:C++
@@ -20,7 +18,8 @@ check_AddProc_parm	process_manager.c	/^UINT32 check_AddProc_parm(PROC_ID pid, Pr
 check_AddProc_parm	process_manager.h	/^UINT32 check_AddProc_parm(PROC_ID pid, ProcInfo proc_info);$/;"	p	language:C++	signature:(PROC_ID pid, ProcInfo proc_info)
 check_Enable_Core_parm	process_manager.c	/^UINT32 check_Enable_Core_parm(UINT32 core_id) {$/;"	f	language:C++	signature:(UINT32 core_id)
 check_Enable_Core_parm	process_manager.h	/^UINT32 check_Enable_Core_parm(UINT32 core_id);$/;"	p	language:C++	signature:(UINT32 core_id)
-check_Enable_Core_parm	tags	/^check_Enable_Core_parm	process_manager.c	\/^UINT32 check_Enable_Core_parm(UINT32 core_id) {$\/;"	f	language:C++	signature:(UINT32 core_id)$/;"	f	language:C++	signature:(UINT32 core_id)
+check_QueryCpuStat_parm	process_manager.c	/^UINT32 check_QueryCpuStat_parm(UINT32 core_id) {$/;"	f	language:C++	signature:(UINT32 core_id)
+check_QueryCpuStat_parm	process_manager.h	/^UINT32 check_QueryCpuStat_parm(UINT32 core_id);$/;"	p	language:C++	signature:(UINT32 core_id)
 check_SetAffinity_parm	process_manager.c	/^UINT32 check_SetAffinity_parm(PROC_ID pid, UINT32 affinity) {$/;"	f	language:C++	signature:(PROC_ID pid, UINT32 affinity)
 check_SetAffinity_parm	process_manager.h	/^UINT32 check_SetAffinity_parm(PROC_ID pid, UINT32 affinity);$/;"	p	language:C++	signature:(PROC_ID pid, UINT32 affinity)
 Clear	api.c	/^void Clear(void) {$/;"	f	language:C++	signature:(void)
@@ -41,6 +40,10 @@ create_core	process_manager.c	/^Core* create_core(UINT32 core_id) {$/;"	f	langua
 create_core	process_manager.h	/^Core* create_core(UINT32 core_id);$/;"	p	language:C++	signature:(UINT32 core_id)
 create_task_struct	process_manager.c	/^Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info) {$/;"	f	language:C++	signature:(PROC_ID pid, ProcInfo proc_info)
 create_task_struct	process_manager.h	/^Task_Struct* create_task_struct(PROC_ID pid, ProcInfo proc_info);$/;"	p	language:C++	signature:(PROC_ID pid, ProcInfo proc_info)
+cscope.files	cscope.files	1;"	F	language:C++
+cscope.in.out	cscope.in.out	1;"	F	language:C++
+cscope.out	cscope.out	1;"	F	language:C++
+cscope.po.out	cscope.po.out	1;"	F	language:C++
 curr	process_manager.h	/^    Task_Struct * curr;$/;"	m	language:C++	struct:core	access:public
 curr_rq_prio	process_manager.h	/^    UINT32 curr_rq_prio;$/;"	m	language:C++	struct:core	access:public
 curr_timestamp	process_manager.h	/^    UINT32 curr_timestamp;$/;"	m	language:C++	struct:process_manager	access:public
@@ -48,10 +51,19 @@ dispatch_proc	process_manager.c	/^void dispatch_proc(Task_Struct* pTask_Struct_t
 dispatch_proc	process_manager.h	/^void dispatch_proc(Task_Struct* pTask_Struct_temp);$/;"	p	language:C++	signature:(Task_Struct* pTask_Struct_temp)
 EnableCore	api.c	/^INT32 EnableCore(UINT32 core_id) {$/;"	f	language:C++	signature:(UINT32 core_id)
 EnableCore	api.h	/^INT32 EnableCore(UINT32 core_id);$/;"	p	language:C++	signature:(UINT32 core_id)
-exam1	main.c	/^void exam1() {$/;"	f	language:C++	signature:()
-exam2	main.c	/^void exam2() {$/;"	f	language:C++	signature:()
-exam3	main.c	/^void exam3() {$/;"	f	language:C++	signature:()
-exam4	main.c	/^void exam4() {$/;"	f	language:C++	signature:()
+EnableCore	tags	/^EnableCore	api.c	\/^INT32 EnableCore(UINT32 core_id) {$\/;"	f	language:C++	signature:(UINT32 core_id)$/;"	f	language:C++	signature:(UINT32 core_id)
+exam1	test.c	/^void exam1() {$/;"	f	language:C++	signature:()
+exam1	test.h	/^void exam1();$/;"	p	language:C++	signature:()
+exam2	test.c	/^void exam2() {$/;"	f	language:C++	signature:()
+exam2	test.h	/^void exam2();$/;"	p	language:C++	signature:()
+exam3	test.c	/^void exam3() {$/;"	f	language:C++	signature:()
+exam3	test.h	/^void exam3();$/;"	p	language:C++	signature:()
+exam4	test.c	/^void exam4() {$/;"	f	language:C++	signature:()
+exam4	test.h	/^void exam4();$/;"	p	language:C++	signature:()
+exam5	test.c	/^void exam5() {$/;"	f	language:C++	signature:()
+exam5	test.h	/^void exam5();$/;"	p	language:C++	signature:()
+exam6	test.c	/^void exam6() {$/;"	f	language:C++	signature:()
+exam6	test.h	/^void exam6();$/;"	p	language:C++	signature:()
 exec_length	basic.h	/^    UINT32 exec_length; \/\/运行的时间长度,单位tick.完成后返回stopped态$/;"	m	language:C++	struct:ProcInfo_Tag	access:public
 exec_length	process_manager.h	/^    UINT32 exec_length;$/;"	m	language:C++	struct:task_struct	access:public
 exec_start	basic.h	/^    UINT32 exec_start; \/\/进入ready的时刻$/;"	m	language:C++	struct:ProcInfo_Tag	access:public
@@ -88,7 +100,6 @@ listMergeSort_Proc	process_manager.c	/^Task_Struct *listMergeSort_Proc(Task_Stru
 listMergeSort_Proc	process_manager.h	/^Task_Struct *listMergeSort_Proc(Task_Struct* head);$/;"	p	language:C++	signature:(Task_Struct* head)
 main	main.c	/^int main(void) {$/;"	f	language:C++	signature:(void)
 main.c	main.c	1;"	F	language:C++
-main.o	main.o	1;"	F	language:C++
 Makefile	Makefile	1;"	F	language:C++
 mergeSortedList_Core	process_manager.c	/^Core *mergeSortedList_Core(Core *L1, Core *L2) {$/;"	f	language:C++	signature:(Core *L1, Core *L2)
 mergeSortedList_Core	process_manager.h	/^Core *mergeSortedList_Core(Core *L1, Core *L2);$/;"	p	language:C++	signature:(Core *L1, Core *L2)
@@ -104,13 +115,12 @@ pHistory	process_manager.h	/^    History * pHistory;$/;"	m	language:C++	struct:c
 pid	process_manager.h	/^    PROC_ID pid ;$/;"	m	language:C++	struct:history	access:public
 pid	process_manager.h	/^    PROC_ID pid;$/;"	m	language:C++	struct:task_struct	access:public
 pProc_Manager	main.c	/^Proc_Manager *pProc_Manager;$/;"	v	language:C++
-PREPARE	process_manager.h	/^    PREPARE,$/;"	e	language:C++	enum:__anon3
+PREPARE	process_manager.h	/^    PREPARE,$/;"	e	language:C++	enum:__anon1
 priority	basic.h	/^    UINT32 priority; \/\/FIFO进程取值: 0~15$/;"	m	language:C++	struct:ProcInfo_Tag	access:public
 priority	process_manager.h	/^    UINT32 priority;$/;"	m	language:C++	struct:task_struct	access:public
 process_manager	process_manager.h	/^typedef struct process_manager{$/;"	s	language:C++
 process_manager.c	process_manager.c	1;"	F	language:C++
 process_manager.h	process_manager.h	1;"	F	language:C++
-process_manager.o	process_manager.o	1;"	F	language:C++
 process_manager::core_num	process_manager.h	/^    UINT32 core_num;$/;"	m	language:C++	struct:process_manager	access:public
 process_manager::curr_timestamp	process_manager.h	/^    UINT32 curr_timestamp;$/;"	m	language:C++	struct:process_manager	access:public
 process_manager::pCore	process_manager.h	/^    Core * pCore;$/;"	m	language:C++	struct:process_manager	access:public
@@ -126,8 +136,9 @@ ProcInfo_Tag::weight	basic.h	/^    WEIGHT_VAL weight; \/\/Normal进程取值: 4\
 PROC_ID	basic.h	/^typedef INT8 PROC_ID; \/\/ -1表示错误,0~127合法$/;"	t	language:C++
 Proc_Manager	process_manager.h	/^}Proc_Manager;$/;"	t	language:C++	typeref:struct:process_manager
 proc_num	process_manager.h	/^    UINT32 proc_num;$/;"	m	language:C++	struct:process_manager	access:public
-PROC_STAT	process_manager.h	/^} PROC_STAT;$/;"	t	language:C++	typeref:enum:__anon3
+PROC_STAT	process_manager.h	/^} PROC_STAT;$/;"	t	language:C++	typeref:enum:__anon1
 pRunQueue	process_manager.h	/^    Task_Struct * pRunQueue;$/;"	m	language:C++	struct:process_manager	access:public
+QueryCpuStat	api.c	/^INT32 QueryCpuStat(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[]) {$/;"	f	language:C++	signature:(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[])
 QueryCpuStat	api.h	/^INT32 QueryCpuStat(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[]);$/;"	p	language:C++	signature:(UINT32 core_id, UINT32 begin_tick, UINT32 length, PROC_ID array[])
 Readme.md	Readme.md	1;"	F	language:C++
 real_priority	process_manager.h	/^    UINT32 real_priority;$/;"	m	language:C++	struct:task_struct	access:public
@@ -135,17 +146,17 @@ refresh_all_core	process_manager.c	/^void refresh_all_core() {$/;"	f	language:C+
 refresh_all_core	process_manager.h	/^void refresh_all_core();$/;"	p	language:C++	signature:()
 refresh_all_proc	process_manager.c	/^void refresh_all_proc() {$/;"	f	language:C++	signature:()
 refresh_all_proc	process_manager.h	/^void refresh_all_proc();$/;"	p	language:C++	signature:()
-RUNNING	process_manager.h	/^    RUNNING,$/;"	e	language:C++	enum:__anon3
+RUNNING	process_manager.h	/^    RUNNING,$/;"	e	language:C++	enum:__anon1
 scheduler_tick	process_manager.c	/^void scheduler_tick(){$/;"	f	language:C++	signature:()
 scheduler_tick	process_manager.h	/^void scheduler_tick();$/;"	p	language:C++	signature:()
-SCHED_BUTT	basic.h	/^    SCHED_BUTT$/;"	e	language:C++	enum:__anon1
-SCHED_FIFO	basic.h	/^    SCHED_FIFO,$/;"	e	language:C++	enum:__anon1
-SCHED_NORMAL	basic.h	/^    SCHED_NORMAL,$/;"	e	language:C++	enum:__anon1
-SCHED_TYPE	basic.h	/^}SCHED_TYPE;$/;"	t	language:C++	typeref:enum:__anon1
+SCHED_BUTT	basic.h	/^    SCHED_BUTT$/;"	e	language:C++	enum:__anon2
+SCHED_FIFO	basic.h	/^    SCHED_FIFO,$/;"	e	language:C++	enum:__anon2
+SCHED_NORMAL	basic.h	/^    SCHED_NORMAL,$/;"	e	language:C++	enum:__anon2
+SCHED_TYPE	basic.h	/^}SCHED_TYPE;$/;"	t	language:C++	typeref:enum:__anon2
 select_first_no_dispatch_proc	process_manager.c	/^Task_Struct* select_first_no_dispatch_proc() {$/;"	f	language:C++	signature:()
 select_first_no_dispatch_proc	process_manager.h	/^Task_Struct* select_first_no_dispatch_proc();$/;"	p	language:C++	signature:()
-SetAffinity	api.c	/^INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk) {$/;"	f	language:C++	signature:(PROC_ID pid, INT8 cpuset_msk)
-SetAffinity	api.h	/^INT32 SetAffinity(PROC_ID pid, INT8 cpuset_msk);$/;"	p	language:C++	signature:(PROC_ID pid, INT8 cpuset_msk)
+SetAffinity	api.c	/^INT32 SetAffinity(PROC_ID pid, INT8 affinity) {$/;"	f	language:C++	signature:(PROC_ID pid, INT8 affinity)
+SetAffinity	api.h	/^INT32 SetAffinity(PROC_ID pid, INT8 affinity);$/;"	p	language:C++	signature:(PROC_ID pid, INT8 affinity)
 set_proc_affinity	process_manager.c	/^UINT32 set_proc_affinity(PROC_ID pid, UINT32 affinity) {$/;"	f	language:C++	signature:(PROC_ID pid, UINT32 affinity)
 set_proc_affinity	process_manager.h	/^UINT32 set_proc_affinity(PROC_ID pid, UINT32 affinity);$/;"	p	language:C++	signature:(PROC_ID pid, UINT32 affinity)
 show_history	process_manager.c	/^void show_history() {$/;"	f	language:C++	signature:()
@@ -157,7 +168,7 @@ sort_for_all_core	process_manager.h	/^void sort_for_all_core();$/;"	p	language:C
 sort_for_all_proc	process_manager.c	/^void sort_for_all_proc() {$/;"	f	language:C++	signature:()
 sort_for_all_proc	process_manager.h	/^void sort_for_all_proc();$/;"	p	language:C++	signature:()
 state	process_manager.h	/^    PROC_STAT state;$/;"	m	language:C++	struct:task_struct	access:public
-STOPPED	process_manager.h	/^    STOPPED$/;"	e	language:C++	enum:__anon3
+STOPPED	process_manager.h	/^    STOPPED$/;"	e	language:C++	enum:__anon1
 tags	tags	1;"	F	language:C++
 task_struct	process_manager.h	/^typedef struct task_struct {$/;"	s	language:C++
 Task_Struct	process_manager.h	/^}Task_Struct;$/;"	t	language:C++	typeref:struct:task_struct
@@ -177,7 +188,8 @@ task_struct::type	process_manager.h	/^    SCHED_TYPE type;$/;"	m	language:C++	st
 task_struct::weight	process_manager.h	/^    WEIGHT_VAL weight;$/;"	m	language:C++	struct:task_struct	access:public
 test.c	test.c	1;"	F	language:C++
 test.h	test.h	1;"	F	language:C++
-test_demo	test.c	/^void test_demo() {$/;"	f	language:C++	signature:()
+test_demo_0	test.c	/^void test_demo_0() {$/;"	f	language:C++	signature:()
+test_demo_0	test.h	/^void test_demo_0();$/;"	p	language:C++	signature:()
 try_to_clear_core_list	process_manager.c	/^UINT32 try_to_clear_core_list() {$/;"	f	language:C++	signature:()
 try_to_clear_core_list	process_manager.h	/^UINT32 try_to_clear_core_list();$/;"	p	language:C++	signature:()
 try_to_clear_runqueue	process_manager.c	/^UINT32 try_to_clear_runqueue() {$/;"	f	language:C++	signature:()
@@ -195,15 +207,17 @@ update_prio_all_core	process_manager.h	/^void update_prio_all_core();$/;"	p	lang
 VRUNTIME_WINDOW	basic.h	12;"	d	language:C++
 weight	basic.h	/^    WEIGHT_VAL weight; \/\/Normal进程取值: 4\/2\/1$/;"	m	language:C++	struct:ProcInfo_Tag	access:public
 weight	process_manager.h	/^    WEIGHT_VAL weight;$/;"	m	language:C++	struct:task_struct	access:public
-WEIGHT_HIGH	basic.h	/^    WEIGHT_HIGH = 4,$/;"	e	language:C++	enum:__anon2
-WEIGHT_LOW	basic.h	/^    WEIGHT_LOW = 1,$/;"	e	language:C++	enum:__anon2
-WEIGHT_MID	basic.h	/^    WEIGHT_MID = 2,$/;"	e	language:C++	enum:__anon2
-WEIGHT_NONE	basic.h	/^    WEIGHT_NONE$/;"	e	language:C++	enum:__anon2
-WEIGHT_VAL	basic.h	/^}WEIGHT_VAL;$/;"	t	language:C++	typeref:enum:__anon2
+WEIGHT_HIGH	basic.h	/^    WEIGHT_HIGH = 4,$/;"	e	language:C++	enum:__anon3
+WEIGHT_LOW	basic.h	/^    WEIGHT_LOW = 1,$/;"	e	language:C++	enum:__anon3
+WEIGHT_MID	basic.h	/^    WEIGHT_MID = 2,$/;"	e	language:C++	enum:__anon3
+WEIGHT_NONE	basic.h	/^    WEIGHT_NONE$/;"	e	language:C++	enum:__anon3
+WEIGHT_VAL	basic.h	/^}WEIGHT_VAL;$/;"	t	language:C++	typeref:enum:__anon3
 __add_history_for_curr	process_manager.c	/^void __add_history_for_curr(Core* pCore) {$/;"	f	language:C++	signature:(Core* pCore)
 __add_history_for_curr	process_manager.h	/^void __add_history_for_curr(Core* pCore);$/;"	p	language:C++	signature:(Core* pCore)
 __API_H__	api.h	15;"	d	language:C++
 __BASIC_H__	basic.h	2;"	d	language:C++
+__check_proc_info_parm	process_manager.c	/^UINT32 __check_proc_info_parm(ProcInfo proc_info) {$/;"	f	language:C++	signature:(ProcInfo proc_info)
+__check_proc_info_parm	process_manager.h	/^UINT32 __check_proc_info_parm(ProcInfo proc_info);$/;"	p	language:C++	signature:(ProcInfo proc_info)
 __effective_prio	process_manager.c	/^UINT32 __effective_prio(Task_Struct* pTask_Struct) {$/;"	f	language:C++	signature:(Task_Struct* pTask_Struct)
 __effective_prio	process_manager.h	/^UINT32 __effective_prio(Task_Struct*);$/;"	p	language:C++	signature:(Task_Struct*)
 __is_allowed_by_affinity	process_manager.c	/^UINT32 __is_allowed_by_affinity(Core* pCore_temp, Task_Struct* pTask_Struct_temp) {$/;"	f	language:C++	signature:(Core* pCore_temp, Task_Struct* pTask_Struct_temp)
@@ -216,6 +230,7 @@ __pop_runqueue	process_manager.c	/^Task_Struct* __pop_runqueue() {$/;"	f	languag
 __pop_runqueue	process_manager.h	/^Task_Struct* __pop_runqueue();$/;"	p	language:C++	signature:()
 __PROCESS_MANAGER_H__	process_manager.h	15;"	d	language:C++
 __select_core_by_id	process_manager.c	/^Core* __select_core_by_id(UINT32 core_id) {$/;"	f	language:C++	signature:(UINT32 core_id)
+__select_core_by_id	process_manager.h	/^Core* __select_core_by_id(UINT32 core_id);$/;"	p	language:C++	signature:(UINT32 core_id)
 __select_task_struct	process_manager.c	/^Task_Struct* __select_task_struct(PROC_ID pid) {$/;"	f	language:C++	signature:(PROC_ID pid)
 __select_task_struct	process_manager.h	/^Task_Struct* __select_task_struct(PROC_ID pid);$/;"	p	language:C++	signature:(PROC_ID pid)
 __show_core_list	process_manager.c	/^void __show_core_list() {$/;"	f	language:C++	signature:()

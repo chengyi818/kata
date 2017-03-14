@@ -1,15 +1,15 @@
 /*=============================================================================
-#     FileName: process_manager.h
-#         Desc:
-#       Author: ChengYi
-#        Email: chengyi818@foxmail.com
-#     HomePage:
-#      Created: 2017-03-01 14:18:50
-#      Version: 0.0.1
-#   LastChange: 2017-03-01 14:18:50
-#      History:
-#               0.0.1 | ChengYi | init
-=============================================================================*/
+  #     FileName: process_manager.h
+  #         Desc:
+  #       Author: ChengYi
+  #        Email: chengyi818@foxmail.com
+  #     HomePage:
+  #      Created: 2017-03-01 14:18:50
+  #      Version: 0.0.1
+  #   LastChange: 2017-03-01 14:18:50
+  #      History:
+  #               0.0.1 | ChengYi | init
+  =============================================================================*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +27,6 @@ UINT32 check_Enable_Core_parm(UINT32 core_id) {
         printf("input core_id: %u dumplicate\n", core_id);
         return API_RTN_ERROR;
     }
-
 
     return API_RTN_OK;
 }
@@ -232,7 +231,7 @@ void __update_prio_per_core(Core* pCore_temp) {
     } else {
         while(pTask_Struct_temp != NULL) {
             if(pTask_Struct_temp->belong_core_id == pCore_temp->core_id &&
-                    pTask_Struct_temp->state == RUNNING) {
+               pTask_Struct_temp->state == RUNNING) {
                 if(pCore_temp->curr_rq_prio > pTask_Struct_temp->real_priority) {
                     pCore_temp->curr_rq_prio = pTask_Struct_temp->real_priority;
                 }
