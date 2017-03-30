@@ -5,8 +5,8 @@
  * Created Time: Wed 29 Mar 2017 07:34:08 PM CST
  */
 
-#include <linux/init.h>
 #include <linux/module.h>
+#include <linux/init.h>
 #include <linux/cdev.h>
 #include <linux/fs.h>
 #include <linux/device.h>
