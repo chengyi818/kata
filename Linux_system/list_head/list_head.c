@@ -5,4 +5,9 @@
  * Created Time: Thu 13 Apr 2017 08:11:59 PM CST
  */
 
-#include "list_head.h"
+#include <linux/types.h>
+
+int main(void) {
+
+    return 0;
+}
