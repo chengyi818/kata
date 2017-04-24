@@ -1,7 +1,7 @@
 CFLAGS += -Wall -Werror
 LFLAGS += -lcrypto
 
-TEST_LIST = basic_hash basic_cipher stream_hash multi_connections
+TEST_LIST = basic_hash basic_cipher stream_hash multi_connections basic_aead
 
 # ARG 1: test name
 define gen_test_rule
