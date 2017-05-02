@@ -15,6 +15,7 @@
 # =============================================================================
 '''
 
+
 def triangles():
     line = [1]
     while True:
@@ -27,7 +28,7 @@ def triangles():
             tmp_line.append(num)
         tmp_line.append(0)
 
-        for index, num  in enumerate(tmp_line):
+        for index, num in enumerate(tmp_line):
             if (index+1) < len(tmp_line):
                 current_num = tmp_line[index] + tmp_line[index+1]
                 line.append(current_num)
@@ -35,12 +36,9 @@ def triangles():
                 break
 
 
-
-
 N = 0
 for t in triangles():
-    print t
+    print(t)
     N = N + 1
     if N == 20:
         break
-

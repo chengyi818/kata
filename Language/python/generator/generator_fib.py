@@ -22,6 +22,7 @@ def fib(max):
         a, b = b, a+b
         n += 1
 
+
 f = fib(6)
 for x in f:
     print(x)

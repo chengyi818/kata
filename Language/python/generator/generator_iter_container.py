@@ -15,6 +15,7 @@
 # =============================================================================
 '''
 
+
 def normalize(numbers):
     total = sum(numbers)
     result = []
@@ -23,9 +24,10 @@ def normalize(numbers):
         result.append(percent)
     return result
 
+
 def ReadVisits(object):
     def __init__(self, data_path):
-        print self.data_path
+        print(self.data_path)
         self.data_path = data_path
 
     def __iter__(self):
@@ -36,4 +38,4 @@ def ReadVisits(object):
 
 visits = ReadVisits('my_numbers')
 percetanges = normalize(visits)
-print percetanges
+print(percetanges)

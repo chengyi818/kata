@@ -14,6 +14,7 @@
 # =============================================================================
 '''
 
+
 def normalize(numbers):
     total = sum(numbers)
     result = []
@@ -22,13 +23,14 @@ def normalize(numbers):
         result.append(percent)
     return result
 
+
 def read_visits(data_path):
     with open(data_path) as f:
         for line in f:
             yield int(line)
 
+
 it = read_visits('my_numbers')
 percentages = normalize(it)
 
 print(percentages)
-
