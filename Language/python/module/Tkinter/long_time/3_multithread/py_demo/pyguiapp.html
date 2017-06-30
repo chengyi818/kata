@@ -1,0 +1,179 @@
+<html>
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>A complete Python Tkinter sample application for a long operation</title>
+		<meta name="keywords" content="Python,GUI,Tkinter,threading,multithread">
+		<meta name="description" content="A complete Python Tkinter application demonstrates one of the ways to implement a GUI wrapper for a long operation. The long operation works in a separated thread without frozing a GUI. A progress bar visializes a progress in calculations. A notification widget displays log messages. User can cancel the operation. Log messages are stored in a viewable history buffer.">
+	</head>
+	<body>
+		<h1>A complete Python Tkinter sample application for a long operation</h1>
+		<p>I have to write a GUI application. User sets parameters, selects files, does other preparations and finally starts calculations. These calculations are very slow, so program should visualize a progress in calculations and should allow user to break calculations.</p>
+		<p>There is another requirement from a programmer's point of view. Code of calculations should know as little as possible about GUI. In fact, it should not know about GUI at all and should work in command-line applications.</p>
+		<p>It is not obvious for me how to add GUI to the application and satisfy all requirements. So I write a prototype application in order to integrate its code to the real application.</p>
+		<p>This document is a sort of documentation. It documents some design decisions and annotates Python classes.</p>
+		<p>The task is common enough, so I publish this document and a sample application in order to share ideas. Please beware that ideas and code may be incorrect. Beware also that my Tkinter experience at moment of prototyping is one day.</p>
+
+		<h2>Initial command-line application</h2>
+		<p>Let our long operation is a countdown from 100 to 0, with some delay between each tick. Sample code is stored in the file <tt>app1.py</tt>.</p>
+		<pre>import logging
+import time
+import gettext
+_ = gettext.gettext
+
+def calc():
+  logger = logging.getLogger(__name__)
+  for i in range(100, 0, -1):
+    logger.info (_('Countdown value is %i'), i)
+    time.sleep(.2)
+  logger.info(_('Done!'))
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.INFO)
+calc()
+</pre>
+		<p>Main functionality is contained in the function <tt>calc</tt>. All other code is an environment for <tt>calc</tt>. Code is not straightforward, but uses <tt>logger</tt> and <tt>gettext</tt> packages.</p>
+		<p>The <tt>gettext</tt> module provides internationalization and localization services. This is required for the main application. The main application reuses code of the prototype, so the prototype also uses <tt>gettext</tt>.</p>
+		<p>The <tt>logging</tt> module is a must-use for big applications. This module simplifies control over messages of program. The prototype application stores messages in buffer and delivers them into the log window.</p>
+
+		<h2>GUI application interface</h2>
+		<p>The main window contains buttons &#8220;Start&#8221;, &#8220;View Log&#8221; and &#8220;Exit&#8221;.</p>
+		<p>The button &#8220;Start&#8221; runs calculations and opens a control window. The control window has the progress bar, the log window and the &#8220;Cancel&#8221; button. The progress bar visualizes a progress of calculations, and messages appear in the log window. Button &#8220;Cancel&#8221; stops calculations and closes the window.</p>
+		<p>The button &#8220;View Log&#8221; in the main window opens a history of messages of the program.</p>
+		<table cellpadding="10">
+			<tr>
+				<td valign="bottom" align="center"><a href="images/mainwindow.png"><img src="images/th-mainwindow.png" width="120" height="19" border="0"><br>Main window</a></td>
+				<td valign="bottom" align="center"><a href="images/progress.png"><img src="images/th-progress.png" width="120" height="70" border="0"><br>Control window</a></td>
+				<td valign="bottom" align="center"><a href="images/logwindow.png"><img src="images/th-logwindow.png" width="120" height="77" border="0"><br>Log history</a></td>
+			</tr>
+		</table>
+
+		<h2>Application design</h2>
+
+		<h3>GUI Thread and Calculations Thread</h3>
+		<p>Application is multithreaded. One thread is a GUI thread and another thread is a calculations thread.</p>
+		<p>Only GUI thread can work with GUI components. The calculations thread should not access GUI. So the calculations thread can't directly update the progress bar or the log window. Instead, it should send a message to the GUI thread, and the GUI thread updates GUI components. This description outlines a communication between threads for visualization of progress.</p>
+		<p>Button &#8220;Cancel&#8221; terminates the calculations thread. Python has no function for killing a thread, so &#8220;Cancel&#8221; handler should perform it indirectly. The handler sets a termination flag in the calculations thread or sends a special message to the calculations thread. The prototype uses the termination flag because it is the simplest solution. The calculations thread regularly checks for the flag. If the flag is set then the calculations thread sends a termination acknowledge message to the GUI thread and exits.</p>
+		<p>Delay is possible between termination and pressing the button. If interval between inspecting the flag is big, then additional complexities arise (for example, a third thread). The sample application ignores this issue because delays are small.</p>
+
+		<h3>ThreadsConnector object</h3>
+		<p>The calculations thread is created by a <tt>ThreadsConnector</tt> object. The function <tt>ThreadsConnector::run()</tt> starts the calculations function, wrapping the call by an error handling code.</p>
+		<p>The main goal of a <tt>ThreadsConnector</tt> object is to encapsulate the termination flag and to assist with a termination of the calculations thread. The <tt>ThreadsConnector</tt> object is shared by both GUI and calculations threads. The GUI thread calls the function <tt>cancel()</tt> to set the termination flag. The calculations thread checks the termination flag by calling the function <tt>ack()</tt>. The function <tt>ack()</tt> does nothing if the flag is not set and raises the exception <tt>ThreadsConnectorTerminateException</tt> if the flag is set.</p>
+		<p>The calculations function can finish normally or can be interrupted by the <tt>ThreadsConnectorTerminateException</tt> or other exception. The function <tt>ThreadsConnector::run()</tt> gets control in all cases. It sends a notification message into the GUI thread. The message contains an acknowledge of a termination and details on exit status. Finally, the function <tt>run()</tt> returns from the thread.</p>
+		<p>The calculations thread have to call regularly the function <tt>ThreadsConnector::ack()</tt>. It is cumbersome to write all these calls in the code of calculations. The calculations function in the prototype application does not have <tt>ack()</tt> calls at all. Instead, calls to <tt>ack()</tt> are integrated into the logger functions and progress bar functions. The sample program uses these functions, and calls to <tt>ack()</tt> are performed automatically.</p>
+		<p>The ThreadsConnector object wraps the reference to the GUI thread. It is the only place where the calculations thread knows about the GUI thread. If the calculations thread wants to send a message to the GUI thread, then the calculations thread uses the ThreadsConnector object as a proxy.</p>
+
+		<h3>Logging</h3>
+		<p>The program displays information to user through the logging system. A log item goes into two areas:</p>
+		<ul>
+			<li>the current log window and</li>
+			<li>the cumulative log history.</li>
+		</ul>
+		<p>These areas are independent, so realizations of delivering are also independent.</p>
+		<h4>Cumulative Logging</h4>
+		<p>The cumulative log history contains all log messages of the program. User clicks button &#8220;View Log&#8221; in the main window in order to view the history.</p>
+		<p>The cumulative logger lives as long as the main program. On startup, the main program creates the cumulative logger object (more precisely, an instance of the <tt>logging.Handler</tt>) and attaches it to the logging system.</p>
+		<p>When a program generates a log message, the logging system passes this log message to all registered handlers. The cumulative handler also gets the log message and remembers it for a later use.</p>
+		<h4>Current Logging</h4>
+		<p>The current logging handler instantly displays log messages in a log window. The log window is a part of the calculations status window.</p>
+		<p>The current handler lives as long as the status window. The handler is created and attached to the logging system immediately after creation of the status window. The handler is detached from the logging system before closing the status window.</p>
+		<p>The handler works in the calculations thread, so it can't write directly into the log window. Instead, the handler sends a message to the GUI thread, and the GUI threads puts a text into the log window.</p>
+		<p>The handler references and uses ThreadsConnector object. If the handler gets a log message, the handler processes it and then also executes the function <tt>ack()</tt> of the ThreadsConnector. Thanks to this functionality, the code of calculations can escape from some <tt>ack()</tt> calls and become clearer.</p>
+
+		<h3>Progress Indication</h3>
+		<p>Progress in calculations is indicated by the progress bar.</p>
+		<p>The program initializes a progress bar controller by an estimated number of ticks. During calculations, the program executes the <tt>tick()</tt> function. When number of ticks is near to the estimated number of ticks, the calculations is near 100% complete.</p>
+		<p>The progress bar controller has and uses a ThreadsConnector object. Each time the program calls <tt>tick()</tt>, the controller calls the function <tt>ack()</tt> of the ThreadsConnector. Reason is the same as for the logger object.</p>
+		<p>The progress bar consists of two parts: a controller and a view. The controller incapsulates a logical state and data of the progress bar and provides functions for manipulating them. The view provides a GUI presentation of the state of the controller.</p>
+		<p>The code of <tt>tick()</tt> is located in the controller. The code updates internal data of the controller object. The code is executing in the calculations thread, so it can't directly update the GUI. Instead, it sends a message to the GUI thread. The progress bar view receives the messages, asks the controller for a current state and updates GUI according to the new state.</p>
+
+		<h3>Combining All Together</h3>
+		<p>When program starts, it creates the cumulative logger. Then the program creates the main window and passes execution control into the window. At this moment the program provides three possible actions for user: exit from the program, view log and run calculations.</p>
+		<p>If user decides to exit, then the program exits. If user wants to view log, the program creates an object responsible for a view log GUI and passes the cumulative logger object as parameter. The view object creates GUI, gets set of messages from the cumulative logger and initializes the view window. The view log GUI is active till user closes it.</p>
+		<p>The main case is a running of calculations. The program creates the action controller and passes parameters to it: the calculations function with parameters and an instance of an object responsible for a look of the control window.</p>
+		<p>The action controller is responsible for coordinating objects in GUI and calculations threads. The controller creates GUI, the calculations thread, helper objects and runs calculations. It also provides inter-thread communication functions and auxiliary functionality.</p>
+		<p>The controller delegates creation of the action window to the view object. The view object creates and packs widgets by callling object functions, so it is possible to customize a presentation by subclassing the base view class.</p>
+		<p>After creation of the view window, the controller creates a ThreadsConnector object, then creates and attaches a logger object and then creates a progress bar object. Finally, it creates a calculations thread, makes GUI visible and runs calculations and GUI.</p>
+		<p>When calculations and GUI are finished, the controller detaches the logger object and returns execution to the caller.</p>
+
+		<h2>Final application</h2>
+		<p>Here is a modified version of the command-line application. The function <tt>calc</tt> is updated to work also in GUI mode.</p>
+		<pre>import logging
+import time
+import gettext
+_ = gettext.gettext
+
+def calc(connector, progress):
+  logger = logging.getLogger(__name__)
+  progress.set(0, 100)
+  for i in range(100, 0, -1):
+    logger.info (_('Countdown value is %i'), i)
+    progress.tick()
+    connector.ack() # can be ommitted in this program
+    time.sleep(.2)
+  logger.info(_('Done!'))
+
+if __name__ == '__main__':
+  logging.basicConfig()
+  logging.getLogger().setLevel(logging.INFO)
+  class dummy:
+    def ack(self):
+      pass
+    def set(self, a, b):
+      pass
+    def tick(self):
+      pass
+  calc(dummy(), dummy())
+</pre>
+		<p>The only differences are:</p>
+		<ul>
+			<li>the function <tt>calc</tt> uses parameters <tt>connector</tt> and <tt>progress</tt>,</li>
+			<li>
+<tt>dummy</tt> object is used as a stub for GUI functions in a command-line mode.</li>
+		</ul>
+		<p>Some remarks on changes in the function <tt>calc</tt>:</p>
+		<ul>
+			<li>Changes are minimal.</li>
+			<li>Injections of an interface code (logging, GUI presentation etc) to the domain-specific code (calculations) are very small.</li>
+			<li>The code doesn't depend on Tkinter. The same code can be used with any GUI toolkit without rewriting the whole application.</li>
+		</ul>
+
+		<h2>Files</h2>
+		<p>
+<a href="pylongopgui.zip">Download</a> the prototype application.</p>
+		<dl>
+			<dt><tt>app1.py</tt></dt>
+			<dd>The initial command-line application</dd>
+			<dt><tt>app2.py</tt></dt>
+			<dd>The modified application with the updated function <tt>calc</tt>
+</dd>
+			<dt><tt>guiapp.py</tt></dt>
+			<dd>The GUI application</dd>
+			<dt><tt>CumulativeLogger.py</tt></dt>
+			<dd>The cumulative logger</dd>
+			<dt><tt>ActionWindow.py</tt></dt>
+			<dd>The calculations control window.</dd>
+			<dt><tt>LoggerToWindow.py</tt></dt>
+			<dd>The logger that forwards messages to the control window</dd>
+			<dt><tt>MainWindowApp.py</tt></dt>
+			<dd>The main window of the GUI application</dd>
+			<dt><tt>ProgressBarView.py</tt></dt>
+			<dd>A GUI component &#8220;progress bar&#8221; (yet another version)</dd>
+			<dt><tt>ProgressBarWithAck.py</tt></dt>
+			<dd>An interface to the progress bar</dd>
+			<dt><tt>ThreadsConnector.py</tt></dt>
+			<dd>The threads connector</dd>
+			<dt><tt>ViewLog.py</tt></dt>
+			<dd>A window with a history of messages</dd>
+		</dl>
+
+		<h2>Final remarks</h2>
+		<p>The code is of public domain. You can use it as you want.</p>
+		<p>I'd like to get improvements both to text (proofreading, maybe rewriting etc) and to code (bug reports and fixes, adding design to windows, icons etc). Do not hesitate to send me comments and improvements.</p>
+		<p>If you have questions, please ask in comp.lang.python. Answering in newsgroups is a selfexpression, but answering in private is a technical support. I don't provide any support.</p>
+		<p>If you found this article very useful, if it saved you time, nerves and money, then I suggest you to order for me something from my Amazon's <a href="http://www.amazon.com/gp/registry/2MGSPFOKYWZL3">wishlist</a>.</p>
+
+		<address>Oleg Paraschenko olpa@ <a href="http://uucode.com/">http://uucode.com/</a>
+</address>
+
+	</body>
+</html>

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-# encoding=utf-8
 
-TEST = '测试test'
+TEST = '0000测试0000'
+print(type(TEST))
+TEST = TEST.encode('utf-8')
+
 print(type(TEST))
 print([TEST])
+print(len(TEST))
