@@ -10,28 +10,30 @@ import threading
 import ActionWindow
 import LoggerToWindow
 import queue as Queue
+import app2
 import sys
 import traceback
 import gettext
 import ProgressBarWithAck
 _ = gettext.gettext
 
-MESSAGE_LOG          = 'log'      # Message to logger
-MESSAGE_EXIT_CANCEL  = 'cancel'   # Calculations are cancelled
-MESSAGE_EXIT_OK      = 'ok'       # .. succesfully finished
-MESSAGE_EXIT_ERROR   = 'error'    # .. finished with error
-MESSAGE_PROGRESS     = 'progress' # Progress is updated
+MESSAGE_LOG = 'log'      # Message to logger
+MESSAGE_EXIT_CANCEL = 'cancel'   # Calculations are cancelled
+MESSAGE_EXIT_OK = 'ok'       # .. succesfully finished
+MESSAGE_EXIT_ERROR = 'error'    # .. finished with error
+MESSAGE_PROGRESS = 'progress'  # Progress is updated
 
 # Texts are private, do not access them from other classes
-TEXT_EXIT_CANCEL     = _('Operation has been cancelled by user')
-TEXT_EXIT_ERROR      = _('Operation has been terminated on error')
-TEXT_EXIT_OK         = _('Operation has been finished succesfully')
+TEXT_EXIT_CANCEL = _('Operation has been cancelled by user')
+TEXT_EXIT_ERROR = _('Operation has been terminated on error')
+TEXT_EXIT_OK = _('Operation has been finished succesfully')
+
 
 class ThreadsConnectorTerminateException(Exception):
-  pass
+    pass
+
 
 class ThreadsConnector:
-
   def __init__(self):
     """ Initialize object """
     self.messages   = Queue.Queue()
@@ -94,28 +96,30 @@ class ThreadsConnector:
       self.put_message([MESSAGE_EXIT_ERROR,  TEXT_EXIT_ERROR])
     self.running = 0
 
-  def runInGui(self, wnd, conn,
-      group=None, target=None, name=None, args=(), kwargs={}):
-    """ Run calculations, using window as a progress indicator
-        "wnd" is an object of class ''ActionWindow
+    def runInGui(self, wnd, conn, group=None,
+                 target=None, name=None, args=(), kwargs={}):
+        """
+        Run calculations, using window as a progress indicator
+        'wnd' is an object of class ''ActionWindow
         all other parameters are passed to threading.Thread
-    """
+        """
     cl = LoggerToWindow.LoggerToWindow(conn)
     cl.attach()
     wnd.setConnector(self)
     self.progress = ProgressBarWithAck.ProgressBarWithAck(self)
     wnd.setProgressBar(self.progress)
-    self.start(group, target, name, args, kwargs)
+    self.start(group, target,
+               name, args, kwargs)
     wnd.go()
     cl.detach()
 
-if __name__ == '__main__':
-  import app2
-  logging.basicConfig()
-  logging.getLogger().setLevel(logging.INFO)
-  conn = ThreadsConnector()
-  import tkinter as Tkinter
-  root = Tkinter.Tk()
-  wnd = ActionWindow.ActionWindow(root, _('Countdown Calculations'), _('Counting down from 100 to 1'))
-  conn.runInGui(wnd, conn, None, app2.calc, 'calc')
 
+if __name__ == '__main__':
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.INFO)
+    conn = ThreadsConnector()
+    import tkinter as Tkinter
+    root = Tkinter.Tk()
+    wnd = ActionWindow.ActionWindow(root, _('Countdown Calculations'),
+                                    _('Counting down from 100 to 1'))
+    conn.runInGui(wnd, conn, None, app2.calc, 'calc')
