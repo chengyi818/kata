@@ -1,0 +1,352 @@
+
+libpoint.so:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000000af0 <_init>:
+ af0:	48 83 ec 08          	sub    $0x8,%rsp
+ af4:	48 8b 05 c5 14 20 00 	mov    0x2014c5(%rip),%rax        # 201fc0 <_DYNAMIC+0x1e0>
+ afb:	48 85 c0             	test   %rax,%rax
+ afe:	74 05                	je     b05 <_init+0x15>
+ b00:	e8 bb 00 00 00       	callq  bc0 <_Unwind_Resume@plt+0x10>
+ b05:	48 83 c4 08          	add    $0x8,%rsp
+ b09:	c3                   	retq   
+
+Disassembly of section .plt:
+
+0000000000000b10 <printf@plt-0x10>:
+ b10:	ff 35 f2 14 20 00    	pushq  0x2014f2(%rip)        # 202008 <_GLOBAL_OFFSET_TABLE_+0x8>
+ b16:	ff 25 f4 14 20 00    	jmpq   *0x2014f4(%rip)        # 202010 <_GLOBAL_OFFSET_TABLE_+0x10>
+ b1c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000000b20 <printf@plt>:
+ b20:	ff 25 f2 14 20 00    	jmpq   *0x2014f2(%rip)        # 202018 <_GLOBAL_OFFSET_TABLE_+0x18>
+ b26:	68 00 00 00 00       	pushq  $0x0
+ b2b:	e9 e0 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b30 <_ZNSolsEi@plt>:
+ b30:	ff 25 ea 14 20 00    	jmpq   *0x2014ea(%rip)        # 202020 <_GLOBAL_OFFSET_TABLE_+0x20>
+ b36:	68 01 00 00 00       	pushq  $0x1
+ b3b:	e9 d0 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b40 <_ZdlPv@plt>:
+ b40:	ff 25 e2 14 20 00    	jmpq   *0x2014e2(%rip)        # 202028 <_GLOBAL_OFFSET_TABLE_+0x28>
+ b46:	68 02 00 00 00       	pushq  $0x2
+ b4b:	e9 c0 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b50 <_ZNSt8ios_base4InitC1Ev@plt>:
+ b50:	ff 25 da 14 20 00    	jmpq   *0x2014da(%rip)        # 202030 <_GLOBAL_OFFSET_TABLE_+0x30>
+ b56:	68 03 00 00 00       	pushq  $0x3
+ b5b:	e9 b0 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b60 <__cxa_atexit@plt>:
+ b60:	ff 25 d2 14 20 00    	jmpq   *0x2014d2(%rip)        # 202038 <_GLOBAL_OFFSET_TABLE_+0x38>
+ b66:	68 04 00 00 00       	pushq  $0x4
+ b6b:	e9 a0 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b70 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@plt>:
+ b70:	ff 25 ca 14 20 00    	jmpq   *0x2014ca(%rip)        # 202040 <_GLOBAL_OFFSET_TABLE_+0x40>
+ b76:	68 05 00 00 00       	pushq  $0x5
+ b7b:	e9 90 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b80 <_ZN5PointC1Eii@plt>:
+ b80:	ff 25 c2 14 20 00    	jmpq   *0x2014c2(%rip)        # 202048 <_GLOBAL_OFFSET_TABLE_+0x48>
+ b86:	68 06 00 00 00       	pushq  $0x6
+ b8b:	e9 80 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000b90 <_ZNSolsEPFRSoS_E@plt>:
+ b90:	ff 25 ba 14 20 00    	jmpq   *0x2014ba(%rip)        # 202050 <_GLOBAL_OFFSET_TABLE_+0x50>
+ b96:	68 07 00 00 00       	pushq  $0x7
+ b9b:	e9 70 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000ba0 <_Znwm@plt>:
+ ba0:	ff 25 b2 14 20 00    	jmpq   *0x2014b2(%rip)        # 202058 <_GLOBAL_OFFSET_TABLE_+0x58>
+ ba6:	68 08 00 00 00       	pushq  $0x8
+ bab:	e9 60 ff ff ff       	jmpq   b10 <_init+0x20>
+
+0000000000000bb0 <_Unwind_Resume@plt>:
+ bb0:	ff 25 aa 14 20 00    	jmpq   *0x2014aa(%rip)        # 202060 <_GLOBAL_OFFSET_TABLE_+0x60>
+ bb6:	68 09 00 00 00       	pushq  $0x9
+ bbb:	e9 50 ff ff ff       	jmpq   b10 <_init+0x20>
+
+Disassembly of section .plt.got:
+
+0000000000000bc0 <.plt.got>:
+ bc0:	ff 25 fa 13 20 00    	jmpq   *0x2013fa(%rip)        # 201fc0 <_DYNAMIC+0x1e0>
+ bc6:	66 90                	xchg   %ax,%ax
+ bc8:	ff 25 1a 14 20 00    	jmpq   *0x20141a(%rip)        # 201fe8 <_DYNAMIC+0x208>
+ bce:	66 90                	xchg   %ax,%ax
+
+Disassembly of section .text:
+
+0000000000000bd0 <deregister_tm_clones>:
+ bd0:	48 8d 3d a1 14 20 00 	lea    0x2014a1(%rip),%rdi        # 202078 <_edata>
+ bd7:	48 8d 05 a1 14 20 00 	lea    0x2014a1(%rip),%rax        # 20207f <_ZStL8__ioinit+0x6>
+ bde:	55                   	push   %rbp
+ bdf:	48 29 f8             	sub    %rdi,%rax
+ be2:	48 89 e5             	mov    %rsp,%rbp
+ be5:	48 83 f8 0e          	cmp    $0xe,%rax
+ be9:	76 15                	jbe    c00 <deregister_tm_clones+0x30>
+ beb:	48 8b 05 e6 13 20 00 	mov    0x2013e6(%rip),%rax        # 201fd8 <_DYNAMIC+0x1f8>
+ bf2:	48 85 c0             	test   %rax,%rax
+ bf5:	74 09                	je     c00 <deregister_tm_clones+0x30>
+ bf7:	5d                   	pop    %rbp
+ bf8:	ff e0                	jmpq   *%rax
+ bfa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ c00:	5d                   	pop    %rbp
+ c01:	c3                   	retq   
+ c02:	0f 1f 40 00          	nopl   0x0(%rax)
+ c06:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ c0d:	00 00 00 
+
+0000000000000c10 <register_tm_clones>:
+ c10:	48 8d 3d 61 14 20 00 	lea    0x201461(%rip),%rdi        # 202078 <_edata>
+ c17:	48 8d 35 5a 14 20 00 	lea    0x20145a(%rip),%rsi        # 202078 <_edata>
+ c1e:	55                   	push   %rbp
+ c1f:	48 29 fe             	sub    %rdi,%rsi
+ c22:	48 89 e5             	mov    %rsp,%rbp
+ c25:	48 c1 fe 03          	sar    $0x3,%rsi
+ c29:	48 89 f0             	mov    %rsi,%rax
+ c2c:	48 c1 e8 3f          	shr    $0x3f,%rax
+ c30:	48 01 c6             	add    %rax,%rsi
+ c33:	48 d1 fe             	sar    %rsi
+ c36:	74 18                	je     c50 <register_tm_clones+0x40>
+ c38:	48 8b 05 a1 13 20 00 	mov    0x2013a1(%rip),%rax        # 201fe0 <_DYNAMIC+0x200>
+ c3f:	48 85 c0             	test   %rax,%rax
+ c42:	74 0c                	je     c50 <register_tm_clones+0x40>
+ c44:	5d                   	pop    %rbp
+ c45:	ff e0                	jmpq   *%rax
+ c47:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+ c4e:	00 00 
+ c50:	5d                   	pop    %rbp
+ c51:	c3                   	retq   
+ c52:	0f 1f 40 00          	nopl   0x0(%rax)
+ c56:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ c5d:	00 00 00 
+
+0000000000000c60 <__do_global_dtors_aux>:
+ c60:	80 3d 11 14 20 00 00 	cmpb   $0x0,0x201411(%rip)        # 202078 <_edata>
+ c67:	75 27                	jne    c90 <__do_global_dtors_aux+0x30>
+ c69:	48 83 3d 77 13 20 00 	cmpq   $0x0,0x201377(%rip)        # 201fe8 <_DYNAMIC+0x208>
+ c70:	00 
+ c71:	55                   	push   %rbp
+ c72:	48 89 e5             	mov    %rsp,%rbp
+ c75:	74 0c                	je     c83 <__do_global_dtors_aux+0x23>
+ c77:	48 8b 3d ea 13 20 00 	mov    0x2013ea(%rip),%rdi        # 202068 <__dso_handle>
+ c7e:	e8 45 ff ff ff       	callq  bc8 <_Unwind_Resume@plt+0x18>
+ c83:	e8 48 ff ff ff       	callq  bd0 <deregister_tm_clones>
+ c88:	5d                   	pop    %rbp
+ c89:	c6 05 e8 13 20 00 01 	movb   $0x1,0x2013e8(%rip)        # 202078 <_edata>
+ c90:	f3 c3                	repz retq 
+ c92:	0f 1f 40 00          	nopl   0x0(%rax)
+ c96:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ c9d:	00 00 00 
+
+0000000000000ca0 <frame_dummy>:
+ ca0:	48 8d 3d 31 11 20 00 	lea    0x201131(%rip),%rdi        # 201dd8 <__JCR_END__>
+ ca7:	48 83 3f 00          	cmpq   $0x0,(%rdi)
+ cab:	75 0b                	jne    cb8 <frame_dummy+0x18>
+ cad:	e9 5e ff ff ff       	jmpq   c10 <register_tm_clones>
+ cb2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+ cb8:	48 8b 05 09 13 20 00 	mov    0x201309(%rip),%rax        # 201fc8 <_DYNAMIC+0x1e8>
+ cbf:	48 85 c0             	test   %rax,%rax
+ cc2:	74 e9                	je     cad <frame_dummy+0xd>
+ cc4:	55                   	push   %rbp
+ cc5:	48 89 e5             	mov    %rsp,%rbp
+ cc8:	ff d0                	callq  *%rax
+ cca:	5d                   	pop    %rbp
+ ccb:	e9 40 ff ff ff       	jmpq   c10 <register_tm_clones>
+
+0000000000000cd0 <_ZN5PointC1Ev>:
+ cd0:	55                   	push   %rbp
+ cd1:	48 89 e5             	mov    %rsp,%rbp
+ cd4:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+ cd8:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ cdc:	c7 00 0f 27 00 00    	movl   $0x270f,(%rax)
+ ce2:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ ce6:	c7 40 04 0f 27 00 00 	movl   $0x270f,0x4(%rax)
+ ced:	90                   	nop
+ cee:	5d                   	pop    %rbp
+ cef:	c3                   	retq   
+
+0000000000000cf0 <_ZN5PointC1Eii>:
+ cf0:	55                   	push   %rbp
+ cf1:	48 89 e5             	mov    %rsp,%rbp
+ cf4:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+ cf8:	89 75 f4             	mov    %esi,-0xc(%rbp)
+ cfb:	89 55 f0             	mov    %edx,-0x10(%rbp)
+ cfe:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ d02:	8b 55 f4             	mov    -0xc(%rbp),%edx
+ d05:	89 10                	mov    %edx,(%rax)
+ d07:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ d0b:	8b 55 f0             	mov    -0x10(%rbp),%edx
+ d0e:	89 50 04             	mov    %edx,0x4(%rax)
+ d11:	90                   	nop
+ d12:	5d                   	pop    %rbp
+ d13:	c3                   	retq   
+
+0000000000000d14 <_ZN5Point8setPointEii>:
+ d14:	55                   	push   %rbp
+ d15:	48 89 e5             	mov    %rsp,%rbp
+ d18:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+ d1c:	89 75 f4             	mov    %esi,-0xc(%rbp)
+ d1f:	89 55 f0             	mov    %edx,-0x10(%rbp)
+ d22:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ d26:	8b 55 f4             	mov    -0xc(%rbp),%edx
+ d29:	89 10                	mov    %edx,(%rax)
+ d2b:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ d2f:	8b 55 f0             	mov    -0x10(%rbp),%edx
+ d32:	89 50 04             	mov    %edx,0x4(%rax)
+ d35:	90                   	nop
+ d36:	5d                   	pop    %rbp
+ d37:	c3                   	retq   
+
+0000000000000d38 <_ZN5Point10printPointEv>:
+ d38:	55                   	push   %rbp
+ d39:	48 89 e5             	mov    %rsp,%rbp
+ d3c:	53                   	push   %rbx
+ d3d:	48 83 ec 18          	sub    $0x18,%rsp
+ d41:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+ d45:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+ d49:	8b 18                	mov    (%rax),%ebx
+ d4b:	48 8d 35 af 01 00 00 	lea    0x1af(%rip),%rsi        # f01 <_fini+0x9>
+ d52:	48 8b 05 97 12 20 00 	mov    0x201297(%rip),%rax        # 201ff0 <_DYNAMIC+0x210>
+ d59:	48 89 c7             	mov    %rax,%rdi
+ d5c:	e8 0f fe ff ff       	callq  b70 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@plt>
+ d61:	89 de                	mov    %ebx,%esi
+ d63:	48 89 c7             	mov    %rax,%rdi
+ d66:	e8 c5 fd ff ff       	callq  b30 <_ZNSolsEi@plt>
+ d6b:	48 89 c2             	mov    %rax,%rdx
+ d6e:	48 8b 05 83 12 20 00 	mov    0x201283(%rip),%rax        # 201ff8 <_DYNAMIC+0x218>
+ d75:	48 89 c6             	mov    %rax,%rsi
+ d78:	48 89 d7             	mov    %rdx,%rdi
+ d7b:	e8 10 fe ff ff       	callq  b90 <_ZNSolsEPFRSoS_E@plt>
+ d80:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+ d84:	8b 58 04             	mov    0x4(%rax),%ebx
+ d87:	48 8d 35 78 01 00 00 	lea    0x178(%rip),%rsi        # f06 <_fini+0xe>
+ d8e:	48 8b 05 5b 12 20 00 	mov    0x20125b(%rip),%rax        # 201ff0 <_DYNAMIC+0x210>
+ d95:	48 89 c7             	mov    %rax,%rdi
+ d98:	e8 d3 fd ff ff       	callq  b70 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@plt>
+ d9d:	89 de                	mov    %ebx,%esi
+ d9f:	48 89 c7             	mov    %rax,%rdi
+ da2:	e8 89 fd ff ff       	callq  b30 <_ZNSolsEi@plt>
+ da7:	48 89 c2             	mov    %rax,%rdx
+ daa:	48 8b 05 47 12 20 00 	mov    0x201247(%rip),%rax        # 201ff8 <_DYNAMIC+0x218>
+ db1:	48 89 c6             	mov    %rax,%rsi
+ db4:	48 89 d7             	mov    %rdx,%rdi
+ db7:	e8 d4 fd ff ff       	callq  b90 <_ZNSolsEPFRSoS_E@plt>
+ dbc:	90                   	nop
+ dbd:	48 83 c4 18          	add    $0x18,%rsp
+ dc1:	5b                   	pop    %rbx
+ dc2:	5d                   	pop    %rbp
+ dc3:	c3                   	retq   
+
+0000000000000dc4 <_ZN5Point9printAddrEv>:
+ dc4:	55                   	push   %rbp
+ dc5:	48 89 e5             	mov    %rsp,%rbp
+ dc8:	48 83 ec 10          	sub    $0x10,%rsp
+ dcc:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+ dd0:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+ dd4:	48 89 c6             	mov    %rax,%rsi
+ dd7:	48 8d 3d 2d 01 00 00 	lea    0x12d(%rip),%rdi        # f0b <_fini+0x13>
+ dde:	b8 00 00 00 00       	mov    $0x0,%eax
+ de3:	e8 38 fd ff ff       	callq  b20 <printf@plt>
+ de8:	90                   	nop
+ de9:	c9                   	leaveq 
+ dea:	c3                   	retq   
+
+0000000000000deb <_Z10getPointerv>:
+ deb:	55                   	push   %rbp
+ dec:	48 89 e5             	mov    %rsp,%rbp
+ def:	41 54                	push   %r12
+ df1:	53                   	push   %rbx
+ df2:	48 83 ec 10          	sub    $0x10,%rsp
+ df6:	bf 08 00 00 00       	mov    $0x8,%edi
+ dfb:	e8 a0 fd ff ff       	callq  ba0 <_Znwm@plt>
+ e00:	48 89 c3             	mov    %rax,%rbx
+ e03:	ba 00 00 00 00       	mov    $0x0,%edx
+ e08:	be 00 00 00 00       	mov    $0x0,%esi
+ e0d:	48 89 df             	mov    %rbx,%rdi
+ e10:	e8 6b fd ff ff       	callq  b80 <_ZN5PointC1Eii@plt>
+ e15:	48 89 5d e8          	mov    %rbx,-0x18(%rbp)
+ e19:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+ e1d:	eb 16                	jmp    e35 <_Z10getPointerv+0x4a>
+ e1f:	49 89 c4             	mov    %rax,%r12
+ e22:	48 89 df             	mov    %rbx,%rdi
+ e25:	e8 16 fd ff ff       	callq  b40 <_ZdlPv@plt>
+ e2a:	4c 89 e0             	mov    %r12,%rax
+ e2d:	48 89 c7             	mov    %rax,%rdi
+ e30:	e8 7b fd ff ff       	callq  bb0 <_Unwind_Resume@plt>
+ e35:	48 83 c4 10          	add    $0x10,%rsp
+ e39:	5b                   	pop    %rbx
+ e3a:	41 5c                	pop    %r12
+ e3c:	5d                   	pop    %rbp
+ e3d:	c3                   	retq   
+
+0000000000000e3e <_Z12getReferencev>:
+ e3e:	55                   	push   %rbp
+ e3f:	48 89 e5             	mov    %rsp,%rbp
+ e42:	41 54                	push   %r12
+ e44:	53                   	push   %rbx
+ e45:	48 83 ec 10          	sub    $0x10,%rsp
+ e49:	bf 08 00 00 00       	mov    $0x8,%edi
+ e4e:	e8 4d fd ff ff       	callq  ba0 <_Znwm@plt>
+ e53:	48 89 c3             	mov    %rax,%rbx
+ e56:	ba 00 00 00 00       	mov    $0x0,%edx
+ e5b:	be 00 00 00 00       	mov    $0x0,%esi
+ e60:	48 89 df             	mov    %rbx,%rdi
+ e63:	e8 18 fd ff ff       	callq  b80 <_ZN5PointC1Eii@plt>
+ e68:	48 89 5d e0          	mov    %rbx,-0x20(%rbp)
+ e6c:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+ e70:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+ e74:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+ e78:	eb 16                	jmp    e90 <_Z12getReferencev+0x52>
+ e7a:	49 89 c4             	mov    %rax,%r12
+ e7d:	48 89 df             	mov    %rbx,%rdi
+ e80:	e8 bb fc ff ff       	callq  b40 <_ZdlPv@plt>
+ e85:	4c 89 e0             	mov    %r12,%rax
+ e88:	48 89 c7             	mov    %rax,%rdi
+ e8b:	e8 20 fd ff ff       	callq  bb0 <_Unwind_Resume@plt>
+ e90:	48 83 c4 10          	add    $0x10,%rsp
+ e94:	5b                   	pop    %rbx
+ e95:	41 5c                	pop    %r12
+ e97:	5d                   	pop    %rbp
+ e98:	c3                   	retq   
+
+0000000000000e99 <_Z41__static_initialization_and_destruction_0ii>:
+ e99:	55                   	push   %rbp
+ e9a:	48 89 e5             	mov    %rsp,%rbp
+ e9d:	48 83 ec 10          	sub    $0x10,%rsp
+ ea1:	89 7d fc             	mov    %edi,-0x4(%rbp)
+ ea4:	89 75 f8             	mov    %esi,-0x8(%rbp)
+ ea7:	83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+ eab:	75 32                	jne    edf <_Z41__static_initialization_and_destruction_0ii+0x46>
+ ead:	81 7d f8 ff ff 00 00 	cmpl   $0xffff,-0x8(%rbp)
+ eb4:	75 29                	jne    edf <_Z41__static_initialization_and_destruction_0ii+0x46>
+ eb6:	48 8d 3d bc 11 20 00 	lea    0x2011bc(%rip),%rdi        # 202079 <_ZStL8__ioinit>
+ ebd:	e8 8e fc ff ff       	callq  b50 <_ZNSt8ios_base4InitC1Ev@plt>
+ ec2:	48 8d 15 9f 11 20 00 	lea    0x20119f(%rip),%rdx        # 202068 <__dso_handle>
+ ec9:	48 8d 35 a9 11 20 00 	lea    0x2011a9(%rip),%rsi        # 202079 <_ZStL8__ioinit>
+ ed0:	48 8b 05 f9 10 20 00 	mov    0x2010f9(%rip),%rax        # 201fd0 <_DYNAMIC+0x1f0>
+ ed7:	48 89 c7             	mov    %rax,%rdi
+ eda:	e8 81 fc ff ff       	callq  b60 <__cxa_atexit@plt>
+ edf:	90                   	nop
+ ee0:	c9                   	leaveq 
+ ee1:	c3                   	retq   
+
+0000000000000ee2 <_GLOBAL__sub_I_point.cpp>:
+ ee2:	55                   	push   %rbp
+ ee3:	48 89 e5             	mov    %rsp,%rbp
+ ee6:	be ff ff 00 00       	mov    $0xffff,%esi
+ eeb:	bf 01 00 00 00       	mov    $0x1,%edi
+ ef0:	e8 a4 ff ff ff       	callq  e99 <_Z41__static_initialization_and_destruction_0ii>
+ ef5:	5d                   	pop    %rbp
+ ef6:	c3                   	retq   
+
+Disassembly of section .fini:
+
+0000000000000ef8 <_fini>:
+ ef8:	48 83 ec 08          	sub    $0x8,%rsp
+ efc:	48 83 c4 08          	add    $0x8,%rsp
+ f00:	c3                   	retq   
