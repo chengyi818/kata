@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # content = '中'
-file_path = "./texts/text_gbk.txt"
+file_path = "../texts/text_gbk.txt"
 # with open(file_path, "wb+") as file_handle:
     # content_gbk = content.encode("gbk")
     # file_handle.write(content_gbk)
