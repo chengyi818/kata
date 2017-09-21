@@ -13,11 +13,25 @@ with open(file_path, "r+", encoding='utf-8',
     content_read = file_handle.read()
     print(type(content_read))
     print(repr(content_read))
-    file_handle.writelines(content_read)
+    # file_handle.writelines(content_read)
 
 # error handle: backslashreplace
 with open(file_path, "r", encoding='utf-8',
           errors="backslashreplace") as file_handle:
+    content_read = file_handle.read()
+    print(type(content_read))
+    print(repr(content_read))
+
+# error handle: replace
+with open(file_path, "r", encoding='utf-8',
+          errors="replace") as file_handle:
+    content_read = file_handle.read()
+    print(type(content_read))
+    print(repr(content_read))
+
+# error handle: ignore
+with open(file_path, "r", encoding='utf-8',
+          errors="ignore") as file_handle:
     content_read = file_handle.read()
     print(type(content_read))
     print(repr(content_read))

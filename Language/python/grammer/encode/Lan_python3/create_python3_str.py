@@ -8,8 +8,10 @@ def show(object):
 
 a = "中"
 b = '\u4e2d'
-c = b"\xe4\xb8\xad"
+c = '\U00004e2d'
+d = "\N{CJK UNIFIED IDEOGRAPH-4E2D}"
 
 show(a)
 show(b)
 show(c)
+show(d)
