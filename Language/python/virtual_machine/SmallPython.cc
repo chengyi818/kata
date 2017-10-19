@@ -13,7 +13,7 @@ using namespace std;
     int refCount; \
     struct tagPyTypeObject *type
 
-# define PyObject_HEAD_INIT(typePtr) \
+#define PyObject_HEAD_INIT(typePtr) \
     0, typePtr
 
 const char *info = "********** Python Research **********\n";
@@ -234,7 +234,7 @@ static void dict_print(PyObject *object){
     printf("{");
     map<long, PyObject *>::iterator it = (dictObject->dict).begin();
     map<long, PyObject *>::iterator end = (dictObject->dict).end();
-    for(; it != end; it++){
+    for(; it != end; ++it){
         printf("%ld: ", it->first);
         PyObject *value = it->second;
         (value->type)->print(value);
@@ -257,7 +257,7 @@ PyObject *GetObjectBySymbol(string &symbol){
 
 bool IsSourceAllDigit(string source){
     bool result = true;
-    for(int i=0; i!=source.size(); i++){
+    for(unsigned int i=0; i != source.size(); i++){
         result = isdigit(source[i]);
         if(!result)
             break;
