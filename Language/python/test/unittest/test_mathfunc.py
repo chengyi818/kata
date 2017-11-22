@@ -2,9 +2,10 @@
 # Author: ChengYi
 # Mail: chengyi818@foxmail.cn
 # created time: Thu 16 Nov 2017 04:23:41 PM CST
-
+# flake8: noqa
 
 import unittest
+
 from mathfunc import *
 
 
