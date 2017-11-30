@@ -1,0 +1,28 @@
+  3           0 LOAD_CONST               0 (<code object f at 0x7f9c59606830, file "func_1.py", line 3>)
+              3 MAKE_FUNCTION            0
+              6 STORE_NAME               0 (f)
+
+  8           9 LOAD_NAME                0 (f)
+             12 LOAD_CONST               1 ('Robert')
+             15 LOAD_CONST               2 ('age')
+             18 LOAD_CONST               3 (5)
+             21 CALL_FUNCTION          257
+             24 POP_TOP             
+             25 LOAD_CONST               4 (None)
+             28 RETURN_VALUE        
+
+Function f:
+  4           0 LOAD_FAST                1 (age)
+              3 LOAD_CONST               1 (5)
+              6 INPLACE_ADD         
+              7 STORE_FAST               1 (age)
+
+  5          10 LOAD_CONST               2 ('name: ')
+             13 LOAD_FAST                0 (name)
+             16 LOAD_CONST               3 ('age: ')
+             19 LOAD_FAST                1 (age)
+             22 BUILD_TUPLE              4
+             25 PRINT_ITEM          
+             26 PRINT_NEWLINE       
+             27 LOAD_CONST               0 (None)
+             30 RETURN_VALUE        
