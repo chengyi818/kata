@@ -5,6 +5,7 @@
  * Created Time: Fri 05 Jan 2018 09:24:10 AM CST
  */
 #include <stdio.h>
+
 void show_array(int *s, unsigned long size) {
     for(unsigned long i=0; i<size; i++) {
         printf("%d ", s[i]);
@@ -29,7 +30,7 @@ int bubble_sort(int *s, unsigned long size) {
 
 
 int main(void) {
-    int array[5] = {4, 2, 3, 1, 5};
+    int array[10] = {4, 2, 3, 1, 5, 6, 8, 9, 0, 7};
 
     // 数组长度
     /* printf("%lu\n", sizeof(array)/sizeof(array[0])); */
