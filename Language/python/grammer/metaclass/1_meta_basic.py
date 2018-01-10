@@ -4,6 +4,9 @@
 # created time: Tue 28 Nov 2017 03:42:21 PM CST
 
 
+print("create class Meta")
+
+
 class Meta(type):
     def __new__(meta, name, bases, class_dict):
         print("Meta __new__")
@@ -12,12 +15,15 @@ class Meta(type):
 
     def __init__(meta, name, bases, class_dict):
         print("Meta __init__")
-        return type.__init__(meta, name, bases, class_dict)
+        # return type.__init__(meta, name, bases, class_dict)
 
     def __call__(cls, *args, **kwargs):
         print("Meta __call__")
         instance = super().__call__(*args, **kwargs)
         return instance
+
+
+print("create class MyClass")
 
 
 class MyClass(object, metaclass=Meta):
