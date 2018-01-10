@@ -5,21 +5,24 @@
  * Created Time: Tue 09 Jan 2018 09:36:54 AM CST
  */
 #include <stdio.h>
+static int size;
 
-void show_array(int *s, unsigned long size) {
-    for(unsigned long i=0; i<size; i++) {
+void show_array(int *s, int size) {
+    for(int i=0; i<size; i++) {
         printf("%d ", s[i]);
     }
     printf("\n");
+    printf("\n");
 }
 
-void quick_sort(int *s, unsigned long start, unsigned long end) {
-    if(start>=end)
+void quick_sort(int *s, int start, int end) {
+    if(start >= end)
         return;
 
-    unsigned long i = start;
-    unsigned long j = end;
+    int i = start;
+    int j = end;
 
+    printf("put %d in right position\n", s[start]);
     while(i != j) {
         while(s[j] >= s[start] && j>i) {
             j--;
@@ -27,31 +30,41 @@ void quick_sort(int *s, unsigned long start, unsigned long end) {
         while(s[i] <= s[start] && i<j) {
             i++;
         }
-        s[i] = s[i] ^ s[j];
-        s[j] = s[i] ^ s[j];
-        s[i] = s[i] ^ s[j];
-        show_array(s, end-start+1);
+        if(i != j) {
+            printf("swap %d %d\n", s[i], s[j]);
+            s[i] = s[i] ^ s[j];
+            s[j] = s[i] ^ s[j];
+            s[i] = s[i] ^ s[j];
+            show_array(s, size);
+        }
     }
 
-    s[start] = s[start] ^ s[i];
-    s[i] = s[start] ^ s[i];
-    s[start] = s[start] ^ s[i];
-    show_array(s, end-start+1);
+    if(start != i) {
+        printf("swap %d %d\n", s[start], s[i]);
+        s[start] = s[start] ^ s[i];
+        s[i] = s[start] ^ s[i];
+        s[start] = s[start] ^ s[i];
+        show_array(s, size);
+    }
 
-    /* quick_sort(s, start, i-1); */
-    /* quick_sort(s, i+1, end); */
+    quick_sort(s, start, i-1);
+    quick_sort(s, i+1, end);
 }
 
 
 int main(void) {
     int array[10] = {4, 2, 3, 1, 5, 6, 8, 9, 0, 7};
+    /* int array[5] = {4, 3, 2, 1, 5}; */
 
     // 数组长度
-    /* printf("%lu\n", sizeof(array)/sizeof(array[0])); */
-    unsigned long size = sizeof(array)/sizeof(array[0]);
+    size = (int)sizeof(array)/sizeof(array[0]);
 
+    printf("show array at first\n");
     show_array(array, size);
+
     quick_sort(array, 0, size-1);
+
+    printf("show array at last\n");
     show_array(array, size);
 
     return 0;
