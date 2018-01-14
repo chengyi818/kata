@@ -15,11 +15,13 @@ class Meta(type):
 
     def __init__(meta, name, bases, class_dict):
         print("Meta __init__")
-        # return type.__init__(meta, name, bases, class_dict)
+        return type.__init__(meta, name, bases, class_dict)
 
     def __call__(cls, *args, **kwargs):
         print("Meta __call__")
-        instance = super().__call__(*args, **kwargs)
+        # instance = super().__call__(*args, **kwargs)
+        print(id(cls))
+        instance = type.__call__(cls, *args, **kwargs)
         return instance
 
 
@@ -35,5 +37,6 @@ class MyClass(object, metaclass=Meta):
 
 if __name__ == "__main__":
     print("__main__")
+    print(id(MyClass))
     a = MyClass()
     a.foo()
