@@ -1,4 +1,4 @@
-package com.example.chengyi.myapplication;
+package com.example.acitivitylifecycletest;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.chengyi.myapplication", appContext.getPackageName());
+        assertEquals("com.example.acitivitylifecycletest", appContext.getPackageName());
     }
 }

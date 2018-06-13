@@ -1,4 +1,4 @@
-package com.example.chengyi.myapplication;
+package com.example.acitivitylifecycletest;
 
 import org.junit.Test;
 
