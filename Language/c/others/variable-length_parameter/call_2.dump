@@ -1,0 +1,77 @@
+0000000000400596 <va_sum>:
+  400596:	55                   	push   %rbp
+  400597:	48 89 e5             	mov    %rsp,%rbp
+  40059a:	48 81 ec f0 00 00 00 	sub    $0xf0,%rsp
+  4005a1:	89 bd 1c ff ff ff    	mov    %edi,-0xe4(%rbp)
+  4005a7:	48 89 b5 58 ff ff ff 	mov    %rsi,-0xa8(%rbp)
+  4005ae:	48 89 95 60 ff ff ff 	mov    %rdx,-0xa0(%rbp)
+  4005b5:	48 89 8d 68 ff ff ff 	mov    %rcx,-0x98(%rbp)
+  4005bc:	4c 89 85 70 ff ff ff 	mov    %r8,-0x90(%rbp)
+  4005c3:	4c 89 8d 78 ff ff ff 	mov    %r9,-0x88(%rbp)
+  4005ca:	84 c0                	test   %al,%al
+  4005cc:	74 20                	je     4005ee <va_sum+0x58>
+  4005ce:	0f 29 45 80          	movaps %xmm0,-0x80(%rbp)
+  4005d2:	0f 29 4d 90          	movaps %xmm1,-0x70(%rbp)
+  4005d6:	0f 29 55 a0          	movaps %xmm2,-0x60(%rbp)
+  4005da:	0f 29 5d b0          	movaps %xmm3,-0x50(%rbp)
+  4005de:	0f 29 65 c0          	movaps %xmm4,-0x40(%rbp)
+  4005e2:	0f 29 6d d0          	movaps %xmm5,-0x30(%rbp)
+  4005e6:	0f 29 75 e0          	movaps %xmm6,-0x20(%rbp)
+  4005ea:	0f 29 7d f0          	movaps %xmm7,-0x10(%rbp)
+  4005ee:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+  4005f5:	00 00 
+  4005f7:	48 89 85 48 ff ff ff 	mov    %rax,-0xb8(%rbp)
+  4005fe:	31 c0                	xor    %eax,%eax
+  400600:	c7 85 30 ff ff ff 08 	movl   $0x8,-0xd0(%rbp)
+  400607:	00 00 00 
+  40060a:	c7 85 34 ff ff ff 30 	movl   $0x30,-0xcc(%rbp)
+  400611:	00 00 00 
+  400614:	48 8d 45 10          	lea    0x10(%rbp),%rax
+  400618:	48 89 85 38 ff ff ff 	mov    %rax,-0xc8(%rbp)
+  40061f:	48 8d 85 50 ff ff ff 	lea    -0xb0(%rbp),%rax
+  400626:	48 89 85 40 ff ff ff 	mov    %rax,-0xc0(%rbp)
+  40062d:	8b 85 1c ff ff ff    	mov    -0xe4(%rbp),%eax
+  400633:	89 85 28 ff ff ff    	mov    %eax,-0xd8(%rbp)
+  400639:	c7 85 2c ff ff ff 00 	movl   $0x0,-0xd4(%rbp)
+  400640:	00 00 00 
+  400643:	48 8d 85 30 ff ff ff 	lea    -0xd0(%rbp),%rax
+  40064a:	48 89 c6             	mov    %rax,%rsi
+  40064d:	bf 04 08 40 00       	mov    $0x400804,%edi
+  400652:	b8 00 00 00 00       	mov    $0x0,%eax
+  400657:	e8 14 fe ff ff       	callq  400470 <printf@plt>
+  40065c:	8b 95 1c ff ff ff    	mov    -0xe4(%rbp),%edx
+  400662:	48 8d 85 1c ff ff ff 	lea    -0xe4(%rbp),%rax
+  400669:	48 89 c6             	mov    %rax,%rsi
+  40066c:	bf 0c 08 40 00       	mov    $0x40080c,%edi
+  400671:	b8 00 00 00 00       	mov    $0x0,%eax
+  400676:	e8 f5 fd ff ff       	callq  400470 <printf@plt>
+  40067b:	eb 0c                	jmp    400689 <va_sum+0xf3>
+  40067d:	8b 85 2c ff ff ff    	mov    -0xd4(%rbp),%eax
+  400683:	01 85 28 ff ff ff    	add    %eax,-0xd8(%rbp)
+  400689:	8b 85 30 ff ff ff    	mov    -0xd0(%rbp),%eax
+  40068f:	83 f8 30             	cmp    $0x30,%eax
+  400692:	73 23                	jae    4006b7 <va_sum+0x121>
+  400694:	48 8b 85 40 ff ff ff 	mov    -0xc0(%rbp),%rax
+  40069b:	8b 95 30 ff ff ff    	mov    -0xd0(%rbp),%edx
+  4006a1:	89 d2                	mov    %edx,%edx
+  4006a3:	48 01 d0             	add    %rdx,%rax
+  4006a6:	8b 95 30 ff ff ff    	mov    -0xd0(%rbp),%edx
+  4006ac:	83 c2 08             	add    $0x8,%edx
+  4006af:	89 95 30 ff ff ff    	mov    %edx,-0xd0(%rbp)
+  4006b5:	eb 12                	jmp    4006c9 <va_sum+0x133>
+  4006b7:	48 8b 85 38 ff ff ff 	mov    -0xc8(%rbp),%rax
+  4006be:	48 8d 50 08          	lea    0x8(%rax),%rdx
+  4006c2:	48 89 95 38 ff ff ff 	mov    %rdx,-0xc8(%rbp)
+  4006c9:	8b 00                	mov    (%rax),%eax
+  4006cb:	89 85 2c ff ff ff    	mov    %eax,-0xd4(%rbp)
+  4006d1:	83 bd 2c ff ff ff ff 	cmpl   $0xffffffff,-0xd4(%rbp)
+  4006d8:	75 a3                	jne    40067d <va_sum+0xe7>
+  4006da:	8b 85 28 ff ff ff    	mov    -0xd8(%rbp),%eax
+  4006e0:	48 8b 8d 48 ff ff ff 	mov    -0xb8(%rbp),%rcx
+  4006e7:	64 48 33 0c 25 28 00 	xor    %fs:0x28,%rcx
+  4006ee:	00 00 
+  4006f0:	74 05                	je     4006f7 <va_sum+0x161>
+  4006f2:	e8 69 fd ff ff       	callq  400460 <__stack_chk_fail@plt>
+  4006f7:	c9                   	leaveq 
+  4006f8:	c3                   	retq   
+
