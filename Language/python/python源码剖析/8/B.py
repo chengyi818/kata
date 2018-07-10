@@ -1,7 +1,7 @@
-classmethod = 1
+locals = 1
 def f():
-    classmethod = 2
-    print(classmethod)
+    locals = 2
+    print(locals)
 
-print(classmethod)
-f()
+print(locals)
+# f()

@@ -7,7 +7,7 @@ def g():
     print("current funcion is: ", frame.f_code.co_name)
     print("current local id: ", id(frame.f_locals), "content: ", frame.f_locals)
     print("current global id: ", id(frame.f_globals), "content: ", frame.f_globals)
-    print("current co_flags is: ", frame.f_code.co_flags)
+    # print("current co_flags is: ", frame.f_code.co_flags)
 
     print("----------------------------------------------------------------------")
 
