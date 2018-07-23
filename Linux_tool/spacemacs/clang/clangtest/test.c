@@ -1,6 +1,6 @@
 #include "someheader.h"
 
-int main(int argc, char **argv)
+int main()
 {
     return somefunction();
 }

@@ -1,6 +1,7 @@
 # import dis
 
 def f(name, age):
+    test = 1
     age += 5
     print("name: ", name, "age: ", age)
 
