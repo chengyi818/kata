@@ -1,6 +1,6 @@
-import dis
 def get_func():
     value = "inner"
+    print(value)
     def inner_func():
         print(value)
 
@@ -8,5 +8,4 @@ def get_func():
 
 show_value = get_func()
 show_value()
-dis.dis(show_value)
 
