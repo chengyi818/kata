@@ -9,11 +9,11 @@ def containHello():
     return "hello" in sys.modules.keys()
 
 
-print(containHello())
+print("containHello: ", containHello())
 
 import hello
 
-print(containHello())
-print(dir())
-print(id(hello))
-print(id(sys.modules['hello']))
+print("containHello: ", containHello())
+print("dir(): ", dir())
+print("id(hello): ", id(hello))
+print("id(sys.modules['hello']): ", id(sys.modules['hello']))

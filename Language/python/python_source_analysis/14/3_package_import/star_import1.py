@@ -3,6 +3,7 @@
 # Mail: chengyi818@foxmail.cn
 # created time: Fri 19 Jan 2018 12:14:29 PM CST
 
-import A.tank
+from A.tank import *
 
-print(A.__path__)
+print(locals())
+print(a)
