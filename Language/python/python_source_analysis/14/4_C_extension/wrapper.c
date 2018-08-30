@@ -25,5 +25,4 @@ void initexample()
 {
     PyObject* m;
     m = Py_InitModule("example", exampleMethods);
-
 }
