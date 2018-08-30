@@ -6,7 +6,7 @@
 #print("before import, locals: ", dir())
 #import sys
 
-import usermodule1
+import A
 
 # print("after import, locals: ", dir())
 # print(dir(usermodule1))

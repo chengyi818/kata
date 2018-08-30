@@ -6,4 +6,4 @@
 # import sys
 import usermodule1
 
-print(usermodule1.a)
+#print(usermodule1.a)
