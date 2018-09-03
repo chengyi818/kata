@@ -1,4 +1,6 @@
 a = 1
+
+
 def f(a):
     # a = 2
     def g():
@@ -6,6 +8,7 @@ def f(a):
 
     # locals()
     return g
+
 
 func = f(2)
 func()
