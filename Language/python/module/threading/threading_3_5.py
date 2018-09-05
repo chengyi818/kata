@@ -288,6 +288,7 @@ class Condition:
         waiter = _allocate_lock()
         waiter.acquire()
         self._waiters.append(waiter)
+        // 释放_lock
         saved_state = self._release_save()
         gotit = False
         try:    # restore state no matter what (e.g., KeyboardInterrupt)
@@ -301,6 +302,7 @@ class Condition:
                     gotit = waiter.acquire(False)
             return gotit
         finally:
+            // 重新获取_lock
             self._acquire_restore(saved_state)
             if not gotit:
                 try:
