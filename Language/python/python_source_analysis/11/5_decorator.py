@@ -1,12 +1,14 @@
 def should_say(fn):
-    def say(*args):
+    def say():
         print("say somethin...")
-        fn(*args)
+        fn()
 
     return say
 
+
+@should_say
 def func1():
     print("in func")
 
-func1 = should_say(func1)
+
 func1()
