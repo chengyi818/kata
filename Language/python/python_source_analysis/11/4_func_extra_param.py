@@ -1,9 +1,8 @@
-def f(*arg, **kwargs):
-    test = 2
-    print(arg)
+def f(*hangxu, **kwargs):
+    print(hangxu)
     print(kwargs)
-    print(test)
 
 
 f(1, 2)
+
 f(b=3)
