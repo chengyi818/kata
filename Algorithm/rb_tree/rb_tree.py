@@ -162,4 +162,3 @@ class RbTree(object):
             S.parent = P
         else:
             self.root = S
-        self.show()
