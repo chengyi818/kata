@@ -1,0 +1,15 @@
+* 说明
+使用python3实现红黑树算法.
+
+* 依赖
+sudo pip3 install networkx matplotlib
+sudo apt-get install python3-tk
+
+* 特点
+1. 使用cmd可以通过console,实时操作红黑树
+2. 操作红黑树后,可以立刻绘制当前红黑树图形
+
+* 待完善
+** 不支持 节点的值 重复
+** DONE 每次显示图片后,必须关闭才能显示下一张
+   CLOSED: [2018-12-20 Thu 11:24]

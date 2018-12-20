@@ -2,16 +2,18 @@
 # Author: ChengYi
 # Mail: chengyi818@foxmail.cn
 # created time: Wed 19 Dec 2018 08:57:53 PM CST
-from rb_node import *
+import rb_node
 import rb_draw
+from multiprocessing import Process
+
 
 class RbTree(object):
     def __init__(self):
         self.root = None
+        self.index = 0
 
-
-    def insert(self, value, color=RED):
-        tmp_node = RbNode(value, color)
+    def insert(self, value, color=rb_node.RED):
+        tmp_node = rb_node.RbNode(value, color)
 
         # 插入节点为根节点
         if not self.root:
@@ -37,7 +39,12 @@ class RbTree(object):
                     return
 
     def show(self):
-        rb_draw.draw(self.root)
+        self.index += 1
+        p = Process(target=self._show, args=(self.root, self.index))
+        p.start()
+
+    def _show(self, root, index):
+        rb_draw.draw(root, index)
 
     # input: value
     # return: Node

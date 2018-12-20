@@ -4,11 +4,11 @@
 # created time: Wed 19 Dec 2018 09:46:48 PM CST
 import networkx as nx
 import matplotlib.pyplot as plt
-from rb_node import *
 
 
 def create_graph(G, node, pos={}, x=0, y=0, layer=1):
     pos[node.value] = (x, y)
+    G.add_node(node.value)
     if node.left:
         G.add_edge(node.value, node.left.value)
         l_x, l_y = x - 1 / 2 ** layer, y - 1
@@ -23,18 +23,21 @@ def create_graph(G, node, pos={}, x=0, y=0, layer=1):
                      layer=r_layer)
     return (G, pos)
 
-def draw(node):   # 以某个节点为根画图
+
+def draw(node, index):   # 以某个节点为根画图
     graph = nx.DiGraph()
     graph, pos = create_graph(graph, node)
-    fig, ax = plt.subplots(figsize=(8, 10))  # 比例可以根据树的深度适当调节
 
+    # 比例可以根据树的深度适当调节
+    fig, ax = plt.subplots(figsize=(8, 10))
+    ax.set_title("Figure {0}".format(index))
     # 获取节点颜色
-    color_map = []
+    node_color = []
     for tmp in graph.nodes:
         tmp_node = search(node, tmp)
-        color_map.append(tmp_node.color)
+        node_color.append(tmp_node.color)
 
-    nx.draw_networkx(graph, pos, node_color=color_map,
+    nx.draw_networkx(graph, pos, node_color=node_color,
                      ax=ax, node_size=300)
     plt.show()
 
