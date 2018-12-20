@@ -13,7 +13,6 @@ def test():
     # test_left_rotate()
     test_right_rotate()
 
-
 def test_change_color():
     t = rb_tree.RbTree()
     t.insert(50, rb_node.BLACK)
@@ -27,23 +26,32 @@ def test_change_color():
 
 def test_left_rotate():
     t = rb_tree.RbTree()
-    t.insert(50, rb_node.BLACK)
-    t.insert(27, rb_node.RED)
-    t.insert(72, rb_node.RED)
-    t.insert(100)
+    t.insert(80)
+    t.insert(120)
+    t.insert(40, rb_node.BLACK)
+    t.insert(60)
+    t.insert(20)
+    t.insert(70)
+    t.insert(50)
+
     t.show()
-    t.left_rotate(t.search(72))
+    t.left_rotate(t.search(40))
     t.show()
 
 
 def test_right_rotate():
     t = rb_tree.RbTree()
-    t.insert(50, rb_node.BLACK)
-    t.insert(27, rb_node.RED)
-    t.insert(72, rb_node.RED)
-    t.insert(10)
+    t.insert(80)
+    t.insert(40)
+    t.insert(120, rb_node.BLACK)
+    t.insert(140)
+    t.insert(100)
+    t.insert(110)
+    t.insert(90)
+
+
     t.show()
-    t.right_rotate(t.search(27))
+    t.right_rotate(t.search(120))
     t.show()
 
 
@@ -70,7 +78,7 @@ class RbTreeConsole(Cmd):
         print("exit")
 
     def do_exit(self, s):
-        print("ByeBye: ", s)
+        print("ByeBye!")
         sys.exit()
 
     do_EOF = do_exit
