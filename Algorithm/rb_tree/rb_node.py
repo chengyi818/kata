@@ -15,6 +15,8 @@ class RbNode(object):
         if(value != NULL):
             self.left = RbNode(NULL, BLACK)
             self.right = RbNode(NULL, BLACK)
+            self.left.parent = self
+            self.right.parent = self
         else:
             self.left = None
             self.right = None
@@ -36,6 +38,16 @@ class RbNode(object):
             return True
         else:
             return False
+
+    def is_nil(self):
+        if(self.value == NULL):
+            return True
+        return False
+
+    def is_not_nil(self):
+        if(self.value == NULL):
+            return False
+        return True
 
     def get_uncle(self):
         grandparent = self.get_grandparent()

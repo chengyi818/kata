@@ -29,6 +29,7 @@ def create_graph(G, node, pos={}, x=0, y=0, layer=1):
                      layer=r_layer)
     return (G, pos)
 
+
 # 以某个节点为根画图
 def _draw(node, index):
     graph = nx.DiGraph()

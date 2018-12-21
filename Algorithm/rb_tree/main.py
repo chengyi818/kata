@@ -49,7 +49,6 @@ def test_right_rotate():
     t.insert(110)
     t.insert(90)
 
-
     t.show()
     t.right_rotate(t.search(120))
     t.show()
@@ -66,12 +65,27 @@ class RbTreeConsole(Cmd):
     def do_i(self, value):
         input_list = value.split()
         for tmp in input_list:
+            print("insert: ", tmp)
             self.tree.insert(int(tmp))
+        print("show after insert: ", value)
+        self.tree.show()
 
     def help_s(self):
         print("show tree")
 
     def do_s(self, value):
+        self.tree.show()
+
+    def help_d(self):
+        print("delete node with value")
+
+    def do_d(self, value):
+        input_list = value.split()
+        for tmp in input_list:
+            print("delete: ", tmp)
+            target = self.tree.search(int(value))
+            self.tree.delete(target)
+        print("show after delete: ", value)
         self.tree.show()
 
     def help_exit(self):
