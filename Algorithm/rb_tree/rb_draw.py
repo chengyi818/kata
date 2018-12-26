@@ -6,6 +6,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from multiprocessing import Process
 INDEX = 0
+DEBUG = False
 
 
 def create_graph(G, node, pos={}, x=0, y=0, layer=1):
@@ -19,12 +20,20 @@ def create_graph(G, node, pos={}, x=0, y=0, layer=1):
         G.add_edge(node_id, id(node.left))
         l_x, l_y = x - 1 / 2 ** layer, y - 1
         l_layer = layer + 1
+        if DEBUG:
+            print(node.value, " : ", id(node),
+                " --left--> ", node.left.value,
+                " : ", id(node.left))
         create_graph(G, node.left, x=l_x, y=l_y, pos=pos,
                      layer=l_layer)
     if node.right:
         G.add_edge(node_id, id(node.right))
         r_x, r_y = x + 1 / 2 ** layer, y - 1
         r_layer = layer + 1
+        if DEBUG:
+            print(node.value, " : ", id(node),
+                " --right--> ", node.right.value,
+                " : ", id(node.right))
         create_graph(G, node.right, x=r_x, y=r_y, pos=pos,
                      layer=r_layer)
     return (G, pos)
@@ -55,3 +64,5 @@ def draw(node):
     INDEX += 1
     p = Process(target=_draw, args=(node, INDEX))
     p.start()
+    if DEBUG:
+        p.join()
