@@ -54,6 +54,7 @@ class RbTree(object):
         """
          y: 真正将被删除的节点
          x: 替代y的节点
+         z: 输入节点
 
         注意: y一定只有0/1个子节点
         """
@@ -99,6 +100,9 @@ class RbTree(object):
         return y
 
     """
+    实际删除节点
+    
+    Case 1
     """
     def delete_fixup(self, node):
         target = node
