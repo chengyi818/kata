@@ -100,8 +100,8 @@ class RbTree(object):
         return y
 
     """
+    ----------------------------------------------
     实际删除节点
-    
     Case 1
     """
     def delete_fixup(self, node):
