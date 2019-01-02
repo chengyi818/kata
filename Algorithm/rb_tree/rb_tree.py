@@ -100,9 +100,7 @@ class RbTree(object):
         return y
 
     """
-    ----------------------------------------------
-    实际删除节点
-    Case 1
+    target为替代节点
     """
     def delete_fixup(self, node):
         target = node
@@ -112,33 +110,30 @@ class RbTree(object):
             if target == target.parent.left:
                 brother = target.parent.right
 
-                # 目标节点是"黑+黑"节点,即 目标节点+父节点 均为黑色
-                # 兄弟节点为红色,兄弟节点的子节点均为黑色
+                # Case 2.2.1: 兄弟节点为红色
                 if brother.is_red():
-                    brother.set_black()
-                    target.parent.set_red()
+                    self.switch_color(target, brother)
                     self.left_rotate(target.parent)
                     brother = target.parent.right
-                # 目标节点是"黑+黑"节点,即 目标节点+父节点 均为黑色
-                # 兄弟节点为黑色, 兄弟节点的子节点均为黑色
+                # Case 2.2.2.3: 侄子节点均为黑色
                 if brother.left.is_black() and brother.right.is_black():
                     brother.set_red()
                     target = target.parent
-                # 兄弟节点为黑色,兄弟节点的右子节点为黑色,左子节点为红色
+                # Case 2.2.2.2: 近侄子为红色
                 elif brother.right.is_black():
-                    brother.left.set_black()
-                    brother.set_red()
+                    self.switch_color(brother, brother.left)
                     self.right_rotate(brother)
                     brother = target.parent.right
-                # 兄弟节点为黑色,兄弟节点的右子节点为红色,左子节点为黑色
+                # Case 2.2.2.1: 远侄子为红色
                 else:
                     # target.parent.set_black()
-                    # brother.right.set_black()
+                    brother.right.set_black()
+                    self.switch_color(target.parent, brother)
                     self.left_rotate(target.parent)
                     target = target.parent.parent
                     # self.root = target
             else:
-                # 目标节点是父节点的左节点
+                # 目标节点是父节点的右节点
                 brother = target.parent.left
 
                 # 目标节点是"黑+黑"节点,即 目标节点+父节点 均为黑色
@@ -340,3 +335,6 @@ class RbTree(object):
 
         print("show after right_rotate: ", Y.value)
         self.show()
+
+    def switch_color(self, x, y):
+        x.color, y.color = y.color, x.color
