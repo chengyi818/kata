@@ -63,10 +63,17 @@ class RbTreeConsole(Cmd):
         print("insert value [color]")
 
     def do_i(self, value):
-        input_list = value.split()
-        for tmp in input_list:
-            print("insert: ", tmp)
-            self.tree.insert(int(tmp))
+        if('-' in value):
+            (start, end) = value.split("-")
+            for tmp in range(int(start), int(end)+1):
+                print("insert: ", tmp)
+                self.tree.insert(int(tmp))
+        else:
+            input_list = value.split()
+            for tmp in input_list:
+                print("insert: ", tmp)
+                self.tree.insert(int(tmp))
+
         print("show after insert: ", value)
         self.tree.show()
 

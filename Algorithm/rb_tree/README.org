@@ -63,10 +63,12 @@ sudo apt-get install python3-tk
 ******* Case 2.2.2.3.2: 父节点为黑色
        1. 兄弟节点改为红色
        2. 删除目标节点
-       3. 以父节点为新的目标节点,再次平衡
+       3. 以父节点为新的目标节点,回到Case 2.2,再次平衡.
 
 * 参考链接
 ** 介绍
 https://www.cnblogs.com/skywang12345/p/3245399.html
 ** 删除再平衡
 https://www.cnblogs.com/qingergege/p/7351659.html
+** Python源码实现
+https://blog.csdn.net/z649431508/article/details/78034751
