@@ -34,6 +34,7 @@ class MyClass(object, metaclass=Meta):
     def foo(self):
         print("foo")
 
+print("before main")
 
 if __name__ == "__main__":
     print("__main__")

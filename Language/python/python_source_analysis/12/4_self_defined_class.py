@@ -14,8 +14,8 @@ class A(object):
     def f(self):
         print("A::f")
 
-    def g(self, aValue):
-        self.value = aValue
+    def g(self, input):
+        self.value = input
         print(self.value)
 
 
