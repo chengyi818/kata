@@ -20,5 +20,15 @@ class A(object):
 
 
 a = A()
+# a.f()
+# a.g(10)
+
+# print(a.__class__.__dict__['f'])
+print(a.f)
 a.f()
-a.g(10)
+
+print(A.f)
+
+a.f = 2
+print(a.f)
+print(A.f)
