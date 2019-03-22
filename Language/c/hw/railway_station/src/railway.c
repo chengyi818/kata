@@ -9,26 +9,25 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "railway.h"
 
 
-int JudgeTrainSequence(int maxNum, char* pOutSeq);
+/* int main() { */
+/*     char* pOutSeq = "53241"; */
 
-char* TRAIN_NUM = "0123456789";
+/*     int ret = JudgeTrainSequence(5, pOutSeq); */
+/*     printf("ret: %d\n", ret); */
 
-int main() {
-    /* char* pOutSeq = "21345"; */
-    /* char* pOutSeq = "54321"; */
-    char* pOutSeq = "53241";
-
-    int ret = JudgeTrainSequence(5, pOutSeq);
-    printf("ret: %d\n", ret);
-
-    return 0;
-}
+/*     return 0; */
+/* } */
 
 
+char TRAIN_NUM[] = "0123456789";
 int JudgeTrainSequence(int maxNum, char* pOutSeq) {
     // TODO: maybe need some check for input, such as maxNum
+    if(maxNum == 0 && *pOutSeq == '\0') {
+        return 1;
+    }
 
     // the train num we currently search
     char currentTarget = TRAIN_NUM[maxNum];
