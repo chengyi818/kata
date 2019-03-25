@@ -8,6 +8,7 @@
 #ifndef __SOFT_INTERRUPT_H__
 #define __SOFT_INTERRUPT_H__
 
-
+int SwiCreate(unsigned int swiId, unsigned int prio, void(* proc)( void ));
+int SwiActivate(unsigned int swiId);
 
 #endif /* __SOFT_INTERRUPT_H__ */
