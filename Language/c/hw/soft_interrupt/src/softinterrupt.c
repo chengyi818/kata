@@ -7,6 +7,7 @@
 
 #include "softinterrupt.h"
 #include <stdlib.h>
+#include <string.h>
 
 typedef void(*Func)(void);
 
@@ -81,4 +82,15 @@ scheduler:
     }
 
     return 0;
+}
+
+void Clear(void) {
+    Interrupt *tmp, *new_node;
+    memset(soft_interrupt_table, 0, sizeof(soft_interrupt_table));
+    tmp = &task_queue;
+    while(tmp->next) {
+        new_node = tmp->next;
+        tmp->next = tmp->next->next;
+        free(new_node);
+    }
 }

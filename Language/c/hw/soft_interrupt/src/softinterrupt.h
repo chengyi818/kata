@@ -10,5 +10,6 @@
 
 int SwiCreate(unsigned int swiId, unsigned int prio, void(* proc)( void ));
 int SwiActivate(unsigned int swiId);
+void Clear(void);
 
 #endif /* __SOFT_INTERRUPT_H__ */
