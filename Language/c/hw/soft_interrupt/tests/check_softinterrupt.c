@@ -16,6 +16,14 @@ void proc1() {
     return;
 }
 
+void setup(void) {
+}
+
+void teardown(void) {
+    Clear();
+    proc_ret = 0;
+}
+
 START_TEST(test_SwiCreate_0) {
     int ret;
 
@@ -70,13 +78,19 @@ Suite* softinterrupt_suite(void)
     Suite* s = suite_create("softinterrupt");
 
     /* SwiCreate test case */
-    TCase* tc_core = tcase_create("SwiCreate");
-    tcase_add_test(tc_core, test_SwiCreate_0);
-    tcase_add_test(tc_core, test_SwiCreate_10);
-    tcase_add_test(tc_core, test_SwiCreate_20);
-    tcase_add_test(tc_core, test_SwiCreate_22);
-    tcase_add_test(tc_core, test_SwiCreate_100);
-    suite_add_tcase(s, tc_core);
+    TCase* tc_create = tcase_create("SwiCreate");
+
+    tcase_add_test(tc_create, test_SwiCreate_0);
+    tcase_add_test(tc_create, test_SwiCreate_10);
+    tcase_add_test(tc_create, test_SwiCreate_20);
+    tcase_add_test(tc_create, test_SwiCreate_22);
+    tcase_add_test(tc_create, test_SwiCreate_100);
+
+    suite_add_tcase(s, tc_create);
+
+    TCase* tc_activate = tcase_create("SwiActivate");
+    tcase_add_checked_fixture(tc_create, setup, teardown);
+    suite_add_tcase(s, tc_activate);
 
     return s;
 }
