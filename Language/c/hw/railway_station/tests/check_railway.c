@@ -46,8 +46,39 @@ START_TEST(test_7) {
 }
 END_TEST
 
+// maxNum小于1
 START_TEST(test_8) {
-    fail_unless(JudgeTrainSequence(0, "") == 1, "test_8 fail");
+    fail_unless(JudgeTrainSequence(0, "") == 0, "test maxNum<1 fail");
+}
+END_TEST
+
+// maxNum大于9
+START_TEST(test_9) {
+    fail_unless(JudgeTrainSequence(10, "1234567890") == 0, "test maxNum>9 fail");
+}
+END_TEST
+
+// pOutSeq长度大于maxNum输入
+START_TEST(test_10) {
+    fail_unless(JudgeTrainSequence(3, "1234") == 0, "test len(pOutSeq)>maxNum fail");
+}
+END_TEST
+
+// pOutSeq长度小于maxNum输入
+START_TEST(test_11) {
+    fail_unless(JudgeTrainSequence(3, "12") == 0, "test len(pOutSeq)<maxNum fail");
+}
+END_TEST
+
+// pOutSeq含有非法字符
+START_TEST(test_12) {
+    fail_unless(JudgeTrainSequence(3, "12$") == 0, "test len(pOutSeq)<maxNum fail");
+}
+END_TEST
+
+// pOutSeq含有不在maxNum范围内的数字
+START_TEST(test_13) {
+    fail_unless(JudgeTrainSequence(3, "124") == 0, "test len(pOutSeq)<maxNum fail");
 }
 END_TEST
 
@@ -68,6 +99,11 @@ Suite * make_railway_suite(void) {
     tcase_add_test(tc_railway, test_6);
     tcase_add_test(tc_railway, test_7);
     tcase_add_test(tc_railway, test_8);
+    tcase_add_test(tc_railway, test_9);
+    tcase_add_test(tc_railway, test_10);
+    tcase_add_test(tc_railway, test_11);
+    tcase_add_test(tc_railway, test_12);
+    tcase_add_test(tc_railway, test_13);
 
     return s;
 }

@@ -25,8 +25,11 @@
 char TRAIN_NUM[] = "0123456789";
 int JudgeTrainSequence(int maxNum, char* pOutSeq) {
     // TODO: maybe need some check for input, such as maxNum
-    if(maxNum == 0 && *pOutSeq == '\0') {
-        return 1;
+    if(maxNum < 1 || maxNum >9) {
+        return 0;
+    }
+    if(strlen(pOutSeq) != (unsigned int)maxNum) {
+        return 0;
     }
 
     // the train num we currently search
@@ -49,6 +52,11 @@ STEP1:
     while(pOutSeq[outNum-1] != currentTarget) {
         stack[top++] = pOutSeq[outNum-1];
         outNum--;
+
+        if(outNum<1) {
+            // 此时中间一定有非法字符
+            return 0;
+        }
     }
 
 /* STEP2: */

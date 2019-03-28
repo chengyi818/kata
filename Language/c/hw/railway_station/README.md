@@ -11,7 +11,6 @@ int JudgeTrainSequence(int maxNum, char* pOutSeq);
 ```
 
 输入参数:
-
 int maxNum: 进站的火车最大编号
 char* pOutSeq: 使用字符串表示火车出站序列,指针指向的内存区域保证有效.
 
