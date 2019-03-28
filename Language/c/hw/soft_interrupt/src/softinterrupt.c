@@ -8,6 +8,7 @@
 #include "softinterrupt.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 typedef void(*Func)(void);
 
@@ -48,6 +49,7 @@ int SwiActivate(unsigned int swiId) {
 
     if(prio >= current_prio) {
         // create Interrupt task and insert to task_queue
+        printf("insert %u\n", prio);
         new_node = (Interrupt*)malloc(sizeof(Interrupt));
         new_node->prio = prio;
         new_node->proc = proc;
@@ -85,12 +87,14 @@ scheduler:
 }
 
 void Clear(void) {
-    Interrupt *tmp, *new_node;
+    Interrupt *tmp;
+
     memset(soft_interrupt_table, 0, sizeof(soft_interrupt_table));
     tmp = &task_queue;
     while(tmp->next) {
-        new_node = tmp->next;
+        Interrupt* new_node = tmp->next;
         tmp->next = tmp->next->next;
+        printf("free %u\n", new_node->prio);
         free(new_node);
     }
 }

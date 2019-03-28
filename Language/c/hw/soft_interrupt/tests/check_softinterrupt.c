@@ -11,86 +11,119 @@
 
 static int proc_ret;
 
-void proc1() {
-    proc_ret = 1;
+void proc_add_1() {
+    proc_ret += 1;
     return;
 }
 
+void proc_3_add_1() {
+    SwiActivate(5);
+    SwiActivate(5);
+    SwiActivate(5);
+    Clear();
+}
+
 void setup(void) {
+    proc_ret = 1;
+
+    SwiCreate(5, 10, proc_add_1);
+    SwiCreate(6, 10, proc_3_add_1);
 }
 
 void teardown(void) {
-    Clear();
-    proc_ret = 0;
 }
 
 START_TEST(test_SwiCreate_0) {
     int ret;
 
-    ret = SwiCreate(0, 0, proc1);
-    fail_unless(ret == 0, "test 0 0 fail");
-    ret = SwiActivate(0);
-    fail_unless(ret == 0, "test 0 1 fail");
-    fail_unless(proc_ret == 1, "test 0 0 1 fail");
-
-    ret = SwiActivate(1);
-    fail_unless(ret == -1, "test 0 2 fail");
+    ret = SwiCreate(0, 0, proc_add_1);
+    fail_unless(ret == 0, "注册swiId 0失败");
 }
 END_TEST
 
-START_TEST(test_SwiCreate_100) {
+START_TEST(test_SwiCreate_1) {
     int ret;
 
-    ret = SwiCreate(100, 10, proc1);
-    ck_assert_int_eq(ret, -1);
+    ret = SwiCreate(100, 10, proc_add_1);
+    fail_unless(ret == -1, "注册非法swiId, 测试失败");
 }
 END_TEST
 
-START_TEST(test_SwiCreate_10) {
+START_TEST(test_SwiCreate_2) {
     int ret;
 
-    ret = SwiCreate(10, 33, proc1);
-    ck_assert_int_eq(ret, -1);
+    ret = SwiCreate(10, 33, proc_add_1);
+    fail_unless(ret == -1, "注册非法prio, 测试失败");
 }
 END_TEST
 
-START_TEST(test_SwiCreate_20) {
+START_TEST(test_SwiCreate_3) {
     int ret;
 
     ret = SwiCreate(20, 31, NULL);
-    ck_assert_int_eq(ret, -1);
+    fail_unless(ret == -1, "注册proc为空, 测试失败");
 }
 END_TEST
 
-START_TEST(test_SwiCreate_22) {
+START_TEST(test_SwiCreate_4) {
     int ret;
 
-    ret = SwiCreate(22, 22, proc1);
-    ck_assert_int_eq(ret, 0);
-    ret = SwiCreate(22, 22, proc1);
-    ck_assert_int_eq(ret, -1);
+    ret = SwiCreate(22, 22, proc_add_1);
+    fail_unless(ret == 0, "注册swiId22, 测试失败");
+    ret = SwiCreate(22, 22, proc_add_1);
+    fail_unless(ret == -1, "重复注册swiId22, 测试失败");
 }
 END_TEST
+
+START_TEST(test_SwiActivate_0) {
+    int ret;
+
+    ret = SwiActivate(5);
+    fail_unless(ret == 0, "运行swiId 5失败");
+    fail_unless(proc_ret == 2, "swiId执行失败");
+
+    ret = SwiActivate(1);
+    fail_unless(ret == -1, "执行未注册进程,测试失败");
+}
+END_TEST
+
+START_TEST(test_SwiClear_0) {
+    int ret;
+
+    ret = SwiActivate(6);
+    fail_unless(ret == 0, "运行swiId 6失败");
+    fail_unless(proc_ret == 1, "swiId 6执行失败");
+    ret = SwiActivate(6);
+    fail_unless(ret == -1, "运行swiId 6 after Clear,测试失败");
+}
+END_TEST
+
 
 
 Suite* softinterrupt_suite(void)
 {
     Suite* s = suite_create("softinterrupt");
 
-    /* SwiCreate test case */
+    /* test SwiCreate */
     TCase* tc_create = tcase_create("SwiCreate");
-
     tcase_add_test(tc_create, test_SwiCreate_0);
-    tcase_add_test(tc_create, test_SwiCreate_10);
-    tcase_add_test(tc_create, test_SwiCreate_20);
-    tcase_add_test(tc_create, test_SwiCreate_22);
-    tcase_add_test(tc_create, test_SwiCreate_100);
-
+    tcase_add_test(tc_create, test_SwiCreate_1);
+    tcase_add_test(tc_create, test_SwiCreate_2);
+    tcase_add_test(tc_create, test_SwiCreate_3);
+    tcase_add_test(tc_create, test_SwiCreate_4);
     suite_add_tcase(s, tc_create);
 
+    /* test SwiActivate */
     TCase* tc_activate = tcase_create("SwiActivate");
-    tcase_add_checked_fixture(tc_create, setup, teardown);
+    tcase_add_checked_fixture(tc_activate, setup, teardown);
+    tcase_add_test(tc_activate, test_SwiActivate_0);
     suite_add_tcase(s, tc_activate);
+
+    /* test Clear */
+    TCase* tc_clear = tcase_create("Clear");
+    tcase_add_checked_fixture(tc_clear, setup, teardown);
+    tcase_add_test(tc_clear, test_SwiClear_0);
+    suite_add_tcase(s, tc_clear);
 
     return s;
 }
