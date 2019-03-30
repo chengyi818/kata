@@ -89,6 +89,10 @@ scheduler:
 void Clear(void) {
     Interrupt *tmp;
 
+    if(current_prio != 32) {
+        return;
+    }
+
     memset(soft_interrupt_table, 0, sizeof(soft_interrupt_table));
     tmp = &task_queue;
     while(tmp->next) {
