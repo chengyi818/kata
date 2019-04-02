@@ -51,12 +51,6 @@ module_param_named(debug_mask, binder_alloc_debug_mask,
             pr_info(x);                         \
     } while (0)
 
-#define binder_alloc_cydebug(pid, x...)         \
-    do {                                        \
-        if (pid > 2641)                         \
-            pr_info(x);                         \
-    } while (0)
-
 static struct binder_buffer *binder_buffer_next(struct binder_buffer *buffer)
 {
 	return list_entry(buffer->entry.next, struct binder_buffer, entry);
@@ -92,9 +86,6 @@ static void binder_insert_free_buffer(struct binder_alloc *alloc,
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 		     "%d: add free buffer, size %zd, at %pK\n",
 		      alloc->pid, new_buffer_size, new_buffer);
-    binder_alloc_cydebug(alloc->pid,
-                         "%d: add free buffer, size %zd, at %pK\n",
-                         alloc->pid, new_buffer_size, new_buffer);
 
     while (*p) {
 		parent = *p;
@@ -160,16 +151,9 @@ static struct binder_buffer *binder_alloc_prepare_to_free_locked(
 			 * Guard against user threads attempting to
 			 * free the buffer twice
 			 */
-			if (buffer->free_in_progress) {
-				pr_err("%d:%d FREE_BUFFER u%016llx user freed buffer twice\n",
-				       alloc->pid, current->pid, (u64)user_ptr);
-				return NULL;
-			}
-			buffer->free_in_progress = 1;
-            // CVE_2019_2025
-            /* if (!buffer->allow_user_free) */
-            /*     return ERR_PTR(-EPERM); */
-            /* buffer->allow_user_free = 0; */
+            if (!buffer->allow_user_free)
+                return ERR_PTR(-EPERM);
+            buffer->allow_user_free = 0;
             return buffer;
 		}
 	}
@@ -211,10 +195,6 @@ static int binder_update_page_range(struct binder_alloc *alloc, int allocate,
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 		     "%d: %s pages %pK-%pK\n", alloc->pid,
 		     allocate ? "allocate" : "free", start, end);
-
-	binder_alloc_cydebug(alloc->pid,
-                       "%d: %s pages %pK-%pK\n", alloc->pid,
-                       allocate ? "allocate" : "free", start, end);
 
 	if (end <= start)
 		return 0;
@@ -451,9 +431,6 @@ struct binder_buffer *binder_alloc_new_buf_locked(struct binder_alloc *alloc,
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 		     "%d: binder_alloc_buf size %zd got buffer %pK size %zd\n",
 		      alloc->pid, size, buffer, buffer_size);
-	binder_alloc_cydebug(alloc->pid,
-                       "%d: binder_alloc_buf size %zd got buffer %pK size %zd\n",
-                       alloc->pid, size, buffer, buffer_size);
 
 	has_page_addr =
 		(void *)(((uintptr_t)buffer->data + buffer_size) & PAGE_MASK);
@@ -488,21 +465,12 @@ struct binder_buffer *binder_alloc_new_buf_locked(struct binder_alloc *alloc,
     // 初始化刚分配的binder_buffer
 	rb_erase(best_fit, &alloc->free_buffers);
 	buffer->free = 0;
-	buffer->free_in_progress = 0;
-    // CVE_2019_2025
-    /* buffer->allow_user_free = 0; */
+    buffer->allow_user_free = 0;
 	binder_insert_allocated_buffer_locked(alloc, buffer);
 
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 		     "%d: binder_alloc_buf size %zd got %pK\n",
 		      alloc->pid, size, buffer);
-
-    binder_alloc_cydebug(alloc->pid,
-                         "%d: binder_alloc_buf size %zd got %pK, data_ptr: %016lx\n",
-                         alloc->pid, size, buffer,
-                         ((uintptr_t)buffer->data +
-                          binder_alloc_get_user_buffer_offset(alloc))
-        );
 
 	buffer->data_size = data_size;
 	buffer->offsets_size = offsets_size;
@@ -576,10 +544,6 @@ static void binder_delete_free_buffer(struct binder_alloc *alloc,
 		binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 				   "%d: merge free, buffer %pK share page with %pK\n",
 				   alloc->pid, buffer->data, prev->data);
-
-		binder_alloc_cydebug(alloc->pid,
-                           "%d: merge free, buffer %pK share page with %pK\n",
-                           alloc->pid, buffer->data, prev->data);
 	}
 
 	if (!list_is_last(&buffer->entry, &alloc->buffers)) {
@@ -591,11 +555,6 @@ static void binder_delete_free_buffer(struct binder_alloc *alloc,
 					   alloc->pid,
 					   buffer->data,
 					   next->data);
-			binder_alloc_cydebug(alloc->pid,
-                               "%d: merge free, buffer %pK share page with %pK\n",
-                               alloc->pid,
-                               buffer->data,
-                               next->data);
 		}
 	}
 
@@ -614,10 +573,6 @@ static void binder_delete_free_buffer(struct binder_alloc *alloc,
 				   "%d: merge free, buffer %pK do not share page with %pK or %pK\n",
 				   alloc->pid, buffer->data,
 				   prev->data, next ? next->data : NULL);
-		binder_alloc_cydebug(alloc->pid,
-                           "%d: merge free, buffer %pK do not share page with %pK or %pK\n",
-                           alloc->pid, buffer->data,
-                           prev->data, next ? next->data : NULL);
 		binder_update_page_range(alloc, 0, buffer_start_page(buffer),
 					 buffer_start_page(buffer) + PAGE_SIZE);
 	}
@@ -639,10 +594,6 @@ static void binder_free_buf_locked(struct binder_alloc *alloc,
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
 		     "%d: binder_free_buf %pK size %zd buffer_size %zd\n",
 		      alloc->pid, buffer, size, buffer_size);
-
-	binder_alloc_cydebug(alloc->pid,
-                       "%d: binder_free_buf %pK size %zd buffer_size %zd\n",
-                       alloc->pid, buffer, size, buffer_size);
 
 	BUG_ON(buffer->free);
 	BUG_ON(size > buffer_size);

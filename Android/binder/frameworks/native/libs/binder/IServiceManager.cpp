@@ -38,7 +38,6 @@ namespace android {
 sp<IServiceManager> defaultServiceManager()
 {
     if (gDefaultServiceManager != NULL) return gDefaultServiceManager;
-
     {
         AutoMutex _l(gDefaultServiceManagerLock);
         while (gDefaultServiceManager == NULL) {
@@ -190,6 +189,7 @@ public:
         Parcel data, reply;
         data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
         data.writeString16(name);
+        // 将Service封装成flat_binder_object
         data.writeStrongBinder(service);
         data.writeInt32(allowIsolated ? 1 : 0);
         data.writeInt32(dumpsysPriority);

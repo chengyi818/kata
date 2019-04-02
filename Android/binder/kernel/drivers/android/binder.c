@@ -171,12 +171,6 @@ module_param_call(stop_on_user_error, binder_set_stop_on_user_error,
             pr_info(x);                         \
     } while (0)
 
-#define binder_cydebug(pid, x...)               \
-    do {                                        \
-        if (pid > 2641)                         \
-            pr_info(x);                         \
-    } while (0)
-
 
 #define binder_user_error(x...)                             \
     do {                                                    \
@@ -3144,24 +3138,8 @@ static void binder_transaction(struct binder_proc *proc,
                      (u64)tr->data.ptr.offsets,
                      (u64)tr->data_size, (u64)tr->offsets_size,
                      (u64)extra_buffers_size);
-        binder_cydebug(proc->pid,
-                     "%d:%d BC_REPLY %d -> %d:%d, data %016llx-%016llx size %lld-%lld-%lld\n",
-                     proc->pid, thread->pid, t->debug_id,
-                     target_proc->pid, target_thread->pid,
-                     (u64)tr->data.ptr.buffer,
-                     (u64)tr->data.ptr.offsets,
-                     (u64)tr->data_size, (u64)tr->offsets_size,
-                     (u64)extra_buffers_size);
     } else {
         binder_debug(BINDER_DEBUG_TRANSACTION,
-                     "%d:%d BC_TRANSACTION %d -> %d - node %d, data %016llx-%016llx size %lld-%lld-%lld\n",
-                     proc->pid, thread->pid, t->debug_id,
-                     target_proc->pid, target_node->debug_id,
-                     (u64)tr->data.ptr.buffer,
-                     (u64)tr->data.ptr.offsets,
-                     (u64)tr->data_size, (u64)tr->offsets_size,
-                     (u64)extra_buffers_size);
-        binder_cydebug(proc->pid,
                      "%d:%d BC_TRANSACTION %d -> %d - node %d, data %016llx-%016llx size %lld-%lld-%lld\n",
                      proc->pid, thread->pid, t->debug_id,
                      target_proc->pid, target_node->debug_id,
@@ -3207,13 +3185,6 @@ static void binder_transaction(struct binder_proc *proc,
         t->buffer = NULL;
         goto err_binder_alloc_buf_failed;
     }
-    // CVE_2019_2025
-    binder_cydebug(proc->pid, "%d:%d xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n", proc->pid, thread->pid);
-    binder_cydebug(proc->pid, "%d:%d xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n", proc->pid, thread->pid);
-    binder_cydebug(proc->pid, "%d:%d xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n", proc->pid, thread->pid);
-    binder_cydebug(proc->pid, "%d:%d xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n", proc->pid, thread->pid);
-    binder_cydebug(proc->pid, "%d:%d xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n", proc->pid, thread->pid);
-    t->buffer->allow_user_free = 0;
     t->buffer->debug_id = t->debug_id;
     t->buffer->transaction = t;
     t->buffer->target_node = target_node;
@@ -3557,10 +3528,6 @@ static int binder_thread_write(struct binder_proc *proc,
             atomic_inc(&thread->stats.bc[_IOC_NR(cmd)]);
         }
 
-        binder_cydebug(proc->pid,
-                       "%d:%d binder_thread_write cmd: %d\n",
-                       proc->pid, thread->pid, cmd);
-
         switch (cmd) {
         case BC_INCREFS:
         case BC_ACQUIRE:
@@ -3622,11 +3589,6 @@ static int binder_thread_write(struct binder_proc *proc,
                          proc->pid, thread->pid, debug_string,
                          rdata.debug_id, rdata.desc, rdata.strong,
                          rdata.weak);
-            binder_cydebug(proc->pid,
-                           "%d:%d %s ref %d desc %d s %d w %d\n",
-                           proc->pid, thread->pid, debug_string,
-                           rdata.debug_id, rdata.desc, rdata.strong,
-                           rdata.weak);
             break;
         }
         case BC_INCREFS_DONE:
@@ -3693,13 +3655,6 @@ static int binder_thread_write(struct binder_proc *proc,
                          cmd == BC_INCREFS_DONE ? "BC_INCREFS_DONE" : "BC_ACQUIRE_DONE",
                          node->debug_id, node->local_strong_refs,
                          node->local_weak_refs, node->tmp_refs);
-
-            binder_cydebug(proc->pid,
-                           "%d:%d %s node %d ls %d lw %d tr %d\n",
-                           proc->pid, thread->pid,
-                           cmd == BC_INCREFS_DONE ? "BC_INCREFS_DONE" : "BC_ACQUIRE_DONE",
-                           node->debug_id, node->local_strong_refs,
-                           node->local_weak_refs, node->tmp_refs);
             binder_node_inner_unlock(node);
             binder_put_node(node);
             break;
@@ -3722,42 +3677,25 @@ static int binder_thread_write(struct binder_proc *proc,
             // 找到data_ptr对应的binder_buffer
             buffer = binder_alloc_prepare_to_free(&proc->alloc,
                                                   data_ptr);
-            if (buffer == NULL) {
-                binder_user_error("%d:%d BC_FREE_BUFFER u%016llx no match\n",
-                                  proc->pid, thread->pid, (u64)data_ptr);
+            if (IS_ERR_OR_NULL(buffer)) {
+                if (PTR_ERR(buffer) == -EPERM) {
+                    binder_user_error(
+                        "%d:%d BC_FREE_BUFFER u%016llx matched unreturned or currently freeing buffer\n",
+                        proc->pid, thread->pid,
+                        (u64)data_ptr);
+                } else {
+                    binder_user_error(
+                        "%d:%d BC_FREE_BUFFER u%016llx no match\n",
+                        proc->pid, thread->pid,
+                        (u64)data_ptr);
+                }
                 break;
             }
-            if (!buffer->allow_user_free) {
-                binder_user_error("%d:%d BC_FREE_BUFFER u%016llx matched unreturned buffer\n",
-                                  proc->pid, thread->pid, (u64)data_ptr);
-                break;
-            }
-            // CVE_2019_2025
-            /* if (IS_ERR_OR_NULL(buffer)) { */
-            /*     if (PTR_ERR(buffer) == -EPERM) { */
-            /*         binder_user_error( */
-            /*             "%d:%d BC_FREE_BUFFER u%016llx matched unreturned or currently freeing buffer\n", */
-            /*             proc->pid, thread->pid, */
-            /*             (u64)data_ptr); */
-            /*     } else { */
-            /*         binder_user_error( */
-            /*             "%d:%d BC_FREE_BUFFER u%016llx no match\n", */
-            /*             proc->pid, thread->pid, */
-            /*             (u64)data_ptr); */
-            /*     } */
-            /*     break; */
-            /* } */
             binder_debug(BINDER_DEBUG_FREE_BUFFER,
                          "%d:%d BC_FREE_BUFFER u%016llx found buffer %d for %s transaction\n",
                          proc->pid, thread->pid, (u64)data_ptr,
                          buffer->debug_id,
                          buffer->transaction ? "active" : "finished");
-
-            binder_cydebug(proc->pid,
-                           "%d:%d BC_FREE_BUFFER u%016llx found buffer %d for %s transaction\n",
-                           proc->pid, thread->pid, (u64)data_ptr,
-                           buffer->debug_id,
-                           buffer->transaction ? "active" : "finished");
 
             if (buffer->transaction) {
                 buffer->transaction->buffer = NULL;
@@ -4438,16 +4376,6 @@ retry:
                      t->buffer->data_size, t->buffer->offsets_size,
                      (u64)tr.data.ptr.buffer, (u64)tr.data.ptr.offsets);
 
-        binder_cydebug(proc->pid,
-                       "%d:%d %s %d %d:%d, cmd %d size %zd-%zd ptr %016llx-%016llx\n",
-                       proc->pid, thread->pid,
-                       (cmd == BR_TRANSACTION) ? "BR_TRANSACTION" :
-                       "BR_REPLY",
-                       t->debug_id, t_from ? t_from->proc->pid : 0,
-                       t_from ? t_from->pid : 0, cmd,
-                       t->buffer->data_size, t->buffer->offsets_size,
-                       (u64)tr.data.ptr.buffer, (u64)tr.data.ptr.offsets);
-
         if (t_from)
             binder_thread_dec_tmpref(t_from);
         t->buffer->allow_user_free = 1;
@@ -4734,11 +4662,6 @@ static int binder_ioctl_write_read(struct file *filp,
                  proc->pid, thread->pid,
                  (u64)bwr.write_size, (u64)bwr.write_buffer,
                  (u64)bwr.read_size, (u64)bwr.read_buffer);
-    binder_cydebug(proc->pid,
-                   "%d:%d write %lld at %016llx, read %lld at %016llx\n",
-                   proc->pid, thread->pid,
-                   (u64)bwr.write_size, (u64)bwr.write_buffer,
-                   (u64)bwr.read_size, (u64)bwr.read_buffer);
 
     if (bwr.write_size > 0) {
         ret = binder_thread_write(proc, thread,
@@ -4775,11 +4698,6 @@ static int binder_ioctl_write_read(struct file *filp,
                  (u64)bwr.write_consumed, (u64)bwr.write_size,
                  (u64)bwr.read_consumed, (u64)bwr.read_size);
 
-    binder_cydebug(proc->pid,
-                   "%d:%d wrote %lld of %lld, read return %lld of %lld\n",
-                   proc->pid, thread->pid,
-                   (u64)bwr.write_consumed, (u64)bwr.write_size,
-                   (u64)bwr.read_consumed, (u64)bwr.read_size);
     if(copy_to_user(ubuf, &bwr, sizeof(bwr))) {
         ret = -EFAULT;
         goto out;
@@ -4870,10 +4788,6 @@ static long binder_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
     /*pr_info("binder_ioctl: %d:%d %x %lx\n",
       proc->pid, current->pid, cmd, arg);*/
 
-    binder_cydebug(proc->pid,
-                   "binder_ioctl: %d:%d %x %lx\n",
-                   proc->pid, current->pid, cmd, arg);
-
     binder_selftest_alloc(&proc->alloc);
 
     trace_binder_ioctl(cmd, arg);
@@ -4903,8 +4817,6 @@ static long binder_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
             goto err;
         }
 
-        binder_cydebug(proc->pid, "%d:%d max_threads: %d\n",
-                       proc->pid, thread->pid, max_threads);
         binder_inner_proc_lock(proc);
         proc->max_threads = max_threads;
         binder_inner_proc_unlock(proc);
@@ -5017,12 +4929,6 @@ static int binder_mmap(struct file *filp, struct vm_area_struct *vma)
         vma->vm_end = vma->vm_start + SZ_4M;
 
     binder_debug(BINDER_DEBUG_OPEN_CLOSE,
-                 "%s: %d %lx-%lx (%ld K) vma %lx pagep %lx\n",
-                 __func__, proc->pid, vma->vm_start, vma->vm_end,
-                 (vma->vm_end - vma->vm_start) / SZ_1K, vma->vm_flags,
-                 (unsigned long)pgprot_val(vma->vm_page_prot));
-
-    binder_cydebug(proc->pid,
                  "%s: %d %lx-%lx (%ld K) vma %lx pagep %lx\n",
                  __func__, proc->pid, vma->vm_start, vma->vm_end,
                  (vma->vm_end - vma->vm_start) / SZ_1K, vma->vm_flags,

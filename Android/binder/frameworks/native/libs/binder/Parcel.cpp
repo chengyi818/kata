@@ -206,11 +206,15 @@ inline static status_t finish_flatten_binder(
     return out->writeObject(flat, false);
 }
 
+/**
+ * @binder: 指向一个BnService对象
+ */
 status_t flatten_binder(const sp<ProcessState>& /*proc*/,
     const sp<IBinder>& binder, Parcel* out)
 {
     flat_binder_object obj;
 
+    // 设置obj权限
     if (IPCThreadState::self()->backgroundSchedulingDisabled()) {
         /* minimum priority for all nodes is nice 0 */
         obj.flags = FLAT_BINDER_FLAG_ACCEPTS_FDS;
@@ -220,6 +224,7 @@ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
     }
 
     if (binder != NULL) {
+        // 获取binder对应的本地对象接口,其实就是自己
         IBinder *local = binder->localBinder();
         if (!local) {
             BpBinder *proxy = binder->remoteBinder();
@@ -232,6 +237,7 @@ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
             obj.handle = handle;
             obj.cookie = 0;
         } else {
+            // 设置obj的内容,包括本地对象的弱引用计数地址和本地对象地址
             obj.hdr.type = BINDER_TYPE_BINDER;
             obj.binder = reinterpret_cast<uintptr_t>(local->getWeakRefs());
             obj.cookie = reinterpret_cast<uintptr_t>(local);
@@ -242,6 +248,7 @@ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
         obj.cookie = 0;
     }
 
+    // 将obect对象写入Parcel对象out
     return finish_flatten_binder(binder, obj, out);
 }
 
@@ -1304,10 +1311,12 @@ status_t Parcel::write(const FlattenableHelperInterface& val)
 
 status_t Parcel::writeObject(const flat_binder_object& val, bool nullMetaData)
 {
+    // 判断空间 是否足够
     const bool enoughData = (mDataPos+sizeof(val)) <= mDataCapacity;
     const bool enoughObjects = mObjectsSize < mObjectsCapacity;
     if (enoughData && enoughObjects) {
 restart_write:
+        // 将val写入Parcel
         *reinterpret_cast<flat_binder_object*>(mData+mDataPos) = val;
 
         // remember if it's a file descriptor
@@ -1319,6 +1328,7 @@ restart_write:
             mHasFds = mFdsKnown = true;
         }
 
+        // 记录binder jobject在Parcel中的位置
         // Need to write meta-data?
         if (nullMetaData || val.binder != 0) {
             mObjects[mObjectsSize] = mDataPos;

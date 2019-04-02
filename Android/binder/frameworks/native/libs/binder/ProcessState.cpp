@@ -40,7 +40,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define BINDER_VM_SIZE ((1 * 1024 * 1024) - sysconf(_SC_PAGE_SIZE) * 2)
+#define BINDER_VM_SIZE ((1 * 1024 * 1024) - sysconf(_SC_PAGE_SIZE) * 2) // 1016 kb
 #define DEFAULT_MAX_BINDER_THREADS 15
 
 // -------------------------------------------------------------------------
@@ -108,6 +108,7 @@ void ProcessState::setContextObject(const sp<IBinder>& object)
 
 sp<IBinder> ProcessState::getContextObject(const sp<IBinder>& /*caller*/)
 {
+    // 创建一个Binder代理对象
     return getStrongProxyForHandle(0);
 }
 
@@ -240,12 +241,16 @@ ProcessState::handle_entry* ProcessState::lookupHandleLocked(int32_t handle)
     return &mHandleToObject.editItemAt(handle);
 }
 
+/**
+ * @handle: 0表示要创建一个Service Manager代理对象
+ */
 sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
 {
     sp<IBinder> result;
 
     AutoMutex _l(mLock);
 
+    // 首先在mHandleToObject中,搜索是否已经handle对应的handle_entry
     handle_entry* e = lookupHandleLocked(handle);
 
     if (e != NULL) {
@@ -253,8 +258,11 @@ sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
         // are unable to acquire a weak reference on this current one.  See comment
         // in getWeakProxyForHandle() for more info about this.
         IBinder* b = e->binder;
+        // handle尚无对应的BpBinder对象 或者 BpBinder已经销毁,无法增加弱引用计数
+        // 需要重新创建BpBinder对象
         if (b == NULL || !e->refs->attemptIncWeak(this)) {
             if (handle == 0) {
+                // ServiceManager代理对象
                 // Special case for context manager...
                 // The context manager is the only object for which we create
                 // a BpBinder proxy without already holding a reference.
@@ -281,6 +289,7 @@ sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
                    return NULL;
             }
 
+            // 创建一个Binder代理对象
             b = BpBinder::create(handle);
             e->binder = b;
             if (b) e->refs = b->getWeakRefs();
@@ -410,7 +419,7 @@ static int open_driver(const char *driver)
 
 ProcessState::ProcessState(const char *driver)
     : mDriverName(String8(driver))
-    , mDriverFD(open_driver(driver))
+    , mDriverFD(open_driver(driver)) // open /dev/binder
     , mVMStart(MAP_FAILED)
     , mThreadCountLock(PTHREAD_MUTEX_INITIALIZER)
     , mThreadCountDecrement(PTHREAD_COND_INITIALIZER)
