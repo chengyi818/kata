@@ -37,6 +37,10 @@ int SwiCreate(unsigned int swiId, unsigned int prio, void(* proc)( void )) {
 }
 
 int SwiActivate(unsigned int swiId) {
+    if(swiId > 99 ) {
+        return -1;
+    }
+
     Func proc = soft_interrupt_table[swiId].proc;
     unsigned int prio = soft_interrupt_table[swiId].prio;
     unsigned int restore = current_prio;
