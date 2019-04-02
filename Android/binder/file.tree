@@ -1,0 +1,270 @@
+.
+├── BinderSample
+│   ├── AppBinderDemo
+│   │   ├── app
+│   │   │   ├── app.iml
+│   │   │   ├── build.gradle
+│   │   │   ├── proguard-rules.pro
+│   │   │   └── src
+│   │   │       ├── androidTest
+│   │   │       │   └── java
+│   │   │       │       └── com
+│   │   │       │           └── yuanhh
+│   │   │       │               └── appbinderdemo
+│   │   │       │                   └── ApplicationTest.java
+│   │   │       ├── main
+│   │   │       │   ├── aidl
+│   │   │       │   │   └── com
+│   │   │       │   │       └── yuanhh
+│   │   │       │   │           └── appbinderdemo
+│   │   │       │   │               ├── IRemoteService.aidl
+│   │   │       │   │               └── MyData.aidl
+│   │   │       │   ├── AndroidManifest.xml
+│   │   │       │   ├── java
+│   │   │       │   │   └── com
+│   │   │       │   │       └── yuanhh
+│   │   │       │   │           └── appbinderdemo
+│   │   │       │   │               ├── ClientActivity.java
+│   │   │       │   │               ├── MyData.java
+│   │   │       │   │               └── RemoteService.java
+│   │   │       │   └── res
+│   │   │       │       ├── layout
+│   │   │       │       │   └── activity_main.xml
+│   │   │       │       ├── mipmap-hdpi
+│   │   │       │       │   └── ic_launcher.png
+│   │   │       │       ├── mipmap-mdpi
+│   │   │       │       │   └── ic_launcher.png
+│   │   │       │       ├── mipmap-xhdpi
+│   │   │       │       │   └── ic_launcher.png
+│   │   │       │       ├── mipmap-xxhdpi
+│   │   │       │       │   └── ic_launcher.png
+│   │   │       │       ├── mipmap-xxxhdpi
+│   │   │       │       │   └── ic_launcher.png
+│   │   │       │       ├── values
+│   │   │       │       │   ├── colors.xml
+│   │   │       │       │   ├── dimens.xml
+│   │   │       │       │   ├── strings.xml
+│   │   │       │       │   └── styles.xml
+│   │   │       │       └── values-w820dp
+│   │   │       │           └── dimens.xml
+│   │   │       └── test
+│   │   │           └── java
+│   │   │               └── com
+│   │   │                   └── yuanhh
+│   │   │                       └── appbinderdemo
+│   │   │                           └── ExampleUnitTest.java
+│   │   ├── AppBinderDemo.iml
+│   │   ├── build.gradle
+│   │   ├── gradle
+│   │   │   └── wrapper
+│   │   │       ├── gradle-wrapper.jar
+│   │   │       └── gradle-wrapper.properties
+│   │   ├── gradle.properties
+│   │   ├── gradlew
+│   │   ├── gradlew.bat
+│   │   ├── README.md
+│   │   └── settings.gradle
+│   ├── FrameworkBinderDemo
+│   │   ├── Android.mk
+│   │   ├── ClientDemo
+│   │   │   ├── Android.mk
+│   │   │   ├── ClientDemo
+│   │   │   └── src
+│   │   │       └── com
+│   │   │           └── yuanhh
+│   │   │               └── frameworkBinder
+│   │   │                   ├── ClientDemo.java
+│   │   │                   ├── IMyService.java
+│   │   │                   └── MyServiceProxy.java
+│   │   ├── README.md
+│   │   └── ServerDemo
+│   │       ├── Android.mk
+│   │       ├── ServerDemo
+│   │       └── src
+│   │           └── com
+│   │               └── yuanhh
+│   │                   └── frameworkBinder
+│   │                       ├── IMyService.java
+│   │                       ├── MyService.java
+│   │                       └── ServerDemo.java
+│   ├── _images
+│   │   ├── apk_ui.png
+│   │   ├── app_binder_demo.jpg
+│   │   ├── framework_binder_demo.jpg
+│   │   ├── framework_client.png
+│   │   ├── framework_server.png
+│   │   ├── logcat_BinderSimple.png
+│   │   ├── native_binder_demo.jpg
+│   │   ├── native_client.png
+│   │   └── native_server.png
+│   ├── NativeBinderDemo
+│   │   ├── Android.mk
+│   │   ├── ClientDemo.cpp
+│   │   ├── IMyService.cpp
+│   │   ├── IMyService.h
+│   │   ├── README.md
+│   │   └── ServerDemo.cpp
+│   ├── Output
+│   │   ├── frameworkBinderDemo
+│   │   │   ├── ClientDemo
+│   │   │   ├── ClientDemo.jar
+│   │   │   ├── ServerDemo
+│   │   │   └── ServerDemo.jar
+│   │   └── nativeBinderDemo
+│   │       ├── ClientDemo
+│   │       └── ServerDemo
+│   └── README.md
+├── file.tree
+├── frameworks
+│   ├── base
+│   │   ├── core
+│   │   │   ├── java
+│   │   │   │   ├── android
+│   │   │   │   │   └── os
+│   │   │   │   │       ├── Binder.java
+│   │   │   │   │       ├── Parcel.java
+│   │   │   │   │       ├── ServiceManager.java
+│   │   │   │   │       └── ServiceManagerNative.java
+│   │   │   │   └── com
+│   │   │   │       └── android
+│   │   │   │           └── internal
+│   │   │   │               └── os
+│   │   │   │                   ├── BinderCallsStats.java
+│   │   │   │                   └── BinderInternal.java
+│   │   │   └── jni
+│   │   │       ├── android_util_Binder.cpp
+│   │   │       └── android_util_Binder.h
+│   │   └── services
+│   │       └── java
+│   │           └── com
+│   │               └── android
+│   │                   └── server
+│   │                       └── SystemServer.java
+│   └── native
+│       ├── cmds
+│       │   └── servicemanager
+│       │       ├── Android.bp
+│       │       ├── bctest.c
+│       │       ├── binder.c
+│       │       ├── binder.h
+│       │       ├── service_manager.c
+│       │       ├── servicemanager.rc
+│       │       └── vndservicemanager.rc
+│       └── libs
+│           └── binder
+│               ├── ActivityManager.cpp
+│               ├── aidl
+│               │   └── android
+│               │       └── content
+│               │           └── pm
+│               │               └── IPackageManagerNative.aidl
+│               ├── Android.bp
+│               ├── AppOpsManager.cpp
+│               ├── Binder.cpp
+│               ├── BpBinder.cpp
+│               ├── BufferedTextOutput.cpp
+│               ├── Debug.cpp
+│               ├── IActivityManager.cpp
+│               ├── IAppOpsCallback.cpp
+│               ├── IAppOpsService.cpp
+│               ├── IBatteryStats.cpp
+│               ├── IInterface.cpp
+│               ├── IMediaResourceMonitor.cpp
+│               ├── IMemory.cpp
+│               ├── include
+│               │   ├── binder
+│               │   │   ├── ActivityManager.h
+│               │   │   ├── AppOpsManager.h
+│               │   │   ├── Binder.h
+│               │   │   ├── BinderService.h
+│               │   │   ├── BpBinder.h
+│               │   │   ├── BufferedTextOutput.h
+│               │   │   ├── Debug.h
+│               │   │   ├── IActivityManager.h
+│               │   │   ├── IAppOpsCallback.h
+│               │   │   ├── IAppOpsService.h
+│               │   │   ├── IBatteryStats.h
+│               │   │   ├── IBinder.h
+│               │   │   ├── IInterface.h
+│               │   │   ├── IMediaResourceMonitor.h
+│               │   │   ├── IMemory.h
+│               │   │   ├── IPCThreadState.h
+│               │   │   ├── IPermissionController.h
+│               │   │   ├── IpPrefix.h
+│               │   │   ├── IProcessInfoService.h
+│               │   │   ├── IResultReceiver.h
+│               │   │   ├── IServiceManager.h
+│               │   │   ├── IShellCallback.h
+│               │   │   ├── IUidObserver.h
+│               │   │   ├── Map.h
+│               │   │   ├── MemoryBase.h
+│               │   │   ├── MemoryDealer.h
+│               │   │   ├── MemoryHeapBase.h
+│               │   │   ├── Parcelable.h
+│               │   │   ├── Parcel.h
+│               │   │   ├── PermissionCache.h
+│               │   │   ├── PermissionController.h
+│               │   │   ├── PersistableBundle.h
+│               │   │   ├── ProcessInfoService.h
+│               │   │   ├── ProcessState.h
+│               │   │   ├── SafeInterface.h
+│               │   │   ├── Status.h
+│               │   │   ├── TextOutput.h
+│               │   │   └── Value.h
+│               │   └── private
+│               │       └── binder
+│               │           ├── binder_module.h
+│               │           ├── ParcelValTypes.h
+│               │           └── Static.h
+│               ├── IPCThreadState.cpp
+│               ├── IPermissionController.cpp
+│               ├── IpPrefix.cpp
+│               ├── IProcessInfoService.cpp
+│               ├── IResultReceiver.cpp
+│               ├── IServiceManager.cpp
+│               ├── IShellCallback.cpp
+│               ├── IUidObserver.cpp
+│               ├── MemoryBase.cpp
+│               ├── MemoryDealer.cpp
+│               ├── MemoryHeapBase.cpp
+│               ├── Parcel.cpp
+│               ├── PermissionCache.cpp
+│               ├── PermissionController.cpp
+│               ├── PersistableBundle.cpp
+│               ├── ProcessInfoService.cpp
+│               ├── ProcessState.cpp
+│               ├── Static.cpp
+│               ├── Status.cpp
+│               ├── tags
+│               ├── tests
+│               │   ├── Android.bp
+│               │   ├── binderDriverInterfaceTest.cpp
+│               │   ├── binderLibTest.cpp
+│               │   ├── binderSafeInterfaceTest.cpp
+│               │   ├── binderTextOutputTest.cpp
+│               │   ├── binderThroughputTest.cpp
+│               │   ├── binderValueTypeTest.cpp
+│               │   └── schd-dbg.cpp
+│               ├── TextOutput.cpp
+│               └── Value.cpp
+├── kernel
+│   ├── drivers
+│   │   └── android
+│   │       ├── binder_alloc.c
+│   │       ├── binder_alloc.h
+│   │       ├── binder_alloc_selftest.c
+│   │       ├── binder.c
+│   │       ├── binder_trace.h
+│   │       ├── Kconfig
+│   │       ├── Makefile
+│   │       ├── modules.builtin
+│   │       └── modules.order
+│   └── include
+│       └── uapi
+│           └── linux
+│               └── android
+│                   └── binder.h
+├── README.md
+└── tree
+
+87 directories, 180 files
