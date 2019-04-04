@@ -1336,6 +1336,7 @@ restart_write:
             mObjectsSize++;
         }
 
+        // 调整Parcel.mDataPos
         return finishWrite(sizeof(flat_binder_object));
     }
 

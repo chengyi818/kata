@@ -187,9 +187,10 @@ public:
     virtual status_t addService(const String16& name, const sp<IBinder>& service,
                                 bool allowIsolated, int dumpsysPriority) {
         Parcel data, reply;
+        // 写入Binder进程间通信请求头
         data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
         data.writeString16(name);
-        // 将Service封装成flat_binder_object
+        // 重点: 将service封装成flat_binder_object
         data.writeStrongBinder(service);
         data.writeInt32(allowIsolated ? 1 : 0);
         data.writeInt32(dumpsysPriority);
