@@ -2926,6 +2926,12 @@ static struct binder_node *binder_get_node_refs_for_txn(
     return target_node;
 }
 
+/**
+ *
+ * @reply: true表示处理的是BC_REPLY, false表示处理的是BC_TRANSACTION
+ */
+
+
 static void binder_transaction(struct binder_proc *proc,
                                struct binder_thread *thread,
                                struct binder_transaction_data *tr, int reply,
@@ -2960,8 +2966,8 @@ static void binder_transaction(struct binder_proc *proc,
     e->offsets_size = tr->offsets_size;
     e->context_name = proc->context->name;
 
-    // 从bn返回给驱动
     if (reply) {
+        // BC_REPLY协议
         binder_inner_proc_lock(proc);
         in_reply_to = thread->transaction_stack;
         if (in_reply_to == NULL) {
@@ -3015,7 +3021,9 @@ static void binder_transaction(struct binder_proc *proc,
         target_proc->tmp_ref++;
         binder_inner_proc_unlock(target_thread->proc);
     } else {
+        // BC_TRANSACTION协议
         if (tr->target.handle) {
+            // 指定了目标handle
             struct binder_ref *ref;
 
             /*
@@ -3026,9 +3034,11 @@ static void binder_transaction(struct binder_proc *proc,
              * done.
              */
             binder_proc_lock(proc);
+            // 获取handle对应的binder_ref
             ref = binder_get_ref_olocked(proc, tr->target.handle,
                                          true);
             if (ref) {
+                // 获取binder_ref对应的binder_node
                 target_node = binder_get_node_refs_for_txn(
                     ref->node, &target_proc,
                     &return_error);
@@ -3039,6 +3049,7 @@ static void binder_transaction(struct binder_proc *proc,
             }
             binder_proc_unlock(proc);
         } else {
+            // 目标node为service manager
             mutex_lock(&context->context_mgr_node_lock);
             target_node = context->binder_context_mgr_node;
             if (target_node)
@@ -3066,6 +3077,7 @@ static void binder_transaction(struct binder_proc *proc,
             goto err_invalid_target_handle;
         }
         binder_inner_proc_lock(proc);
+        // 优化: 优先寻找等待线程执行任务
         if (!(tr->flags & TF_ONE_WAY) && thread->transaction_stack) {
             struct binder_transaction *tmp;
 
@@ -3407,6 +3419,7 @@ static void binder_transaction(struct binder_proc *proc,
         t->from_parent = thread->transaction_stack;
         thread->transaction_stack = t;
         binder_inner_proc_unlock(proc);
+        // 将binder_transaction投递到目标线程todo
         if (!binder_proc_transaction(t, target_proc, target_thread)) {
             binder_inner_proc_lock(proc);
             binder_pop_transaction_ilocked(thread, t);

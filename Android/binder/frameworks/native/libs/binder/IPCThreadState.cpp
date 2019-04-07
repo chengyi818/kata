@@ -608,6 +608,7 @@ status_t IPCThreadState::transact(int32_t handle,
 
     LOG_ONEWAY(">>>> SEND from pid %d uid %d %s", getpid(), getuid(),
         (flags & TF_ONE_WAY) == 0 ? "READ REPLY" : "ONE WAY");
+    // 将数据写入mOut
     err = writeTransactionData(BC_TRANSACTION, flags, handle, code, data, NULL);
 
     if (err != NO_ERROR) {
@@ -624,6 +625,7 @@ status_t IPCThreadState::transact(int32_t handle,
         }
         #endif
         if (reply) {
+            // 发送数据并等待回复
             err = waitForResponse(reply);
         } else {
             Parcel fakeReply;
@@ -764,11 +766,13 @@ status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)
     int32_t err;
 
     while (1) {
+        // 发送mOut,并读入mIn
         if ((err=talkWithDriver()) < NO_ERROR) break;
         err = mIn.errorCheck();
         if (err < NO_ERROR) break;
         if (mIn.dataAvail() == 0) continue;
 
+        // 依次读取cmd处理
         cmd = (uint32_t)mIn.readInt32();
 
         IF_LOG_COMMANDS() {
@@ -902,6 +906,7 @@ status_t IPCThreadState::talkWithDriver(bool doReceive)
             alog << "About to read/write, write size = " << mOut.dataSize() << endl;
         }
 #if defined(__ANDROID__)
+        // 核心ioctl
         if (ioctl(mProcess->mDriverFD, BINDER_WRITE_READ, &bwr) >= 0)
             err = NO_ERROR;
         else
@@ -982,6 +987,7 @@ status_t IPCThreadState::writeTransactionData(int32_t cmd, uint32_t binderFlags,
         return (mLastError = err);
     }
 
+    // 将binder_transaction_data写入mOut
     mOut.writeInt32(cmd);
     mOut.write(&tr, sizeof(tr));
 
