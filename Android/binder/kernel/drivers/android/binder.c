@@ -1710,6 +1710,8 @@ static struct binder_ref *binder_get_ref_for_node_olocked(
     struct binder_ref *ref;
     struct rb_node *n;
 
+    // 在binder_proc->refs_by_node.rb_node中查找目标binder_ref
+    // 根据binder_node地址排序
     while (*p) {
         parent = *p;
         ref = rb_entry(parent, struct binder_ref, rb_node_node);
@@ -1719,11 +1721,14 @@ static struct binder_ref *binder_get_ref_for_node_olocked(
         else if (node > ref->node)
             p = &(*p)->rb_right;
         else
+            // 如果刚好找到,直接返回
             return ref;
     }
+    // 没有新new_ref需要init,没找到,返回NULL
     if (!new_ref)
         return NULL;
 
+    // 初始化binder_ref
     binder_stats_created(BINDER_STAT_REF);
     new_ref->data.debug_id = atomic_inc_return(&binder_last_id);
     new_ref->proc = proc;
@@ -1731,6 +1736,7 @@ static struct binder_ref *binder_get_ref_for_node_olocked(
     rb_link_node(&new_ref->rb_node_node, parent, p);
     rb_insert_color(&new_ref->rb_node_node, &proc->refs_by_node);
 
+    // 决定new_ref句柄值
     new_ref->data.desc = (node == context->binder_context_mgr_node) ? 0 : 1;
     for (n = rb_first(&proc->refs_by_desc); n != NULL; n = rb_next(n)) {
         ref = rb_entry(n, struct binder_ref, rb_node_desc);
@@ -1739,6 +1745,7 @@ static struct binder_ref *binder_get_ref_for_node_olocked(
         new_ref->data.desc = ref->data.desc + 1;
     }
 
+    // 将binder_ref插入proc->refs_by_desc
     p = &proc->refs_by_desc.rb_node;
     while (*p) {
         parent = *p;
@@ -1757,6 +1764,7 @@ static struct binder_ref *binder_get_ref_for_node_olocked(
     rb_insert_color(&new_ref->rb_node_desc, &proc->refs_by_desc);
 
     binder_node_lock(node);
+    // 将new_ref插入对应binder_node的refs
     hlist_add_head(&new_ref->node_entry, &node->refs);
 
     binder_debug(BINDER_DEBUG_INTERNAL_REFS,
@@ -2535,8 +2543,11 @@ static int binder_translate_binder(struct flat_binder_object *fp,
     struct binder_ref_data rdata;
     int ret = 0;
 
+    // 根据fp对应用户空间地址, 查找对应的binder_node
     node = binder_get_node(proc, fp->binder);
     if (!node) {
+        // 若是第一次传递,则无法获取
+        // 根据flat_binder_object,创建binder_node
         node = binder_new_node(proc, fp);
         if (!node)
             return -ENOMEM;
@@ -2554,6 +2565,7 @@ static int binder_translate_binder(struct flat_binder_object *fp,
         goto done;
     }
 
+    // 在目标进程target_proc中,增加与本binder_node对应的binder_ref的引用计数
     ret = binder_inc_ref_for_node(target_proc, node,
                                   fp->hdr.type == BINDER_TYPE_BINDER,
                                   &thread->todo, &rdata);
@@ -2561,6 +2573,7 @@ static int binder_translate_binder(struct flat_binder_object *fp,
         goto done;
 
     if (fp->hdr.type == BINDER_TYPE_BINDER)
+        // 此时binder_node对象已经变为binder_ref
         fp->hdr.type = BINDER_TYPE_HANDLE;
     else
         fp->hdr.type = BINDER_TYPE_WEAK_HANDLE;
@@ -3117,7 +3130,7 @@ static void binder_transaction(struct binder_proc *proc,
         e->to_thread = target_thread->pid;
     e->to_proc = target_proc->pid;
 
-    // 创建一个新的binder_transaction
+    // 创建一个新的binder_transaction t
     /* TODO: reuse incoming transaction for reply */
     t = kzalloc(sizeof(*t), GFP_KERNEL);
     if (t == NULL) {
@@ -3129,7 +3142,7 @@ static void binder_transaction(struct binder_proc *proc,
     binder_stats_created(BINDER_STAT_TRANSACTION);
     spin_lock_init(&t->lock);
 
-    // 创建一个新的binder_work
+    // 创建一个新的binder_work tcomplete
     tcomplete = kzalloc(sizeof(*tcomplete), GFP_KERNEL);
     if (tcomplete == NULL) {
         return_error = BR_FAILED_REPLY;
@@ -3162,6 +3175,7 @@ static void binder_transaction(struct binder_proc *proc,
     }
 
     if (!reply && !(tr->flags & TF_ONE_WAY))
+        // 同步请求,源线程
         t->from = thread;
     else
         t->from = NULL;
@@ -3398,6 +3412,7 @@ static void binder_transaction(struct binder_proc *proc,
     t->work.type = BINDER_WORK_TRANSACTION;
 
     if (reply) {
+        // BC_REPLY
         binder_enqueue_thread_work(thread, tcomplete);
         binder_inner_proc_lock(target_proc);
         if (target_thread->is_dead) {
@@ -3412,6 +3427,7 @@ static void binder_transaction(struct binder_proc *proc,
         binder_restore_priority(current, in_reply_to->saved_priority);
         binder_free_transaction(in_reply_to);
     } else if (!(t->flags & TF_ONE_WAY)) {
+        // 同步BC_TRANSACTION
         BUG_ON(t->buffer->async_transaction != 0);
         binder_inner_proc_lock(proc);
         binder_enqueue_thread_work_ilocked_nowake(thread, tcomplete);
@@ -3427,6 +3443,7 @@ static void binder_transaction(struct binder_proc *proc,
             goto err_dead_proc_or_thread;
         }
     } else {
+        // 异步BC_TRANSACTION
         BUG_ON(target_node == NULL);
         BUG_ON(t->buffer->async_transaction != 1);
         binder_enqueue_thread_work(thread, tcomplete);
@@ -4122,6 +4139,7 @@ retry:
         struct binder_thread *t_from;
 
         binder_inner_proc_lock(proc);
+        // 优先处理本thread的todo list
         if (!binder_worklist_empty_ilocked(&thread->todo))
             list = &thread->todo;
         else if (!binder_worklist_empty_ilocked(&proc->todo) &&
@@ -4149,6 +4167,7 @@ retry:
         case BINDER_WORK_TRANSACTION: {
             // bp传递任务给bn,bn会在这里收到binder_transaction
             binder_inner_proc_unlock(proc);
+            // 将binder_work转化为binder_transaction
             t = container_of(w, struct binder_transaction, work);
         } break;
         case BINDER_WORK_RETURN_ERROR: {
@@ -4165,6 +4184,7 @@ retry:
             binder_stat_br(proc, thread, cmd);
         } break;
         case BINDER_WORK_TRANSACTION_COMPLETE: {
+            // 向用户空间写回一个BR_TRANSACTION_COMPLETE
             binder_inner_proc_unlock(proc);
             cmd = BR_TRANSACTION_COMPLETE;
             if (put_user(cmd, (uint32_t __user *)ptr))
@@ -4313,7 +4333,7 @@ retry:
         if (!t)
             continue;
 
-        // 设置binder_transaction_data
+        // 设置binder_transaction_data tr
         BUG_ON(t->buffer == NULL);
         // 如果指定了binder_node
         if (t->buffer->target_node) {
@@ -4393,6 +4413,7 @@ retry:
             binder_thread_dec_tmpref(t_from);
         t->buffer->allow_user_free = 1;
         if (cmd == BR_TRANSACTION && !(t->flags & TF_ONE_WAY)) {
+            // 同步请求
             binder_inner_proc_lock(thread->proc);
             t->to_parent = thread->transaction_stack;
             t->to_thread = thread;

@@ -214,6 +214,8 @@ void binder_send_reply(struct binder_state *bs,
     binder_write(bs, &data, sizeof(data));
 }
 
+// service manager处理binder_write_read
+// binder_io == Parcel
 int binder_parse(struct binder_state *bs, struct binder_io *bio,
                  uintptr_t ptr, size_t size, binder_handler func)
 {
@@ -248,6 +250,8 @@ int binder_parse(struct binder_state *bs, struct binder_io *bio,
             }
             binder_dump_txn(txn);
             if (func) {
+                // msg: 用于读取从驱动返回的数据
+                // reply: 用于将数据写入rdata
                 unsigned rdata[256/4];
                 struct binder_io msg;
                 struct binder_io reply;
@@ -255,6 +259,7 @@ int binder_parse(struct binder_state *bs, struct binder_io *bio,
 
                 bio_init(&reply, rdata, sizeof(rdata), 4);
                 bio_init_from_txn(&msg, txn);
+                // 调用 svcmgr_handler 处理 binder_transaction_data
                 res = func(bs, txn, &msg, &reply);
                 if (txn->flags & TF_ONE_WAY) {
                     binder_free_buffer(bs, txn->data.ptr.buffer);
