@@ -10,6 +10,7 @@ package main
 import (
 	"fmt"
 	"time"
+	"strconv"
 )
 
 type MyError struct {
@@ -17,6 +18,7 @@ type MyError struct {
 	What string
 }
 
+// go error built-in
 func (e *MyError) Error() string {
 	return fmt.Sprintf("at %v, %s",
 		e.When, e.What)
@@ -30,7 +32,16 @@ func run() error {
 }
 
 func main() {
+	// 会调用built-in Error()
 	if err := run(); err != nil {
 		fmt.Println(err)
 	}
+
+	// 常见用法
+	i, err := strconv.Atoi("42a")
+	if err != nil {
+		fmt.Printf("couldn't convert number: %v\n", err)
+		return
+	}
+	fmt.Println("Converted integer:", i)
 }
