@@ -1,0 +1,110 @@
+* Effective Go
+https://golang.org/doc/effective_go.html
+
+* Introduction
+** Examples
+   https://golang.org/pkg/
+   许多go package中,就带有示例代码和测试代码
+* Formatting
+  0. gofmt
+  1. 默认使用tab缩进
+  2. 没有长度限制
+  3. 括号少的多
+* Commentary
+  1. /* */
+  2. //
+  3. godoc使用注释生成文档
+* Names
+  1. Package中,首字母大写的符号表示导出.
+  2. 类似python中的__all__
+** Package names
+   1. 小写,单个单词
+   2. import尽量不要使用相对路径
+   3. 导出符号命名应该考虑到包名,从而简化符号命名
+   4. 尽量不要使用长命名,应该是看不惯Java?
+** Getters
+   1. go不支持python的setters和getters
+
+   #+NAME: <go setter&&getter>
+   #+BEGIN_SRC <go>
+  owner := obj.Owner()
+  if owner != user {
+      obj.SetOwner(user)
+  }
+   #+END_SRC
+
+** Interface names
+   1. 接口通常命名为方法名+er,比如 Reader, Writer, Formatter, CloseNotifier
+   2. 有些方法是常用接口的方法,类似于python的type ducking.比如: Read, Write, Close, Flush, String
+   3. 了解这些接口的方法,如果含义一致,则方法命名可以相同.
+   4. 如果含义不一致,则需要避免这些命名
+** MixedCaps
+   1. go倾向使用MixedCaps和mixedCaps,而不是下划线
+* Semicolons
+  1. go源码中,不需要分号,是由编译器自动插入的
+  2. go仅在for,if等少数场景需要分号
+  3. 如果在一行中,有多个语句,需要分号
+  4. 因为自动插入分号的原因,go大括号不能另起一行
+* Control structures
+** If
+   f, err := os.Open(name)
+   if err != nil {
+   return err
+   }
+   d, err := f.Stat()
+   if err != nil {
+   f.Close()
+   return err
+   }
+   codeUsing(f, d)
+
+   1. 常见用法,省略了else
+** Redeclaration and reassignment
+   1. 上面一段代码,err变量重复使用
+** For
+
+** Switch
+** Type switch
+* Functions
+** Multiple return values
+** Named result parameters
+** Defer
+* Data
+** Allocation with new
+** Constructors and composite literals
+** Allocation with make
+** Arrays
+** Slices
+** Two-dimensional slices
+** Maps
+** Printing
+** Append
+* Initialization
+** Constants
+** Variables
+** The init function
+* Methods
+** Pointers vs. Values
+* Interfaces and other types
+** Interfaces
+** Conversions
+** Interface conversions and type assertions
+** Generality
+** Interfaces and methods
+* The blank identifier
+** The blank identifier in multiple assignment
+** Unused imports and variables
+** Import for side effect
+** Interface checks
+* Embedding
+* Concurrency
+** Share by communicating
+** Goroutines
+** Channels
+** Channels of channels
+** Parallelization
+** A leaky buffer
+* Errors
+** Panic
+** Recover
+* A web server

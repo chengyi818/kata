@@ -14,5 +14,5 @@ func main() {
 
 	var s []int = primes[1:4]
 	fmt.Println(s)
-	fmt.Printf("Type: %T Value: %v\n", s, s)
+	fmt.Printf("Type: %T Value: %v Len: %v Cap: %v\n", s, s, len(s), cap(s))
 }
