@@ -264,6 +264,7 @@ int binder_parse(struct binder_state *bs, struct binder_io *bio,
                 if (txn->flags & TF_ONE_WAY) {
                     binder_free_buffer(bs, txn->data.ptr.buffer);
                 } else {
+                    // 将结果返回给驱动程序
                     binder_send_reply(bs, &reply, txn->data.ptr.buffer, res);
                 }
             }
@@ -428,6 +429,7 @@ void binder_loop(struct binder_state *bs, binder_handler func)
     }
 }
 
+// 初始化bio
 void bio_init_from_txn(struct binder_io *bio, struct binder_transaction_data *txn)
 {
     bio->data = bio->data0 = (char *)(intptr_t)txn->data.ptr.buffer;
@@ -436,6 +438,12 @@ void bio_init_from_txn(struct binder_io *bio, struct binder_transaction_data *tx
     bio->offs_avail = txn->offsets_size / sizeof(size_t);
     bio->flags = BIO_F_SHARED;
 }
+/**
+ * @bio: 要初始化的结构体
+ * @data: bio内部使用的缓冲区地址
+ * @maxdata: 缓冲区大小
+ * @maxoffs: bio内部偏移数组大小
+ */
 
 void bio_init(struct binder_io *bio, void *data,
               size_t maxdata, size_t maxoffs)
