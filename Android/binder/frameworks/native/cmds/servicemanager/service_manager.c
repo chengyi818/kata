@@ -311,10 +311,12 @@ int svcmgr_handler(struct binder_state *bs,
         return 0;
 
     case SVC_MGR_ADD_SERVICE:
+        // 获取service组件名称
         s = bio_get_string16(msg, &len);
         if (s == NULL) {
             return -1;
         }
+        // 获得binder_ref的句柄值
         handle = bio_get_ref(msg);
         allow_isolated = bio_get_uint32(msg) ? 1 : 0;
         dumpsys_priority = bio_get_uint32(msg);

@@ -3010,6 +3010,7 @@ static void binder_transaction(struct binder_proc *proc,
         }
         thread->transaction_stack = in_reply_to->to_parent;
         binder_inner_proc_unlock(proc);
+        // 根据binder_transaction找到源binder_thread
         target_thread = binder_get_txn_from_and_acq_inner(in_reply_to);
         if (target_thread == NULL) {
             return_error = BR_DEAD_REPLY;
@@ -3700,6 +3701,7 @@ static int binder_thread_write(struct binder_proc *proc,
             binder_uintptr_t data_ptr;
             struct binder_buffer *buffer;
 
+            // 获取要释放的binder_buffer对应的用户空间地址
             if (get_user(data_ptr, (binder_uintptr_t __user *)ptr))
                 return -EFAULT;
             ptr += sizeof(binder_uintptr_t);
@@ -3731,6 +3733,7 @@ static int binder_thread_write(struct binder_proc *proc,
                 buffer->transaction->buffer = NULL;
                 buffer->transaction = NULL;
             }
+            // buffer是否用于异步事务
             if (buffer->async_transaction && buffer->target_node) {
                 struct binder_node *buf_node;
                 struct binder_work *w;
@@ -3751,7 +3754,9 @@ static int binder_thread_write(struct binder_proc *proc,
                 binder_node_inner_unlock(buf_node);
             }
             trace_binder_transaction_buffer_release(buffer);
+            // 清理binder_buffer中的binder_xxx对象
             binder_transaction_buffer_release(proc, buffer, NULL);
+            // 释放binder_buffer
             binder_alloc_free_buf(&proc->alloc, buffer);
             break;
         }
@@ -4165,7 +4170,7 @@ retry:
 
         switch (w->type) {
         case BINDER_WORK_TRANSACTION: {
-            // bp传递任务给bn,bn会在这里收到binder_transaction
+            // bp传递任务给bn,bn会在这里收到 binder_transaction
             binder_inner_proc_unlock(proc);
             // 将binder_work转化为binder_transaction
             t = container_of(w, struct binder_transaction, work);
@@ -4420,6 +4425,7 @@ retry:
             thread->transaction_stack = t;
             binder_inner_proc_unlock(thread->proc);
         } else {
+            // BR_REPLY可以清理binder_transaction
             binder_free_transaction(t);
         }
         break;

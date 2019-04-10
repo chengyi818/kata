@@ -185,6 +185,7 @@ void binder_send_reply(struct binder_state *bs,
                        binder_uintptr_t buffer_to_free,
                        int status)
 {
+    // 两个命令组合打包
     struct {
         uint32_t cmd_free;
         binder_uintptr_t buffer;
@@ -199,12 +200,14 @@ void binder_send_reply(struct binder_state *bs,
     data.txn.cookie = 0;
     data.txn.code = 0;
     if (status) {
+        // svcmgr_handler处理失败
         data.txn.flags = TF_STATUS_CODE;
         data.txn.data_size = sizeof(int);
         data.txn.offsets_size = 0;
         data.txn.data.ptr.buffer = (uintptr_t)&status;
         data.txn.data.ptr.offsets = 0;
     } else {
+        // svcmgr_handler处理成功
         data.txn.flags = 0;
         data.txn.data_size = reply->data - reply->data0;
         data.txn.offsets_size = ((char*) reply->offs) - ((char*) reply->offs0);

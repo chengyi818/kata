@@ -2449,8 +2449,10 @@ void Parcel::ipcSetDataReference(const uint8_t* data, size_t dataSize,
     const binder_size_t* objects, size_t objectsCount, release_func relFunc, void* relCookie)
 {
     binder_size_t minOffset = 0;
+    // 释放当前Parcel占用的内存
     freeDataNoInit();
     mError = NO_ERROR;
+    // 数据已经保存到本进程,这里只要将读取指针指过去即可
     mData = const_cast<uint8_t*>(data);
     mDataSize = mDataCapacity = dataSize;
     //ALOGI("setDataReference Setting data size of %p to %lu (pid=%d)", this, mDataSize, getpid());
@@ -2460,8 +2462,8 @@ void Parcel::ipcSetDataReference(const uint8_t* data, size_t dataSize,
     mObjectsSize = mObjectsCapacity = objectsCount;
     mNextObjectHint = 0;
     mObjectsSorted = false;
-    mOwner = relFunc;
-    mOwnerCookie = relCookie;
+    mOwner = relFunc; // freeBuffer
+    mOwnerCookie = relCookie; // IPCThreadState对象
     for (size_t i = 0; i < mObjectsSize; i++) {
         binder_size_t offset = mObjects[i];
         if (offset < minOffset) {
