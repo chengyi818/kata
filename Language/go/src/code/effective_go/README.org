@@ -336,7 +336,7 @@ if str, ok := value.(string); ok {
    4. go关键字,创建goroutine类似shell cmd &
 ** Channels
    1. 使用make创建,可以设置buffer大小,返回的类似指针
-   2. channel可以作为signal使用
+   2. unbuffered channel可以作为signal使用
 #+BEGIN_SRC C
   c := make(chan int)  // Allocate a channel.
   // Start the sort in a goroutine; when it completes, signal on the channel.
@@ -347,6 +347,7 @@ if str, ok := value.(string); ok {
   doSomethingForAWhile()
   <-c   // Wait for sort to finish; discard sent value.
 #+END_SRC
+   3. buffered channel可以作为信号量使用
 
 ** Channels of channels
 ** Parallelization
