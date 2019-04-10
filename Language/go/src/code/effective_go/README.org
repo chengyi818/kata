@@ -47,60 +47,307 @@ https://golang.org/doc/effective_go.html
   4. 因为自动插入分号的原因,go大括号不能另起一行
 * Control structures
 ** If
+   1. 常见用法,省略了else
+#+BEGIN_SRC  C
    f, err := os.Open(name)
    if err != nil {
-   return err
+      return err
    }
    d, err := f.Stat()
    if err != nil {
    f.Close()
-   return err
+      return err
    }
    codeUsing(f, d)
-
-   1. 常见用法,省略了else
+#+END_SRC
 ** Redeclaration and reassignment
    1. 上面一段代码,err变量重复使用
 ** For
-
+   1. go中的for,充当了c语言中的for, while
+   2. go没有++和--
 ** Switch
+   1. 自动填充break
+   2. 可以替代大段的if-else
+   3. 可以使用表达式
+#+BEGIN_SRC C
+func unhex(c byte) byte {
+    switch {
+    case '0' <= c && c <= '9':
+        return c - '0'
+    case 'a' <= c && c <= 'f':
+        return c - 'a' + 10
+    case 'A' <= c && c <= 'F':
+        return c - 'A' + 10
+    }
+    return 0
+}}
+#+END_SRC
+
+   4. 可以用逗号隔开case condition
+#+BEGIN_SRC C
+  func shouldEscape(c byte) bool {
+      switch c {
+      case ' ', '?', '&', '=', '#', '+', '%':
+          return true
+      }
+      return false
+  }
+
+#+END_SRC
+
+   5. break可以类似goto
+#+BEGIN_SRC C
+Loop:
+	for n := 0; n < len(src); n += size {
+		switch {
+		case src[n] < sizeOne:
+			if validateOnly {
+				break
+			}
+			size = 1
+			update(src[n])
+
+		case src[n] < sizeTwo:
+			if n+1 >= len(src) {
+				err = errShortInput
+				break Loop
+			}
+			if validateOnly {
+				break
+			}
+			size = 2
+			update(src[n] + src[n+1]<<shift)
+		}
+	}
+#+END_SRC
+
 ** Type switch
+   1. 利用switch判断对象类型
+#+NAME: <Type switch>
+#+BEGIN_SRC C
+var t interface{}
+t = functionOfSomeType()
+switch t := t.(type) {
+default:
+    fmt.Printf("unexpected type %T\n", t)     // %T prints whatever type t has
+case bool:
+    fmt.Printf("boolean %t\n", t)             // t has type bool
+case int:
+    fmt.Printf("integer %d\n", t)             // t has type int
+case *bool:
+    fmt.Printf("pointer to boolean %t\n", *t) // t has type *bool
+case *int:
+    fmt.Printf("pointer to integer %d\n", *t) // t has type *int
+}
+#+END_SRC
 * Functions
 ** Multiple return values
+   1. 函数返回多个值,类似python返回列表
 ** Named result parameters
+   1. 返回命名结果
+#+BEGIN_SRC C
+func ReadFull(r Reader, buf []byte) (n int, err error) {
+    for len(buf) > 0 && err == nil {
+        var nr int
+        nr, err = r.Read(buf)
+        n += nr
+        buf = buf[nr:]
+    }
+    return
+}
+#+END_SRC
 ** Defer
+   1. 类似于python: try final
+   2. 常用于释放锁,关闭文件描述符
+   3. LIFO,类似于栈
+   4. defer语句 参数在defer调用时,已被展开执行
 * Data
 ** Allocation with new
+   1. allocation关键字: new, make
+   2. new类似于c的malloc,返回对象指针
+#+BEGIN_SRC C
+  p := new(SyncedBuffer)  // type *SyncedBuffer
+  var v SyncedBuffer      // type  SyncedBuffer
+#+END_SRC
 ** Constructors and composite literals
+   1. 创建并初始化对象
+   2. 可以返回局部变量地址
+   3. 未初始化局部变量为0
+#+BEGIN_SRC C
+  return &File{fd, name, nil, 0}
+  return &File{fd: fd, name: name}
+#+END_SRC
 ** Allocation with make
+   1. 创建slice, map, channel
+   2. 用于创建必须初始化的对象,比如slice,包含data,length,capacity
+   3. 返回对象本身,而不是对象指针
+#+BEGIN_SRC C
+  var p *[]int = new([]int)       // allocates slice structure; *p == nil; rarely useful
+  var v  []int = make([]int, 100) // the slice v now refers to a new array of 100 ints
+
+  // Unnecessarily complex:
+  var p *[]int = new([]int)
+  *p = make([]int, 100, 100)
+
+  // Idiomatic:
+  v := make([]int, 100)
+#+END_SRC
 ** Arrays
+   1. 数组按值传递.数组作为函数参数,会拷贝整个数组
+   2. 数组的大小固定,且数组大小是其类型的一部分,即[10]int和[20]int是两种不同的类型
+   3. Go中更推荐使用slice
 ** Slices
+   1. slice是array的引用,传递slice即传递指针
+   2. Append库实现
+#+BEGIN_SRC C
+func Append(slice, data []byte) []byte {
+    l := len(slice)
+    if l + len(data) > cap(slice) {  // reallocate
+        // Allocate double what's needed, for future growth.
+        newSlice := make([]byte, (l+len(data))*2)
+        // The copy function is predeclared and works for any slice type.
+        copy(newSlice, slice)
+        slice = newSlice
+    }
+    slice = slice[0:l+len(data)]
+    copy(slice[l:], data)
+    return slice
+}
+#+END_SRC
 ** Two-dimensional slices
+   1. 二维slice分配
 ** Maps
+   1. slice不能作为map的key,因为没有 == 运算
+   2. 判断key是否在map中存在
 ** Printing
+   1. %v value
+   2. %+v 带上field名
+   3. %#v go语法格式
+   4. %T type
+   5. 自定义打印方法,重写String()方法,注意避免无限递归
+   6. v ...interface{} 类似于 v []interface{}
 ** Append
+   1. func append(slice []Type, elems ...Type) []Type
+   2. append两个slice
+#+BEGIN_SRC C
+  x := []int{1,2,3}
+  y := []int{4,5,6}
+  x = append(x, y...)
+  fmt.Println(x)
+#+END_SRC
 * Initialization
 ** Constants
+   1. 常量在编译时创建,且只能是基本类型: 数字,字符,字符串,布尔
+   2. 枚举类型如下:
+#+BEGIN_SRC C
+  type ByteSize float64
+
+  const (
+      _           = iota // ignore first value by assigning to blank identifier
+      KB ByteSize = 1 << (10 * iota)
+      MB
+      GB
+      TB
+      PB
+      EB
+      ZB
+      YB
+  )
+#+END_SRC
 ** Variables
+   1. 运行时赋值
 ** The init function
+   1. func init()在所有变量申明和包导入后,自动调用
+   2. 通常用于验证程序状态和环境变量之类的
 * Methods
 ** Pointers vs. Values
+   1. 按址传递,按值传递
+   2. 重写标准方法
 * Interfaces and other types
 ** Interfaces
+   1. 类似于python的type ducking
 ** Conversions
+   1. 类型转换
 ** Interface conversions and type assertions
+   1. 获取对象类型 obj.(type)
+   2. 获取对象特定类型属性 obj.(string)
+#+BEGIN_SRC C
+if str, ok := value.(string); ok {
+    return str
+} else if str, ok := value.(Stringer); ok {
+    return str.String()
+}
+#+END_SRC
 ** Generality
+   1. 导出interface,而不是实现type
+   2. 构造函数返回interface,而不是实现type
+   3. 基于接口编程,而不是基于实现
 ** Interfaces and methods
 * The blank identifier
 ** The blank identifier in multiple assignment
+   1. _ 用于保存不需要的变量
 ** Unused imports and variables
+   1. unused error
+#+BEGIN_SRC C
+  package main
+
+  import (
+      "fmt"
+      "io"
+      "log"
+      "os"
+  )
+
+  var _ = fmt.Printf // For debugging; delete when done.
+  var _ io.Reader    // For debugging; delete when done.
+
+  func main() {
+      fd, err := os.Open("test.go")
+      if err != nil {
+          log.Fatal(err)
+      }
+      // TODO: use fd.
+      _ = fd
+  }
+#+END_SRC
 ** Import for side effect
+   1. 无错误引入: import _ "net/http/pprof"
 ** Interface checks
+   1. 检查对象是否包含特定接口
+#+BEGIN_SRC C
+  if _, ok := val.(json.Marshaler); ok {
+      fmt.Printf("value %v of type %T implements json.Marshaler\n", val, val)
+  }
+#+END_SRC
 * Embedding
+  1. interface嵌入interface,而成为新的interface
+  2. interface嵌入struct,从而实现继承
+  3. 上层变量函数覆盖下层变量函数
+  4. 同级变量函数重名,报错
 * Concurrency
 ** Share by communicating
+   1. Do not communicate by sharing memory; instead, share memory by communicating.
+   2. 多使用channel
+   3. 类似Unix pipe
 ** Goroutines
+   1. 本质是函数同时运行在同一地址空间,还是有点像协程啊
+   2. 消耗极小,仅比分配栈空间稍大
+   3. 用于隐藏线程的创建和管理
+   4. go关键字,创建goroutine类似shell cmd &
 ** Channels
+   1. 使用make创建,可以设置buffer大小,返回的类似指针
+   2. channel可以作为signal使用
+#+BEGIN_SRC C
+  c := make(chan int)  // Allocate a channel.
+  // Start the sort in a goroutine; when it completes, signal on the channel.
+  go func() {
+      list.Sort()
+      c <- 1  // Send a signal; value does not matter.
+  }()
+  doSomethingForAWhile()
+  <-c   // Wait for sort to finish; discard sent value.
+#+END_SRC
+
 ** Channels of channels
 ** Parallelization
 ** A leaky buffer

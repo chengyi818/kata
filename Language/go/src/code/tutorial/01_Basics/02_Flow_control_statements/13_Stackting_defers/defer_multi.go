@@ -17,6 +17,7 @@ func main() {
 	fmt.Println("counting")
 
 	for i := 0; i < 10; i++ {
+		// i的值在调用defer时,就已经确定了
 		defer fmt.Println(i)
 	}
 
