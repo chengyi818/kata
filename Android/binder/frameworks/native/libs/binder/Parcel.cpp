@@ -319,6 +319,7 @@ status_t unflatten_binder(const sp<ProcessState>& proc,
                 *out = reinterpret_cast<IBinder*>(flat->cookie);
                 return finish_unflatten_binder(NULL, *flat, in);
             case BINDER_TYPE_HANDLE:
+                // 查找和handle相对应的BpBinder对象
                 *out = proc->getStrongProxyForHandle(flat->handle);
                 return finish_unflatten_binder(
                     static_cast<BpBinder*>(out->get()), *flat, in);
@@ -2148,6 +2149,7 @@ status_t Parcel::readNullableStrongBinder(sp<IBinder>* val) const
     return unflatten_binder(ProcessState::self(), *this, val);
 }
 
+// 从Parcel中读取IBinder对象
 sp<IBinder> Parcel::readStrongBinder() const
 {
     sp<IBinder> val;

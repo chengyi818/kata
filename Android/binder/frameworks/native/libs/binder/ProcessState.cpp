@@ -250,7 +250,7 @@ sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
 
     AutoMutex _l(mLock);
 
-    // 首先在mHandleToObject中,搜索是否已经handle对应的handle_entry
+    // 首先在mHandleToObject中,搜索或插入对应的handle_entry
     handle_entry* e = lookupHandleLocked(handle);
 
     if (e != NULL) {
