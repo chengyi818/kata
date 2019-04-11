@@ -140,6 +140,7 @@ public:
     {
     }
 
+    // bp getService
     virtual sp<IBinder> getService(const String16& name) const
     {
         sp<IBinder> svc = checkService(name);

@@ -304,9 +304,11 @@ int svcmgr_handler(struct binder_state *bs,
         if (s == NULL) {
             return -1;
         }
+        // 根据s找到一个uint32_t的handle
         handle = do_find_service(s, len, txn->sender_euid, txn->sender_pid);
         if (!handle)
             break;
+        // 分配并设置Parcel* reply
         bio_put_ref(reply, handle);
         return 0;
 

@@ -2031,6 +2031,7 @@ static int binder_inc_ref_for_node(struct binder_proc *proc,
     int ret = 0;
 
     binder_proc_lock(proc);
+    // 在proc中,查找node对应的binder_ref
     ref = binder_get_ref_for_node_olocked(proc, node, NULL);
     if (!ref) {
         binder_proc_unlock(proc);
@@ -2601,6 +2602,7 @@ static int binder_translate_handle(struct flat_binder_object *fp,
     struct binder_ref_data src_rdata;
     int ret = 0;
 
+    // 通过handle找到对应的binder_node
     node = binder_get_node_from_ref(proc, fp->handle,
                                     fp->hdr.type == BINDER_TYPE_HANDLE, &src_rdata);
     if (!node) {

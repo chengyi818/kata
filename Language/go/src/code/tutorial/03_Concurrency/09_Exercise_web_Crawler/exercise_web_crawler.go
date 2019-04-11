@@ -36,7 +36,6 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	for _, u := range urls {
 		Crawl(u, depth-1, fetcher)
 	}
-
 }
 
 func main() {

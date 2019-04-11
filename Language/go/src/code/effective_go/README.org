@@ -64,7 +64,6 @@ https://golang.org/doc/effective_go.html
    1. 上面一段代码,err变量重复使用
 ** For
    1. go中的for,充当了c语言中的for, while
-   2. go没有++和--
 ** Switch
    1. 自动填充break
    2. 可以替代大段的if-else
@@ -348,11 +347,39 @@ if str, ok := value.(string); ok {
   <-c   // Wait for sort to finish; discard sent value.
 #+END_SRC
    3. buffered channel可以作为信号量使用
-
 ** Channels of channels
+   1. channel是一级对象,可以在channel中传递
 ** Parallelization
+   1. 任务分解,并发执行
 ** A leaky buffer
+   1. 通过channel实现buffer缓存
 * Errors
+  1. Error的实现机制
+  2. 多个返回值,返回err
+  3. 具体err可以重写Error()接口
+  4. 通过检查错误类型,来动态处理
 ** Panic
+   1. 内置函数panic(string)
+   2. 程序中止正常运行,展开其他goroutine的函数栈,执行其defer函数.会停止所有goroutine
+   3. 可以恢复的问题还是err比较好
 ** Recover
+   1. 内置函数recover(),仅可以在defer中使用
+   2. 可以用于仅停止当前goroutine
+#+BEGIN_SRC C
+func server(workChan <-chan *Work) {
+    for work := range workChan {
+        go safelyDo(work)
+    }
+}
+
+func safelyDo(work *Work) {
+    defer func() {
+        if err := recover(); err != nil {
+            log.Println("work failed:", err)
+        }
+    }()
+    do(work)
+}
+#+END_SRC
+   3. 对于package而言,应该把内部panic转为error,向外部传递
 * A web server
