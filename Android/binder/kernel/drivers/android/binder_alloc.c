@@ -81,6 +81,7 @@ static void binder_insert_free_buffer(struct binder_alloc *alloc,
 
 	BUG_ON(!new_buffer->free);
 
+    // 获取binder_buffer所管理的内存大小
 	new_buffer_size = binder_alloc_buffer_size(alloc, new_buffer);
 
 	binder_alloc_debug(BINDER_DEBUG_BUFFER_ALLOC,
@@ -181,6 +182,10 @@ struct binder_buffer *binder_alloc_prepare_to_free(struct binder_alloc *alloc,
 	mutex_unlock(&alloc->mutex);
 	return buffer;
 }
+/**
+ * binder_update_page_range - 为内核地址 start~end 分配物理页面
+ * @allocate: 1表示分配,0表示释放
+ */
 
 static int binder_update_page_range(struct binder_alloc *alloc, int allocate,
 				    void *start, void *end)
@@ -249,6 +254,7 @@ static int binder_update_page_range(struct binder_alloc *alloc, int allocate,
 			goto err_page_ptr_cleared;
 
 		trace_binder_alloc_page_start(alloc, index);
+        // 分配物理内存页面,并获得物理地址
 		page->page_ptr = alloc_page(GFP_KERNEL |
 					    __GFP_HIGHMEM |
 					    __GFP_ZERO);
@@ -260,6 +266,7 @@ static int binder_update_page_range(struct binder_alloc *alloc, int allocate,
 		page->alloc = alloc;
 		INIT_LIST_HEAD(&page->lru);
 
+        // 将页面映射到mm_struct,即内核地址空间
 		ret = map_kernel_range_noflush((unsigned long)page_addr,
 					       PAGE_SIZE, PAGE_KERNEL,
 					       &page->page_ptr);
@@ -272,6 +279,7 @@ static int binder_update_page_range(struct binder_alloc *alloc, int allocate,
 		}
 		user_page_addr =
 			(uintptr_t)page_addr + alloc->user_buffer_offset;
+        // 将相同的物理页面映射到vma,即用户空间
 		ret = vm_insert_page(vma, user_page_addr, page[0].page_ptr);
 		if (ret) {
 			pr_err("%d: binder_alloc_buf failed to map page at %lx in userspace\n",
@@ -371,8 +379,10 @@ struct binder_buffer *binder_alloc_new_buf_locked(struct binder_alloc *alloc,
 	}
 
 	/* Pad 0-size buffers so they get assigned unique addresses */
+    // 最终实际要分配的内存大小
 	size = max(size, sizeof(void *));
 
+    // 重点: 找到最合适的binder_buffer
 	while (n) {
 		buffer = rb_entry(n, struct binder_buffer, rb_node);
 		BUG_ON(!buffer->free);
@@ -682,6 +692,7 @@ int binder_alloc_mmap_handler(struct binder_alloc *alloc,
 		goto err_already_mapped;
 	}
 
+    // 初始化 binder_alloc
 	area = get_vm_area(vma->vm_end - vma->vm_start, VM_IOREMAP);
 	if (area == NULL) {
 		ret = -ENOMEM;

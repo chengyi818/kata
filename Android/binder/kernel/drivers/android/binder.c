@@ -4967,6 +4967,7 @@ static int binder_mmap(struct file *filp, struct vm_area_struct *vma)
     if (proc->tsk != current->group_leader)
         return -EINVAL;
 
+    // 最多分配4M
     if ((vma->vm_end - vma->vm_start) > SZ_4M)
         vma->vm_end = vma->vm_start + SZ_4M;
 
@@ -4981,10 +4982,12 @@ static int binder_mmap(struct file *filp, struct vm_area_struct *vma)
         failure_string = "bad vm_flags";
         goto err_bad_arg;
     }
+    // vma指定的内存区域不可写,不可拷贝
     vma->vm_flags = (vma->vm_flags | VM_DONTCOPY) & ~VM_MAYWRITE;
     vma->vm_ops = &binder_vm_ops;
     vma->vm_private_data = proc;
 
+    // 分配vm_struct,并初始化 binder_alloc
     ret = binder_alloc_mmap_handler(&proc->alloc, vma);
 
     return ret;

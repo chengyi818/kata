@@ -188,14 +188,15 @@ public:
     virtual status_t addService(const String16& name, const sp<IBinder>& service,
                                 bool allowIsolated, int dumpsysPriority) {
         Parcel data, reply;
-        // 写入Binder进程间通信请求头
+        // 1. 写入Binder进程间通信请求头
         data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
+        // 2. 写入key
         data.writeString16(name);
-        // 重点: 将service封装成flat_binder_object
+        // 3. 重点: 将value service封装成flat_binder_object
         data.writeStrongBinder(service);
         data.writeInt32(allowIsolated ? 1 : 0);
         data.writeInt32(dumpsysPriority);
-        // 调用内部binder代理对象
+        // 4. 调用内部binder代理对象
         status_t err = remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
         return err == NO_ERROR ? reply.readExceptionCode() : err;
     }

@@ -1123,6 +1123,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
             if (tr.target.ptr) {
                 // We only have a weak reference on the target object, so we must first try to
                 // safely acquire a strong reference before doing anything else with it.
+                // 重点
                 if (reinterpret_cast<RefBase::weakref_type*>(
                         tr.target.ptr)->attemptIncStrong(this)) {
                     error = reinterpret_cast<BBinder*>(tr.cookie)->transact(tr.code, buffer,

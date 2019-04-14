@@ -113,7 +113,7 @@ struct binder_object_header {
  * between processes.
  */
 struct flat_binder_object {
-	struct binder_object_header	hdr;
+	struct binder_object_header	hdr; // type
 	__u32				flags;
 
 	/* 8 bytes of data. */
@@ -283,9 +283,9 @@ struct binder_transaction_data {
 	 */
 	union {
 		/* target descriptor of command transaction */
-		__u32	handle;
+		__u32	handle; //描述binder_ref
 		/* target descriptor of return transaction */
-		binder_uintptr_t ptr;
+		binder_uintptr_t ptr; //描述binder_node
 	} target;
 	binder_uintptr_t	cookie;	/* target object cookie */
 	__u32		code;		/* transaction command */
@@ -304,7 +304,7 @@ struct binder_transaction_data {
 	union {
 		struct {
 			/* transaction data */
-			binder_uintptr_t	buffer;
+			binder_uintptr_t	buffer; // 真实数据保存地址
 			/* offsets from buffer to flat_binder_object structs */
 			binder_uintptr_t	offsets;
 		} ptr;
@@ -510,4 +510,3 @@ enum binder_driver_command_protocol {
 };
 
 #endif /* _UAPI_LINUX_BINDER_H */
-
