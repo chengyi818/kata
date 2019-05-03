@@ -104,13 +104,67 @@ global 最根本的作用是作为全局变量的宿主。按照 ECMAScript 的�
 注意： 永远使用 var 定义变量以避免引入全局变量，因为全局变量会污染 命名空间，提高代码的耦合风险。
 
 ## 14_常用工具
+util
+
 ## 15_文件系统
+通过回调操作文件/目录
+
 ## 16_GET/POST请求
+
 ## 17_工具模块
+[os](https://www.runoob.com/nodejs/nodejs-os-module.html)
+
+[Path](https://www.runoob.com/nodejs/nodejs-path-module.html)
+
+[Net](https://www.runoob.com/nodejs/nodejs-net-module.html)
+
+[DNS](https://www.runoob.com/nodejs/nodejs-dns-module.html)
+
+[Domain](https://www.runoob.com/nodejs/nodejs-domain-module.html)
+
 ## 18_Web模块
+目前最主流的三个Web服务器是Apache、Nginx、IIS
+
 ## 19_Express框架
+request 对象表示 HTTP 请求
+response 对象表示 HTTP 响应
+
+### 路由
+express_route.js
+
+### 静态文件
+express_static.js
+public/
+
+### get方法
+get_index.htm
+express_get.js
+
+### post方法
+post_index.htm
+express_post.js
+
+### 上传文件
+
+### cookie
+express_cookie.js
+
 ## 20_RESTful API
+REST即表述性状态传递（英文：Representational State Transfer，简称REST）
+
 ## 21_多进程
+每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。
+
+Node 提供了 child_process 模块来创建子进程，方法有：
+
+exec - child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。
+
+spawn - child_process.spawn 使用指定的命令行参数创建新进程。
+
+fork - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork('./son.js') 相当于 spawn('node', ['./son.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+
 ## 22_JXcore打包
 ## 23_MySQL
+CRUD
+
 ## 24_MongoDB
