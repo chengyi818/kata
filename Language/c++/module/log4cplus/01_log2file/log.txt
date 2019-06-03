@@ -1,0 +1,4 @@
+06/03/19 16:05:24,802.337 [140293985736512] INFO  test - Hello world [main.cpp:41]
+06/03/19 16:06:53,259.681 [140691544213312] INFO  CVE - Hello world [main.cpp:42]
+06/03/19 16:12:33,776.675 [140650800428864] INFO  CVE - Hello world [main.cpp:42]
+06/03/19 16:17:55,197.248 [140266439546688] INFO  CVE - Hello world [main.cpp:42]
