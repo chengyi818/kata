@@ -17,6 +17,8 @@ func fibonacci(n int, c chan int) {
 		c <- x
 		x, y = y, x+y
 	}
+
+	fmt.Println("close c")
 	// 通知range,内容结束
 	close(c)
 }
@@ -24,6 +26,7 @@ func fibonacci(n int, c chan int) {
 func main() {
 	c := make(chan int, 10)
 	go fibonacci(cap(c), c)
+
 	for i := range c {
 		fmt.Println(i)
 	}

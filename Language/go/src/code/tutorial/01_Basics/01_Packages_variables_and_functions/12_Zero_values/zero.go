@@ -22,4 +22,5 @@ func main() {
 	var b bool
 	var s string
 	fmt.Printf("%v %v %v %q\n", i, f, b, s)
+	fmt.Println(i, f, b, s)
 }

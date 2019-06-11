@@ -38,6 +38,10 @@ type Daughter struct {
 	Father
 }
 
+func (d Daughter) getHeight() float64 {
+	return d.height
+}
+
 
 func main() {
 	f := Father{"father", 55}
@@ -56,4 +60,5 @@ func main() {
 	fmt.Println(d.getName())
 	fmt.Println(d.getAge())
 	fmt.Println(d.name)
+	fmt.Println(d.getHeight())
 }

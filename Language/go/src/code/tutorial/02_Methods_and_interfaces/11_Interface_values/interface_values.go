@@ -41,6 +41,17 @@ func main() {
 	i = F(math.Pi)
 	describe(i)
 	i.M()
+
+	traverse()
+}
+
+func traverse() {
+	var s []I
+	s = append(s, &T{"Hello"})
+	s = append(s, F(math.Pi))
+	for _, i := range s {
+		i.M()
+	}
 }
 
 func describe(i I) {
