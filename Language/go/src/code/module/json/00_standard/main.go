@@ -95,5 +95,4 @@ func main() {
 		log.Println("Error in decode json: ", err)
 	}
 	fmt.Println("vc2: ", vc2)
-
 }
