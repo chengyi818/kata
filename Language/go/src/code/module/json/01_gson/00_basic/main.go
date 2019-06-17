@@ -19,5 +19,7 @@ const json = `{
 
 func main() {
 	value := gjson.Get(json, "name.last")
+	value2 := gjson.Get(json, "age")
 	println(value.String())
+	println(value2.String())
 }

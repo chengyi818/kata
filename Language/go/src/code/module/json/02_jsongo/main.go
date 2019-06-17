@@ -43,15 +43,15 @@ func main() {
 	log.Println(json.Indent())
 	log.Println(json.String())
 
-	in := json.String()
-    bytes, err := sj.Marshal(in)
-    if err != nil {
-        panic(err)
-    }
-	log.Printf("%T", bytes)
+    // bytes, err := sj.Marshal(in)
+    // if err != nil {
+    //     panic(err)
+    // }
+	// log.Printf("%T", bytes)
 
     var p Person
-    err = sj.Unmarshal(bytes, &p)
+	in := json.String()
+    err := sj.Unmarshal([]byte(in), &p)
     if err != nil {
         panic(err)
     }
