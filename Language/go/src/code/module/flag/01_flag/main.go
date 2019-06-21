@@ -19,6 +19,7 @@ package main
 
 import (
 	"flag" // command line option parser
+	"fmt"
 	"os"
 )
 
@@ -32,6 +33,8 @@ const (
 func main() {
 	flag.PrintDefaults()
 	flag.Parse() // Scans the arg list and sets up flags
+	fmt.Println(*NewLine)
+
 	var s string = ""
 	for i := 0; i < flag.NArg(); i++ {
 		if i > 0 {
