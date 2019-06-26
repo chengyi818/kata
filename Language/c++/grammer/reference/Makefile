@@ -1,16 +1,18 @@
+CC := g++
+OBJDUMP := objdump
+
 dump: dlopen
-	objdump -d a.out > dump_a.txt
-	objdump -d libpoint.so > dump_so.txt
+	$(OBJDUMP) -d a.out > dump_a.txt
+	$(OBJDUMP) -d libpoint.so > dump_so.txt
 
 dlopen: dynamic
-	g++ dlopen.cpp -L. -lpoint -ldl
+	$(CC) dlopen.cpp -L. -lpoint -ldl
 
 dynamic: object
-	g++ -shared -fPIC -o libpoint.so point.o
+	$(CC) -shared -fPIC -o libpoint.so point.o
 
 object:
-	g++ -fPIC -shared -c point.cpp
-
+	$(CC) -fPIC -shared -c point.cpp
 
 clean:
 	rm *.out *.so *.o *.txt
