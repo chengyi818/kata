@@ -18,8 +18,10 @@ func split(sum int) (x, y int) {
 	return
 }
 
+// lat float64,long float64
+
 func split_2(sum int) (int, int) {
-	var x,y int
+	var x, y int
 	x = sum * 4 / 9
 	y = sum - x
 	return x, y

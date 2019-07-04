@@ -20,9 +20,9 @@ type MyError struct {
 
 // go error built-in
 func (e *MyError) Error() string {
-	return fmt.Sprint(e)
-	// return fmt.Sprintf("at %v, %s",
-	// 	e.When, e.What)
+	// return fmt.Sprint(e)
+	return fmt.Sprintf("at %v, %s",
+		e.When, e.What)
 }
 
 func run() error {
