@@ -546,10 +546,10 @@ struct binder_priority {
  */
 struct binder_proc {
     struct hlist_node proc_node;
-    struct rb_root threads;
+    struct rb_root threads; // 线程池
     struct rb_root nodes;
-    struct rb_root refs_by_desc;
-    struct rb_root refs_by_node;
+    struct rb_root refs_by_desc; // binder_ref
+    struct rb_root refs_by_node; // binder_ref
     struct list_head waiting_threads;
     int pid;
     struct task_struct *tsk;
@@ -4958,6 +4958,8 @@ static const struct vm_operations_struct binder_vm_ops = {
     .fault = binder_vm_fault,
 };
 
+// vma: 描述用户空间
+// vm: 描述内核空间
 static int binder_mmap(struct file *filp, struct vm_area_struct *vma)
 {
     int ret;
@@ -5006,6 +5008,7 @@ static int binder_open(struct inode *nodp, struct file *filp)
     binder_debug(BINDER_DEBUG_OPEN_CLOSE, "binder_open: %d:%d\n",
                  current->group_leader->pid, current->pid);
 
+    // 分配binder_proc
     proc = kzalloc(sizeof(*proc), GFP_KERNEL);
     if (proc == NULL)
         return -ENOMEM;
@@ -5837,6 +5840,7 @@ static int __init init_binder_device(const char *name)
 	if (!binder_device)
 		return -ENOMEM;
 
+    // 驱动操作函数
 	binder_device->miscdev.fops = &binder_fops;
 	binder_device->miscdev.minor = MISC_DYNAMIC_MINOR;
 	binder_device->miscdev.name = name;
@@ -5845,6 +5849,7 @@ static int __init init_binder_device(const char *name)
 	binder_device->context.name = name;
 	mutex_init(&binder_device->context.context_mgr_node_lock);
 
+    // 注册/dev/binder
 	ret = misc_register(&binder_device->miscdev);
 	if (ret < 0) {
 		kfree(binder_device);

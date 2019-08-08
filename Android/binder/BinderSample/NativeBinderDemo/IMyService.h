@@ -8,7 +8,9 @@
 #include <binder/ProcessState.h>
 #include <binder/IPCThreadState.h>
 #include <binder/IServiceManager.h>
+
 using namespace android;
+
 namespace android
 {
     class IMyService : public IInterface

@@ -214,10 +214,10 @@ struct binder_fd_array_object {
 struct binder_write_read {
 	binder_size_t		write_size;	/* bytes to write */
 	binder_size_t		write_consumed;	/* bytes consumed by driver */
-	binder_uintptr_t	write_buffer;
+	binder_uintptr_t	write_buffer; // 用户空间地址
 	binder_size_t		read_size;	/* bytes to read */
 	binder_size_t		read_consumed;	/* bytes consumed by driver */
-	binder_uintptr_t	read_buffer;
+	binder_uintptr_t	read_buffer; // 用户空间地址
 };
 
 /* Use with BINDER_VERSION, driver fills in fields. */
@@ -283,9 +283,9 @@ struct binder_transaction_data {
 	 */
 	union {
 		/* target descriptor of command transaction */
-		__u32	handle; //描述binder_ref
+		__u32	handle; //描述目标binder_ref
 		/* target descriptor of return transaction */
-		binder_uintptr_t ptr; //描述binder_node
+		binder_uintptr_t ptr; //描述目标binder_node
 	} target;
 	binder_uintptr_t	cookie;	/* target object cookie */
 	__u32		code;		/* transaction command */

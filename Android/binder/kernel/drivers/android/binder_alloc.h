@@ -100,15 +100,15 @@ struct binder_lru_page {
  */
 struct binder_alloc {
 	struct mutex mutex;
-	struct vm_area_struct *vma;
+	struct vm_area_struct *vma; // 用户空间地址
 	struct mm_struct *vma_vm_mm;
-	void *buffer;
-	ptrdiff_t user_buffer_offset;
+	void *buffer; // 内核地址
+	ptrdiff_t user_buffer_offset; // 地址固定偏移
 	struct list_head buffers;
 	struct rb_root free_buffers;
 	struct rb_root allocated_buffers;
 	size_t free_async_space;
-	struct binder_lru_page *pages;
+	struct binder_lru_page *pages; // 物理内存页面
 	size_t buffer_size;
 	uint32_t buffer_free;
 	int pid;
