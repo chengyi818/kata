@@ -41,6 +41,13 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize){
  *1. for循环scanf读取多个以空格间隔的字符有些问题;
  *2. C中的以某个字符为分割的字符串切割处理
  */
+/*Note:
+ *1. getchar()、getche() 和 getch() 是专用的字符输入函数，它们在缓冲区和回显方面与 scanf() 有着不同的特性，
+ *   是 scanf() 不能替代的。
+ *2. gets() 是专用的字符串输入函数，与 scanf() 相比，gets() 的主要优势是可以读取含有空格的字符串。
+ *3. scanf() 可以一次性读取多份类型相同或者不同的数据，getchar()、getche()、getch() 和 gets() 每次只能读取一份特定类型的数据，
+ *   不能一次性读取多份数据。
+ */
 int main(void) {
     int i,j,k;
 
@@ -62,12 +69,11 @@ int main(void) {
     char strArray[100][100];
     char* stringArray[10];  //可最多存放10个字符串
 
+    #if 1
     /*1. 读入3个整数/字符,多个整数以空白字符(空格 回车符 tab键)隔开; scanf遇到这类空白字符,会连续读取输入流中空白字符,但不会存储*/
-    #if 0
     printf("1.1 请输入3个非负整数(以空格 回车符 tab键隔开):如1 2 3\n");
     scanf("%d%d%d",&i,&j,&k);
     printf("i=%d, j=%d, k=%d. \n",i,j,k);
-    */
 
     printf("1.2 请输入3个非负整数/字符(以空格 回车符 tab键隔开):如123a6\n");
     scanf("%d%c%d",&i,&a,&j);
