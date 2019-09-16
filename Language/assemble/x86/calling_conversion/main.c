@@ -6,11 +6,12 @@
  */
 
 
-int add(int a, int b, int c, int d, int e, int f, int g) {
-    return a+b+c+d+e+f+g;
+int sum(int a, int b, int c, int d, int e, int f, int* g) {
+    return a+b+c+d+e+f+*g;
 }
 
 int main() {
-    add(1, 2, 3, 4, 5, 6, 7);
-    add(2, 2, 3, 4, 5, 6, 7);
+    int a = 7;
+    sum(1, 2, 3, 4, 5, 6, &a);
+    /* sum(2, 2, 3, 4, 5, 6, 7); */
 }
