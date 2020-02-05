@@ -1,0 +1,11 @@
+{
+  "cve_id": "CVE_2019_20096",
+  "software": "kernel",
+  "case_version": "1",
+  "file_path": "net/dccp/feat.c",
+  "function_name": "__feat_register_sp",
+  "result_dict": {
+    "c081472cc99bc022ab1e04088aedeb03": "Patched",
+    "c70fe91d02555aef9c7d51ba75bd14c4": "Vulnerable"
+  }
+}

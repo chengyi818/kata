@@ -1,0 +1,11 @@
+{
+  "cve_id": "CVE_2016_2070",
+  "software": "kernel",
+  "case_version": 1,
+  "file_path": "net/ipv4/tcp_input.c",
+  "function_name": "tcp_cwnd_reduction",
+  "result_dict": {
+    "eb334f8dec2f37d9f82d65ed4d52606c": "Patched",
+    "666d82700b7005ab8133da11d3d29339": "Vulnerable"
+  }
+}
