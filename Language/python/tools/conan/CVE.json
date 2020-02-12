@@ -1,0 +1,52 @@
+{
+  "cve_id": "cve_2016_2070",
+  "software": "kernel",
+  "case_version": "1",
+  "case_result": "(method1 && method2) || method3",
+  "methods": [
+    {
+      "method_id": "method1",
+      "method_type": "function_token_hash",
+      "match_version": "[3.18, 4.4]",
+      "blocks": [
+        {
+          "block_id": "block1",
+          "file_path": "net/ipv4/tcp_input.c",
+          "function_name": "tcp_cwnd_reduction",
+          "result_dict": {
+            "eb334f8dec2f37d9f82d65ed4d52606c": "Patched",
+            "666d82700b7005ab8133da11d3d29339": "Vulnerable"
+          }
+        },
+        {
+          "block_id": "block2",
+          "file_path": "net/ipv4/tcp_input.c",
+          "function_name": "tcp_cwnd_reduction2",
+          "result_dict": {
+            "eb334f8dec2f37d9f82d65ed4d52606c": "Patched",
+            "666d82700b7005ab8133da11d3d29339": "Vulnerable"
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "method2",
+      "method_type": "function_token_anchor",
+      "match_version": "[3.18, 4.4]",
+      "blocks": [
+        {
+          "block_id": "block1",
+          "file_path": "net/ipv4/tcp_input.c",
+          "function_name": "tcp_cwnd_reduction",
+          "anchor_type": "between/before anchor/after anchor",
+          "anchor": "return-EOPNOTSUPP;",
+          "target": "if(dccp_feat_clone_sp_val(&fval,sp_val,sp_len))",
+          "result_dict": {
+            "contain": "Patched",
+            "not contain": "Vulnerable"
+          }
+        }
+      ]
+    }
+  ]
+}

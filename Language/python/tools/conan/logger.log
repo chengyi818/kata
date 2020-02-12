@@ -1,6 +1,0 @@
-DEBUG:root:source_direcotory: /home/chengyi/code/github/linux_kernel_all/linux-4.4-rc8
-DEBUG:root:cases_path: /home/chengyi/code/github/kata/Language/python/tools/conan/cases
-DEBUG:root:file_lists: ['/home/chengyi/code/github/kata/Language/python/tools/conan/cases/CVE_2016_2070.json', '/home/chengyi/code/github/kata/Language/python/tools/conan/cases/CVE_2019_20096.json']
-DEBUG:root:source_direcotory: /home/chengyi/code/github/linux_kernel_all/linux-4.4-rc8
-DEBUG:root:cases_path: /home/chengyi/code/github/kata/Language/python/tools/conan/cases
-DEBUG:root:file_lists: ['/home/chengyi/code/github/kata/Language/python/tools/conan/cases/CVE_2016_2070.json', '/home/chengyi/code/github/kata/Language/python/tools/conan/cases/CVE_2019_20096.json']
