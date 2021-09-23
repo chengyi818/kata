@@ -15,10 +15,12 @@
 # =============================================================================
 '''
 
+
 class MrConst(object):
     # pylint: disable=too-few-public-methods
     class ConstError(TypeError):
         pass
+
     class ConstCaseError(ConstError):
         pass
 
@@ -26,10 +28,12 @@ class MrConst(object):
         if self.__dict__.has_key(key):
             raise self.ConstError("Can't change const.{0}!".format(key))
         if not key.isupper():
-            raise self.ConstCaseError(("cosnt name '{0}' is not all uppercase!"
-                                       .format(key)))
+            raise self.ConstCaseError(
+                ("cosnt name '{0}' is not all uppercase!".format(key)))
         self.__dict__[key] = value
+
 
 import sys
 
 sys.modules[__name__] = MrConst()
+print(3)
