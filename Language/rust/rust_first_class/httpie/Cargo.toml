@@ -9,7 +9,6 @@ edition = "2018"
 # 错误处理
 anyhow="1" 
 # 命令行解析
-# clap = "2.3.3"
 clap = "3.0.0-beta.4"
 # 命令行终端多彩显示
 colored = "2"
