@@ -1,2 +1,2 @@
-mod create_pokemon;
-mod entities;
+pub mod create_pokemon;
+pub mod entities;
