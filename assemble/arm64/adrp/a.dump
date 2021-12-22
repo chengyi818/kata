@@ -1,0 +1,207 @@
+
+a.out:     file format elf64-littleaarch64
+
+
+Disassembly of section .init:
+
+0000000000000758 <_init>:
+ 758:	a9bf7bfd 	stp	x29, x30, [sp,#-16]!
+ 75c:	910003fd 	mov	x29, sp
+ 760:	9400002a 	bl	808 <call_weak_fn>
+ 764:	a8c17bfd 	ldp	x29, x30, [sp],#16
+ 768:	d65f03c0 	ret
+
+Disassembly of section .plt:
+
+0000000000000770 <__cxa_finalize@plt-0x20>:
+ 770:	a9bf7bf0 	stp	x16, x30, [sp,#-16]!
+ 774:	90000090 	adrp	x16, 10000 <__FRAME_END__+0xf610>
+ 778:	f947fe11 	ldr	x17, [x16,#4088]
+ 77c:	913fe210 	add	x16, x16, #0xff8
+ 780:	d61f0220 	br	x17
+ 784:	d503201f 	nop
+ 788:	d503201f 	nop
+ 78c:	d503201f 	nop
+
+0000000000000790 <__cxa_finalize@plt>:
+ 790:	b0000090 	adrp	x16, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 794:	f9400211 	ldr	x17, [x16]
+ 798:	91000210 	add	x16, x16, #0x0
+ 79c:	d61f0220 	br	x17
+
+00000000000007a0 <__libc_start_main@plt>:
+ 7a0:	b0000090 	adrp	x16, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 7a4:	f9400611 	ldr	x17, [x16,#8]
+ 7a8:	91002210 	add	x16, x16, #0x8
+ 7ac:	d61f0220 	br	x17
+
+00000000000007b0 <__gmon_start__@plt>:
+ 7b0:	b0000090 	adrp	x16, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 7b4:	f9400a11 	ldr	x17, [x16,#16]
+ 7b8:	91004210 	add	x16, x16, #0x10
+ 7bc:	d61f0220 	br	x17
+
+00000000000007c0 <abort@plt>:
+ 7c0:	b0000090 	adrp	x16, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 7c4:	f9400e11 	ldr	x17, [x16,#24]
+ 7c8:	91006210 	add	x16, x16, #0x18
+ 7cc:	d61f0220 	br	x17
+
+Disassembly of section .text:
+
+00000000000007d0 <_start>:
+ 7d0:	d280001d 	mov	x29, #0x0                   	// #0
+ 7d4:	d280001e 	mov	x30, #0x0                   	// #0
+ 7d8:	aa0003e5 	mov	x5, x0
+ 7dc:	f94003e1 	ldr	x1, [sp]
+ 7e0:	910023e2 	add	x2, sp, #0x8
+ 7e4:	910003e6 	mov	x6, sp
+ 7e8:	90000080 	adrp	x0, 10000 <__FRAME_END__+0xf610>
+ 7ec:	f947e800 	ldr	x0, [x0,#4048]
+ 7f0:	90000083 	adrp	x3, 10000 <__FRAME_END__+0xf610>
+ 7f4:	f947e463 	ldr	x3, [x3,#4040]
+ 7f8:	90000084 	adrp	x4, 10000 <__FRAME_END__+0xf610>
+ 7fc:	f947d484 	ldr	x4, [x4,#4008]
+ 800:	97ffffe8 	bl	7a0 <__libc_start_main@plt>
+ 804:	97ffffef 	bl	7c0 <abort@plt>
+
+0000000000000808 <call_weak_fn>:
+ 808:	90000080 	adrp	x0, 10000 <__FRAME_END__+0xf610>
+ 80c:	f947e000 	ldr	x0, [x0,#4032]
+ 810:	b4000040 	cbz	x0, 818 <call_weak_fn+0x10>
+ 814:	17ffffe7 	b	7b0 <__gmon_start__@plt>
+ 818:	d65f03c0 	ret
+ 81c:	00000000 	.inst	0x00000000 ; undefined
+
+0000000000000820 <deregister_tm_clones>:
+ 820:	b0000081 	adrp	x1, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 824:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 828:	91010021 	add	x1, x1, #0x40
+ 82c:	91010000 	add	x0, x0, #0x40
+ 830:	91001c21 	add	x1, x1, #0x7
+ 834:	cb000021 	sub	x1, x1, x0
+ 838:	f100383f 	cmp	x1, #0xe
+ 83c:	540000a9 	b.ls	850 <deregister_tm_clones+0x30>
+ 840:	90000081 	adrp	x1, 10000 <__FRAME_END__+0xf610>
+ 844:	f947d821 	ldr	x1, [x1,#4016]
+ 848:	b4000041 	cbz	x1, 850 <deregister_tm_clones+0x30>
+ 84c:	d61f0020 	br	x1
+ 850:	d65f03c0 	ret
+ 854:	d503201f 	nop
+
+0000000000000858 <register_tm_clones>:
+ 858:	b0000081 	adrp	x1, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 85c:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 860:	91010021 	add	x1, x1, #0x40
+ 864:	91010000 	add	x0, x0, #0x40
+ 868:	cb000021 	sub	x1, x1, x0
+ 86c:	9343fc21 	asr	x1, x1, #3
+ 870:	8b41fc21 	add	x1, x1, x1, lsr #63
+ 874:	9341fc21 	asr	x1, x1, #1
+ 878:	b40000c1 	cbz	x1, 890 <register_tm_clones+0x38>
+ 87c:	90000082 	adrp	x2, 10000 <__FRAME_END__+0xf610>
+ 880:	f947f042 	ldr	x2, [x2,#4064]
+ 884:	b4000062 	cbz	x2, 890 <register_tm_clones+0x38>
+ 888:	d61f0040 	br	x2
+ 88c:	d503201f 	nop
+ 890:	d65f03c0 	ret
+ 894:	d503201f 	nop
+
+0000000000000898 <__do_global_dtors_aux>:
+ 898:	a9be7bfd 	stp	x29, x30, [sp,#-32]!
+ 89c:	910003fd 	mov	x29, sp
+ 8a0:	f9000bf3 	str	x19, [sp,#16]
+ 8a4:	b0000093 	adrp	x19, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 8a8:	39410260 	ldrb	w0, [x19,#64]
+ 8ac:	35000140 	cbnz	w0, 8d4 <__do_global_dtors_aux+0x3c>
+ 8b0:	90000080 	adrp	x0, 10000 <__FRAME_END__+0xf610>
+ 8b4:	f947dc00 	ldr	x0, [x0,#4024]
+ 8b8:	b4000080 	cbz	x0, 8c8 <__do_global_dtors_aux+0x30>
+ 8bc:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 8c0:	f9401400 	ldr	x0, [x0,#40]
+ 8c4:	97ffffb3 	bl	790 <__cxa_finalize@plt>
+ 8c8:	97ffffd6 	bl	820 <deregister_tm_clones>
+ 8cc:	52800020 	mov	w0, #0x1                   	// #1
+ 8d0:	39010260 	strb	w0, [x19,#64]
+ 8d4:	f9400bf3 	ldr	x19, [sp,#16]
+ 8d8:	a8c27bfd 	ldp	x29, x30, [sp],#32
+ 8dc:	d65f03c0 	ret
+
+00000000000008e0 <frame_dummy>:
+ 8e0:	90000080 	adrp	x0, 10000 <__FRAME_END__+0xf610>
+ 8e4:	9136e000 	add	x0, x0, #0xdb8
+ 8e8:	f9400001 	ldr	x1, [x0]
+ 8ec:	b5000061 	cbnz	x1, 8f8 <frame_dummy+0x18>
+ 8f0:	17ffffda 	b	858 <register_tm_clones>
+ 8f4:	d503201f 	nop
+ 8f8:	90000081 	adrp	x1, 10000 <__FRAME_END__+0xf610>
+ 8fc:	f947ec21 	ldr	x1, [x1,#4056]
+ 900:	b4ffff81 	cbz	x1, 8f0 <frame_dummy+0x10>
+ 904:	a9bf7bfd 	stp	x29, x30, [sp,#-16]!
+ 908:	910003fd 	mov	x29, sp
+ 90c:	d63f0020 	blr	x1
+ 910:	a8c17bfd 	ldp	x29, x30, [sp],#16
+ 914:	17ffffd1 	b	858 <register_tm_clones>
+
+0000000000000918 <main>:
+ 918:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 91c:	9100c000 	add	x0, x0, #0x30
+ 920:	52800041 	mov	w1, #0x2                   	// #2
+ 924:	b9000001 	str	w1, [x0]
+ 928:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 92c:	9100d000 	add	x0, x0, #0x34
+ 930:	528000a1 	mov	w1, #0x5                   	// #5
+ 934:	b9000001 	str	w1, [x0]
+ 938:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 93c:	9100e000 	add	x0, x0, #0x38
+ 940:	528000c1 	mov	w1, #0x6                   	// #6
+ 944:	b9000001 	str	w1, [x0]
+ 948:	b0000080 	adrp	x0, 11000 <_GLOBAL_OFFSET_TABLE_+0x60>
+ 94c:	9100f000 	add	x0, x0, #0x3c
+ 950:	52800121 	mov	w1, #0x9                   	// #9
+ 954:	b9000001 	str	w1, [x0]
+ 958:	d503201f 	nop
+ 95c:	d65f03c0 	ret
+
+0000000000000960 <__libc_csu_init>:
+ 960:	a9bc7bfd 	stp	x29, x30, [sp,#-64]!
+ 964:	910003fd 	mov	x29, sp
+ 968:	a9025bf5 	stp	x21, x22, [sp,#32]
+ 96c:	90000095 	adrp	x21, 10000 <__FRAME_END__+0xf610>
+ 970:	a90153f3 	stp	x19, x20, [sp,#16]
+ 974:	90000094 	adrp	x20, 10000 <__FRAME_END__+0xf610>
+ 978:	9136a2b5 	add	x21, x21, #0xda8
+ 97c:	9136c294 	add	x20, x20, #0xdb0
+ 980:	cb150294 	sub	x20, x20, x21
+ 984:	a90363f7 	stp	x23, x24, [sp,#48]
+ 988:	aa0203f6 	mov	x22, x2
+ 98c:	2a0003f8 	mov	w24, w0
+ 990:	aa0103f7 	mov	x23, x1
+ 994:	97ffff71 	bl	758 <_init>
+ 998:	9343fe94 	asr	x20, x20, #3
+ 99c:	b4000154 	cbz	x20, 9c4 <__libc_csu_init+0x64>
+ 9a0:	d2800013 	mov	x19, #0x0                   	// #0
+ 9a4:	f8737aa3 	ldr	x3, [x21,x19,lsl #3]
+ 9a8:	aa1603e2 	mov	x2, x22
+ 9ac:	aa1703e1 	mov	x1, x23
+ 9b0:	2a1803e0 	mov	w0, w24
+ 9b4:	91000673 	add	x19, x19, #0x1
+ 9b8:	d63f0060 	blr	x3
+ 9bc:	eb14027f 	cmp	x19, x20
+ 9c0:	54ffff21 	b.ne	9a4 <__libc_csu_init+0x44>
+ 9c4:	a94153f3 	ldp	x19, x20, [sp,#16]
+ 9c8:	a9425bf5 	ldp	x21, x22, [sp,#32]
+ 9cc:	a94363f7 	ldp	x23, x24, [sp,#48]
+ 9d0:	a8c47bfd 	ldp	x29, x30, [sp],#64
+ 9d4:	d65f03c0 	ret
+
+00000000000009d8 <__libc_csu_fini>:
+ 9d8:	d65f03c0 	ret
+
+Disassembly of section .fini:
+
+00000000000009dc <_fini>:
+ 9dc:	a9bf7bfd 	stp	x29, x30, [sp,#-16]!
+ 9e0:	910003fd 	mov	x29, sp
+ 9e4:	a8c17bfd 	ldp	x29, x30, [sp],#16
+ 9e8:	d65f03c0 	ret

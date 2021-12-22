@@ -37,12 +37,16 @@ class A {
 
   private:
     int data;
+
 };
+
 
 A Play(A a) {
     cout << "Play" << endl;
     return a;
 }
+
+A g_a = Play(4);
 
 int main() {
     //对象传入,隐式转换, 调用带参构造函数
