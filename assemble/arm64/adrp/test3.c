@@ -11,4 +11,5 @@ void main()
     g2 = 5;
     g3 = 6;
     g4 = 9;
+    printf("%d\n", g);
 }
