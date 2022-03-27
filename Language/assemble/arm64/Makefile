@@ -10,6 +10,10 @@ test_sbc:
 	aarch64-linux-gnu-gcc -static -g test_sbc.c
 	aarch64-linux-gnu-gcc -S test_sbc.c
 
+test_mov:
+	aarch64-linux-gnu-gcc -static -g $@.c
+	aarch64-linux-gnu-gcc -S $@.c
+
 run:
 	qemu-aarch64 -L /usr/aarch64-linux-gnu  ./a.out
 
