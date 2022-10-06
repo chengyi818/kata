@@ -1,0 +1,5 @@
+{
+  "esbonio.sphinx.confDir": "",
+  "autoDocstring.docstringFormat": "sphinx",
+  "python.linting.pydocstyleEnabled": true
+}

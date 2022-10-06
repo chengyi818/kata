@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 '''
 # =============================================================================
@@ -14,13 +14,19 @@
 #                0.0.1 | ChengYi | init
 # =============================================================================
 '''
-class Counter(object):
+
+
+class Counter():
+    """
+    Counter description
+    """
+
     def __init__(self, name, size):
         self.name = name
         self.size = size
 
     def print_size(self):
-        print "size: {0}".format(self.size)
+        print("size: {0}".format(self.size))
 
     def increase_size(self):
         self.size += 1
@@ -31,12 +37,14 @@ class Counter(object):
 
 COUNTER = Counter('test', 0)
 
+
 def increase_count():
     COUNTER.increase_size()
+
 
 def decrease_count():
     COUNTER.decrease_size()
 
+
 def print_count():
     COUNTER.print_size()
-
