@@ -1,1 +1,0 @@
-objs/foo.o deps/foo.dep: foo.c /home/chengyi/code/kata/Makefile/huge/source/foo/inc/foo.h
