@@ -28,6 +28,7 @@ fn main() {
         sum: Cell::new(None),
     };
     println!("sum: {}", i.sum());
+    println!("sum: {}", i.sum());
 }
 
 #[test]
