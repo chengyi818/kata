@@ -21,7 +21,7 @@ Rust
 
 [ Get Started ](/learn/get-started)
 
-[Version 1.55.0](https://blog.rust-lang.org/2021/09/09/Rust-1.55.0.html)
+[Version 1.80.1](https://blog.rust-lang.org/2024/08/08/Rust-1.80.1.html)
 
  Why Rust?
 ----------
@@ -48,7 +48,7 @@ type inspections, an auto-formatter, and more.
  Build it in Rust
 ----------
 
- In 2018, the Rust community decided to improve programming experience
+ In 2018, the Rust community decided to improve the programming experience
 for a few distinct domains (see [the 2018
 roadmap](https://blog.rust-lang.org/2018/03/12/roadmap.html)). For these, you can find many high-quality crates and some
 awesome guides on how to get started.
@@ -152,16 +152,15 @@ Rust is a community project and is very thankful for the many community contribu
 
 ### Corporate sponsors ###
 
-The Rust project receives support from companies through the donation of infrastructure.
+The Rust project receives support from companies through the Rust Foundation.
 
-[See sponsors](/sponsors)
+[See Foundation members](https://foundation.rust-lang.org/members)
 
 #### Get help! ####
 
 * [Documentation](/learn)
 * [Rust Forge (Contributor Documentation)](http://forge.rust-lang.org)
 * [Ask a Question on the Users Forum](https://users.rust-lang.org)
-* [Check Website Status](http://ping.rust-lang.org)
 
 Language English (en-US)Español (es)Français (fr)Italiano (it)日本語 (ja)Português (pt-BR)Русский (ru)Türkçe (tr)简体中文 (zh-CN)正體中文 (zh-TW)
 
@@ -169,14 +168,14 @@ Language English (en-US)Español (es)Français (fr)Italiano (it)日本語 (ja)Po
 
 * [Code of Conduct](/policies/code-of-conduct)
 * [Licenses](/policies/licenses)
-* [Logo Policy and Media Guide](/policies/media-guide)
+* [Logo Policy and Media Guide](https://foundation.rust-lang.org/policies/logo-policy-and-media-guide/)
 * [Security Disclosures](/policies/security)
-* [Privacy Policy](https://foundation.rust-lang.org/policies/privacy-policy/)
+* [Privacy Notice](https://foundation.rust-lang.org/policies/privacy-policy/)
 * [All Policies](/policies)
 
 #### Social ####
 
-[![twitter logo](/static/images/twitter.svg "Twitter")](https://twitter.com/rustlang) [![youtube logo](/static/images/youtube.svg "YouTube")](https://www.youtube.com/channel/UCaYhcUwRBNscFNUKTjgPFiA) [![discord logo](/static/images/discord.svg "Discord")](https://discord.gg/rust-lang) [![github logo](/static/images/github.svg "GitHub")](https://github.com/rust-lang)
+[![Mastodon](/static/images/mastodon.svg "Mastodon")](https://social.rust-lang.org/@rust) [![twitter logo](/static/images/twitter.svg "Twitter")](https://twitter.com/rustlang) [![youtube logo](/static/images/youtube.svg "YouTube")](https://www.youtube.com/channel/UCaYhcUwRBNscFNUKTjgPFiA) [![discord logo](/static/images/discord.svg "Discord")](https://discord.gg/rust-lang) [![github logo](/static/images/github.svg "GitHub")](https://github.com/rust-lang)
 
  Maintained by the Rust Team. See a bug?[File an issue!](https://github.com/rust-lang/www.rust-lang.org/issues/new/choose)
 
