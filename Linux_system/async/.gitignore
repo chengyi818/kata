@@ -1,0 +1,17 @@
+# === Rust ===
+**/target/
+Cargo.lock
+
+# === C++ 编译产物 ===
+basic_coroutine
+future_promise
+generator
+coroutine_transform
+
+# === C++ 汇编输出 ===
+*.s
+*.dis
+
+# === Python ===
+__pycache__/
+*.pyc

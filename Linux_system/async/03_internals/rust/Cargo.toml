@@ -1,0 +1,19 @@
+[package]
+name = "async_internals"
+version = "0.1.0"
+edition = "2021"
+
+# 不依赖 tokio —— 本章从零实现运行时
+[dependencies]
+
+[[bin]]
+name = "state_machine"
+path = "src/state_machine.rs"
+
+[[bin]]
+name = "pin_unpin"
+path = "src/pin_unpin.rs"
+
+[[bin]]
+name = "mini_executor"
+path = "src/mini_executor.rs"

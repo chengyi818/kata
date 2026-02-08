@@ -1,0 +1,19 @@
+[package]
+name = "async_examples"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+
+[[bin]]
+name = "basic_async"
+path = "src/basic_async.rs"
+
+[[bin]]
+name = "future_impl"
+path = "src/future_impl.rs"
+
+[[bin]]
+name = "select_join"
+path = "src/select_join.rs"
