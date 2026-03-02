@@ -1,52 +1,70 @@
-# 第二章 C++ 异步示例 Makefile
+# Chapter 2: C++ async examples Makefile
 #
-# 用法：
-#   make          编译所有示例
-#   make run      编译并运行所有示例
-#   make clean    清理
+# Usage:
+#   make          compile all examples
+#   make run      compile and run all examples
+#   make clean    clean build artifacts
 
 CXX ?= g++
 CXXFLAGS_BASE = -std=c++20 -O0 -g
 
-# GCC 需要 -fcoroutines 标志
-ifeq ($(findstring g++,$(CXX)),g++)
-  CXXFLAGS_CORO = $(CXXFLAGS_BASE) -fcoroutines
-else ifeq ($(findstring clang,$(CXX)),clang)
+# GCC >= 14: coroutines enabled by default with -std=c++20
+# GCC < 14:  needs -fcoroutines flag
+GCC_VER_MAJOR := $(shell $(CXX) -dumpversion 2>/dev/null | cut -d. -f1)
+GCC_NEEDS_CORO := $(shell [ "$(GCC_VER_MAJOR)" -lt 14 ] 2>/dev/null && echo yes || echo no)
+
+ifeq ($(findstring clang,$(CXX)),clang)
   CXXFLAGS_CORO = $(CXXFLAGS_BASE)
-else
+else ifeq ($(GCC_NEEDS_CORO),yes)
   CXXFLAGS_CORO = $(CXXFLAGS_BASE) -fcoroutines
+else
+  CXXFLAGS_CORO = $(CXXFLAGS_BASE)
+endif
+
+# Windows vs Linux (.exe suffix)
+ifeq ($(OS),Windows_NT)
+  EXE = .exe
+else
+  EXE =
 endif
 
 CXXFLAGS_THREAD = -pthread
 
-TARGETS = basic_coroutine future_promise generator
+NAMES   = basic_coroutine future_promise generator
+TARGETS = $(addsuffix $(EXE),$(NAMES))
 
 .PHONY: all run run-basic run-future run-generator clean
 
 all: $(TARGETS)
 
-basic_coroutine: basic_coroutine.cpp
+basic_coroutine$(EXE): basic_coroutine.cpp
 	$(CXX) $(CXXFLAGS_CORO) -o $@ $<
 
-future_promise: future_promise.cpp
+future_promise$(EXE): future_promise.cpp
 	$(CXX) $(CXXFLAGS_BASE) $(CXXFLAGS_THREAD) -o $@ $<
 
-generator: generator.cpp
+generator$(EXE): generator.cpp
 	$(CXX) $(CXXFLAGS_CORO) -o $@ $<
 
 run: all run-basic run-future run-generator
 
-run-basic: basic_coroutine
-	@echo ""; echo "=== basic_coroutine ==="; echo ""
-	./basic_coroutine
+run-basic: basic_coroutine$(EXE)
+	@echo ""
+	@echo "=== basic_coroutine ==="
+	@echo ""
+	./basic_coroutine$(EXE)
 
-run-future: future_promise
-	@echo ""; echo "=== future_promise ==="; echo ""
-	./future_promise
+run-future: future_promise$(EXE)
+	@echo ""
+	@echo "=== future_promise ==="
+	@echo ""
+	./future_promise$(EXE)
 
-run-generator: generator
-	@echo ""; echo "=== generator ==="; echo ""
-	./generator
+run-generator: generator$(EXE)
+	@echo ""
+	@echo "=== generator ==="
+	@echo ""
+	./generator$(EXE)
 
 clean:
 	rm -f $(TARGETS)

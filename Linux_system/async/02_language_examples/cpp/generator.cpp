@@ -152,10 +152,10 @@ Generator<int> filter_even(int start, int end) {
 // ============================================================
 
 int main() {
-    std::cout << "=== C++20 co_yield 生成器 ===\n\n";
+    std::cout << "=== C++20 co_yield Generator ===\n\n";
 
     // --- range 生成器 ---
-    std::cout << "1. range(0, 5) 生成器:\n   ";
+    std::cout << "1. range(0, 5) generator:\n   ";
     auto gen = range(0, 5);
     while (auto val = gen.next()) {
         std::cout << *val << " ";
@@ -170,7 +170,7 @@ int main() {
     std::cout << "\n\n";
 
     // --- 斐波那契 ---
-    std::cout << "3. 斐波那契数列（前 15 项）:\n   ";
+    std::cout << "3. Fibonacci sequence (first 15):\n   ";
     auto fib = fibonacci();
     for (int i = 0; i < 15; ++i) {
         auto val = fib.next();
@@ -179,26 +179,26 @@ int main() {
     std::cout << "\n\n";
 
     // --- 过滤生成器 ---
-    std::cout << "4. 偶数过滤 filter_even(0, 10):\n   ";
+    std::cout << "4. Even filter filter_even(0, 10):\n   ";
     for (int val : filter_even(0, 10)) {
         std::cout << val << " ";
     }
     std::cout << "\n\n";
 
-    std::cout << "=== 执行流程（以 range(0, 3) 为例） ===\n";
-    std::cout << "  调用 range(0,3):\n";
-    std::cout << "    → 创建协程帧\n";
-    std::cout << "    → initial_suspend: 挂起（lazy）\n";
-    std::cout << "  调用 next():\n";
-    std::cout << "    → resume() 恢复协程\n";
-    std::cout << "    → 执行 co_yield 0\n";
-    std::cout << "    → yield_value(0): 保存值，挂起协程\n";
-    std::cout << "    → 返回 optional(0)\n";
-    std::cout << "  调用 next():\n";
-    std::cout << "    → resume() 恢复协程\n";
-    std::cout << "    → i++, co_yield 1\n";
-    std::cout << "    → 返回 optional(1)\n";
-    std::cout << "  ... 直到循环结束, 协程返回 → done()=true\n";
+    std::cout << "=== Execution Flow (range(0, 3) as example) ===\n";
+    std::cout << "  Call range(0,3):\n";
+    std::cout << "    -> allocate coroutine frame\n";
+    std::cout << "    -> initial_suspend: suspend (lazy)\n";
+    std::cout << "  Call next():\n";
+    std::cout << "    -> resume() resumes coroutine\n";
+    std::cout << "    -> execute co_yield 0\n";
+    std::cout << "    -> yield_value(0): store value, suspend coroutine\n";
+    std::cout << "    -> return optional(0)\n";
+    std::cout << "  Call next():\n";
+    std::cout << "    -> resume() resumes coroutine\n";
+    std::cout << "    -> i++, co_yield 1\n";
+    std::cout << "    -> return optional(1)\n";
+    std::cout << "  ... until loop ends, coroutine returns -> done()=true\n";
 
     return 0;
 }

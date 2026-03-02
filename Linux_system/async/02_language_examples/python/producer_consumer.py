@@ -18,15 +18,14 @@ import time
 async def producer(name: str, queue: asyncio.Queue, num_items: int):
     """生产者：模拟异步爬取网页，将数据放入队列"""
     for i in range(num_items):
-        # 模拟网络请求的随机延迟
         delay = random.uniform(0.1, 0.5)
         await asyncio.sleep(delay)
 
-        item = f"{name}-数据{i}"
+        item = f"{name}-item{i}"
         await queue.put(item)
-        print(f"  [生产者 {name}] 生产: {item} (队列大小: {queue.qsize()})")
+        print(f"  [Producer {name}] produced: {item} (queue size: {queue.qsize()})")
 
-    print(f"  [生产者 {name}] 已完成所有生产")
+    print(f"  [Producer {name}] finished all production")
 
 
 async def consumer(name: str, queue: asyncio.Queue):
@@ -37,32 +36,27 @@ async def consumer(name: str, queue: asyncio.Queue):
     processed = 0
     while True:
         try:
-            # 从队列获取数据，如果队列为空则挂起等待
             item = await asyncio.wait_for(queue.get(), timeout=2.0)
         except asyncio.TimeoutError:
-            # 超时说明可能没有更多数据了
-            print(f"  [消费者 {name}] 超时退出，共处理 {processed} 项")
+            print(f"  [Consumer {name}] timed out, processed {processed} items total")
             return
 
-        # 模拟数据处理
         process_time = random.uniform(0.05, 0.2)
         await asyncio.sleep(process_time)
 
         queue.task_done()
         processed += 1
-        print(f"  [消费者 {name}] 处理: {item} (耗时 {process_time:.2f}s)")
+        print(f"  [Consumer {name}] processed: {item} (took {process_time:.2f}s)")
 
 
 async def demo_basic_producer_consumer():
     """基本的生产者-消费者模式"""
-    print("=== 1. 基本生产者-消费者模式 ===\n")
+    print("=== 1. Basic Producer-Consumer Pattern ===\n")
 
-    # 创建有界队列（maxsize 限制队列大小，满时 put 会阻塞）
     queue: asyncio.Queue[str] = asyncio.Queue(maxsize=5)
 
     start = time.perf_counter()
 
-    # 启动 2 个生产者和 3 个消费者
     producers = [
         asyncio.create_task(producer(f"P{i}", queue, 5))
         for i in range(2)
@@ -72,23 +66,19 @@ async def demo_basic_producer_consumer():
         for i in range(3)
     ]
 
-    # 等待所有生产者完成
     await asyncio.gather(*producers)
-    print(f"\n  所有生产者已完成，等待队列清空...")
+    print(f"\n  All producers finished, waiting for queue to drain...")
 
-    # 等待队列中所有项被处理
     await queue.join()
-    print(f"  队列已清空!")
+    print(f"  Queue drained!")
 
-    # 取消消费者（它们是无限循环，需要显式取消）
     for c in consumers:
         c.cancel()
 
-    # 等待消费者优雅退出
     await asyncio.gather(*consumers, return_exceptions=True)
 
     elapsed = time.perf_counter() - start
-    print(f"\n  总耗时: {elapsed:.2f}s")
+    print(f"\n  Total elapsed: {elapsed:.2f}s")
     print()
 
 
@@ -99,40 +89,38 @@ async def demo_basic_producer_consumer():
 async def priority_producer(queue: asyncio.PriorityQueue, num_items: int):
     """生产带优先级的任务"""
     for i in range(num_items):
-        priority = random.randint(1, 5)  # 1 = 最高优先级
-        item = (priority, f"任务{i}(优先级{priority})")
+        priority = random.randint(1, 5)  # 1 = highest priority
+        item = (priority, f"Task{i}(priority={priority})")
         await queue.put(item)
         await asyncio.sleep(0.05)
-    print(f"  [优先级生产者] 已生产 {num_items} 个任务")
+    print(f"  [PriorityProducer] produced {num_items} tasks")
 
 
 async def priority_consumer(name: str, queue: asyncio.PriorityQueue):
     """按优先级消费任务"""
     while not queue.empty():
         priority, item = await queue.get()
-        print(f"  [消费者 {name}] 处理 {item}")
+        print(f"  [Consumer {name}] processing {item}")
         await asyncio.sleep(0.1)
         queue.task_done()
 
 
 async def demo_priority_queue():
     """优先级队列示例"""
-    print("=== 2. 优先级任务队列 ===\n")
+    print("=== 2. Priority Task Queue ===\n")
 
     queue: asyncio.PriorityQueue = asyncio.PriorityQueue()
 
-    # 先生产所有任务
     await priority_producer(queue, 10)
     print()
 
-    # 再启动消费者（会按优先级顺序消费）
     consumers = [
         asyncio.create_task(priority_consumer(f"C{i}", queue))
         for i in range(2)
     ]
     await asyncio.gather(*consumers)
     print()
-    print("  注意：低优先级数字的任务先被处理（PriorityQueue 是最小堆）")
+    print("  Note: tasks with lower priority numbers are processed first (PriorityQueue is a min-heap)")
     print()
 
 
@@ -143,23 +131,21 @@ async def demo_priority_queue():
 async def rate_limited_fetch(sem: asyncio.Semaphore, url: str) -> str:
     """使用信号量限制并发数"""
     async with sem:
-        # 同一时刻最多只有 sem 个协程在此区域内
-        print(f"  开始请求 {url}")
+        print(f"  Start fetching {url}")
         await asyncio.sleep(random.uniform(0.3, 0.8))
-        print(f"  完成请求 {url}")
-        return f"{url}的结果"
+        print(f"  Done fetching {url}")
+        return f"result of {url}"
 
 
 async def demo_semaphore():
     """信号量限流示例"""
-    print("=== 3. Semaphore 限流 ===\n")
+    print("=== 3. Semaphore Rate Limiting ===\n")
 
-    # 限制最大并发数为 3
     semaphore = asyncio.Semaphore(3)
     urls = [f"https://api.example.com/page/{i}" for i in range(8)]
 
-    print(f"  总请求数: {len(urls)}, 最大并发: 3")
-    print(f"  观察输出：同时最多只有 3 个请求在执行\n")
+    print(f"  Total requests: {len(urls)}, max concurrency: 3")
+    print(f"  Observe: at most 3 requests are running at the same time\n")
 
     start = time.perf_counter()
     results = await asyncio.gather(
@@ -167,10 +153,10 @@ async def demo_semaphore():
     )
     elapsed = time.perf_counter() - start
 
-    print(f"\n  所有请求完成，结果数: {len(results)}")
-    print(f"  总耗时: {elapsed:.2f}s")
-    print(f"  如果无限流（8 个并发）: ~0.8s")
-    print(f"  限流到 3 个并发后: ~{0.55 * 3:.1f}s (三批)")
+    print(f"\n  All requests done, result count: {len(results)}")
+    print(f"  Total elapsed: {elapsed:.2f}s")
+    print(f"  Without rate limit (8 concurrent): ~0.8s")
+    print(f"  With rate limit (3 concurrent): ~{0.55 * 3:.1f}s (three batches)")
     print()
 
 
@@ -183,12 +169,12 @@ async def main():
     await demo_priority_queue()
     await demo_semaphore()
 
-    print("=== 总结 ===")
-    print("  asyncio.Queue:         FIFO 异步队列，生产者-消费者解耦")
-    print("  asyncio.PriorityQueue: 优先级队列，按优先级处理任务")
-    print("  asyncio.Semaphore:     信号量限流，控制最大并发数")
-    print("  queue.join():          等待队列中所有项被处理完")
-    print("  queue.task_done():     消费者处理完一项后通知队列")
+    print("=== Summary ===")
+    print("  asyncio.Queue:         FIFO async queue, decouples producers and consumers")
+    print("  asyncio.PriorityQueue: priority queue, processes tasks by priority")
+    print("  asyncio.Semaphore:     semaphore rate limiter, controls max concurrency")
+    print("  queue.join():          wait until all items in the queue have been processed")
+    print("  queue.task_done():     notify the queue that a consumed item has been processed")
 
 
 if __name__ == "__main__":
