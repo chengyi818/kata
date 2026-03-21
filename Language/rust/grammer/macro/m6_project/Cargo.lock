@@ -3,19 +3,12 @@
 version = 4
 
 [[package]]
-name = "cli-derive"
+name = "m6_project"
 version = "0.1.0"
 dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "cli-parser"
-version = "0.1.0"
-dependencies = [
- "cli-derive",
 ]
 
 [[package]]
