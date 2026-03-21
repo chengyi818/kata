@@ -1,0 +1,10 @@
+[package]
+name = "cli-parser"
+version = "0.1.0"
+edition = "2021"
+description = "CLI 解析宏库 - 主库"
+
+[dependencies]
+cli-derive = { path = "../cli-derive" }
+
+[dev-dependencies]
