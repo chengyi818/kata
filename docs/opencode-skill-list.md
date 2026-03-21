@@ -10,6 +10,81 @@
 
 ---
 
+## 什么是 Skill？
+
+> 🎬 视频入门：[什么是大模型Skill 10分钟弄懂](https://www.bilibili.com/video/BV1dz6oBWEWx/) (隔壁的程序员老王)
+
+### 一句话理解
+
+**Skill = 高级提示词 + 模块化能力 + 可复用 + 可控**
+
+### 普通 Prompt vs Skill
+
+| 维度 | 普通 Prompt | Skill |
+|------|-------------|-------|
+| 颗粒度 | 粗糙，一句话指令 | 精细，数千字步骤拆解 |
+| 稳定性 | 碰运气，容易"幻觉" | 像工厂流水线稳定输出 |
+| 复用性 | 复制粘贴，很麻烦 | 一键调用，无缝衔接 |
+| 形象类比 | 临时抓壮丁 | 请了一位带手册的专家 |
+
+### Skill 本质：岗位 SOP
+
+如果大模型是一个高智商的"通用人才"，Skill 就是为它配备的**"岗位 SOP（标准作业程序）"**。
+
+- 传统方式：把所有规则塞进 System Prompt → token 浪费、容易混淆
+- Skill 方式：模型按需动态加载对应的 Skill → 只加载当前需要的规则
+
+### 文件结构
+
+每个 Skill 就是一个包含 `SKILL.md` 的目录：
+
+```yaml
+---
+name: skill-name
+description: Use when [触发条件] - [功能描述]
+---
+
+# Skill 标题
+
+[数千字的步骤拆解、规则定义、工具调用说明]
+```
+
+### 渐进式披露架构 (Progressive Disclosure)
+
+| 层级 | 组件 | 加载策略 | 作用 |
+|------|------|----------|------|
+| L0 | 目录 | Always-On (始终加载) | 告诉模型有哪些 Skill 可用 |
+| L1 | 元数据 | On-Demand | 判断是否需要调用此 Skill |
+| L2 | 指令 | On-Demand (命中后加载) | 定义具体业务处理逻辑与 SOP |
+| L3 | 引用 | On-Demand | 外部知识库、参考资料 |
+| L4 | 脚本 | Execution (执行时) | 实际的自动化脚本和工具调用 |
+
+### Skill 生态层级
+
+```
+大模型 (嘴) ──→ 我问你答
+    ↓
+智能体 Agent (模板) ──→ 套模板复用
+    ↓
+工作流 Workflow (生产线) ──→ 串联多步
+    ↓
+Skill (经验) ──→ 用我的方法做，带知识库
+    ↓
+龙虾助理 Lobster (手) ──→ 帮你动手干，跨软件操作
+```
+
+### 类比理解
+
+| 角色 | 类比 | 能力 |
+|------|------|------|
+| 大模型 | 万事通 | 随叫随到回答问题 |
+| 智能体 | 熟练工 | 专干某一类活 |
+| 工作流 | 生产线 | 串联多步智能体 |
+| **Skill** | **带手册的专家** | **封装经验和知识，可复用** |
+| 龙虾助理 | 私人秘书 | 操作设备，跨软件执行 |
+
+---
+
 ## 一、ClawHub TOP 50 Skills (按用途分类)
 
 ### 🔧 1. 开发工具 (Development)
@@ -120,16 +195,16 @@
 
 | Skill | 类别 | 下载量 | 安装命令 | 一句话 |
 |-------|------|--------|----------|--------|
-| [Self-Improving Agent](https://clawhub.ai/skills/self-improving-agent) | 记忆 | 87.6K | `clawhub install self-improving-agent` | Agent 自学习，跨会话记住错误和修正 |
-| [Find Skills](https://clawhub.ai/skills/find-skills) | 搜索 | 72.3K | `clawhub install find-skills` | 你说需求，它帮你找并装好 Skill |
-| [Skill Vetter](https://clawhub.ai/skills/skill-vetter) | 安全 | 12.3K | `clawhub install skill-vetter` | 安装前审计 Skill，检测 20+ 危险信号 |
-| [Focus Mode](https://clawhub.ai/skills/focus-mode) | 效率 | 新兴 | `clawhub install focus-mode` | 专注模式，屏蔽干扰，深度工作 |
-| [Agent Browser](https://clawhub.ai/skills/agent-browser) | 浏览器 | 61.1K | `clawhub install agent-browser` | Rust 无头浏览器自动化 (点击/输入/截图) |
-| [AI Daily Briefing](https://clawhub.ai/skills/ai-daily-briefing) | 效率 | 新兴 | `clawhub install ai-daily-briefing` | 每日晨报：任务/日历/优先级一览 |
-| [Multi Search Engine](https://clawhub.ai/skills/multi-search-engine) | 搜索 | 13.7K | `clawhub install multi-search-engine` | 17 搜索引擎集成 (8 国内 + 9 国际) |
-| [YouTube Ultimate](https://clawhub.ai/skills/youtube-ultimate) | 内容 | 新兴 | `clawhub install youtube-ultimate` | YouTube 视频摘要/字幕/频道监控 |
-| [OpenClaw Feeds](https://clawhub.ai/skills/openclaw-feeds) | 信息 | 新兴 | `clawhub install openclaw-feeds` | RSS/Twitter/HN/Reddit 信息流聚合 |
-| [Reddit Search](https://clawhub.ai/skills/reddit-search) | 搜索 | 新兴 | `clawhub install reddit-search` | Reddit 帖子/评论搜索与摘要 |
+| [Self-Improving Agent](https://clawhub.ai/skills/self-improving-agent) | 记忆 | 87.6K | [安装文档](skills/03-dev-memory/self-improving-agent.md) | Agent 自学习，跨会话记住错误和修正 |
+| [Find Skills](https://clawhub.ai/skills/find-skills) | 搜索 | 72.3K | [安装文档](skills/02-search/find-skills.md) | 你说需求，它帮你找并装好 Skill |
+| [Skill Vetter](https://clawhub.ai/skills/skill-vetter) | 安全 | 12.3K | [安装文档](skills/01-security/skill-vetter.md) | 安装前审计 Skill，检测 20+ 危险信号 |
+| [Focus Mode](https://clawhub.ai/skills/focus-mode) | 效率 | 新兴 | 见 [docs/skills/](skills/) | 专注模式，屏蔽干扰，深度工作 |
+| [Agent Browser](https://clawhub.ai/skills/agent-browser) | 浏览器 | 61.1K | [安装文档](skills/02-search/agent-browser.md) | Rust 无头浏览器自动化 (点击/输入/截图) |
+| [AI Daily Briefing](https://clawhub.ai/skills/ai-daily-briefing) | 效率 | 新兴 | [安装文档](skills/07-productivity/ai-daily-briefing.md) | 每日晨报：任务/日历/优先级一览 |
+| [Multi Search Engine](https://clawhub.ai/skills/multi-search-engine) | 搜索 | 13.7K | [安装文档](skills/02-search/multi-search-engine.md) | 17 搜索引擎集成 (8 国内 + 9 国际) |
+| [YouTube Ultimate](https://clawhub.ai/skills/youtube-ultimate) | 内容 | 新兴 | ❌ 不适合国内 | YouTube 被墙，不建议安装 |
+| [OpenClaw Feeds](https://clawhub.ai/skills/openclaw-feeds) | 信息 | 新兴 | 见 [docs/skills/](skills/) | RSS/Twitter/HN/Reddit 信息流聚合 |
+| [Reddit Search](https://clawhub.ai/skills/reddit-search) | 搜索 | 新兴 | ❌ 不适合国内 | Reddit 被墙，不建议安装 |
 
 > 💡 **建议安装顺序**: Skill Vetter → Find Skills → Self-Improving Agent → Agent Browser → Multi Search Engine → AI Daily Briefing → Focus Mode → OpenClaw Feeds → YouTube Ultimate → Reddit Search
 >
@@ -139,18 +214,18 @@
 
 ## 二B. 生产力必备 TOP 10 (用户精选)
 
-| # | Skill | ClawHub 名 | 下载量 | 安装命令 | 一句话 |
+| # | Skill | ClawHub 名 | 下载量 | 安装方式 | 一句话 |
 |---|-------|------------|--------|----------|--------|
-| 1 | 🥇 Skill Vet | `skill-vetter` | 12.3K | `clawhub install skill-vetter` | 安全守门员，安装前自动扫描恶意行为 |
-| 2 | 🔍 Find Skills | `find-skills` | 72.3K | `clawhub install find-skills` | 打字描述需求，自动搜索并安装 Skill |
-| 3 | 🧠 Memory Setup | `elite-longterm-memory` | 19.3K | `clawhub install elite-longterm-memory` | 解决 AI 鱼的记忆，记住使用习惯 |
-| 4 | 📝 Self-Improving | `self-improving-agent` | 87.6K | `clawhub install self-improving-agent` | 纠错后自动记录，下次不再犯 |
-| 5 | 📄 Summarize | `summarize` | 66.4K | `clawhub install summarize` | 链接/PDF/视频几秒提炼核心摘要 |
-| 6 | 🌐 Web Content | `agent-browser` | 61.1K | `clawhub install agent-browser` | 绕过限制抓取网页，输出干净 Markdown |
-| 7 | ✏️ NanoPDF | `nano-pdf` | 32.9K | `clawhub install nano-pdf` | 自然语言编辑 PDF，告别 Adobe |
-| 8 | 🗣️ Humanizer | `humanizer` | 28.6K | `clawhub install humanizer` | 去 AI 味，让文字更像真人说话 |
-| 9 | 🎨 Nano Banana Pro | `nano-banana-pro` | 31.6K | `clawhub install nano-banana-pro` | 对话框直接生图/改图，支持 4K |
-| 10 | ⏰ Proactive Agent | `proactive-agent` | 49.2K | `clawhub install proactive-agent` | AI 从被动应答变为主动服务 |
+| 1 | 🥇 Skill Vet | `skill-vetter` | 12.3K | [安装文档](skills/01-security/skill-vetter.md) | 安全守门员，安装前自动扫描恶意行为 |
+| 2 | 🔍 Find Skills | `find-skills` | 72.3K | [安装文档](skills/02-search/find-skills.md) | 打字描述需求，自动搜索并安装 Skill |
+| 3 | 🧠 Memory Setup | `elite-longterm-memory` | 19.3K | [安装文档](skills/03-dev-memory/elite-longterm-memory.md) | 解决 AI 鱼的记忆，记住使用习惯 |
+| 4 | 📝 Self-Improving | `self-improving-agent` | 87.6K | [安装文档](skills/03-dev-memory/self-improving-agent.md) | 纠错后自动记录，下次不再犯 |
+| 5 | 📄 Summarize | `summarize` | 66.4K | [安装文档](skills/04-document/summarize.md) | 链接/PDF/视频几秒提炼核心摘要 |
+| 6 | 🌐 Web Content | `agent-browser` | 61.1K | [安装文档](skills/02-search/agent-browser.md) | 绕过限制抓取网页，输出干净 Markdown |
+| 7 | ✏️ NanoPDF | `nano-pdf` | 32.9K | [安装文档](skills/04-document/nano-pdf.md) | 自然语言编辑 PDF，告别 Adobe |
+| 8 | 🗣️ Humanizer | `humanizer` | 28.6K | [安装文档](skills/04-document/humanizer.md) | 去 AI 味，让文字更像真人说话 |
+| 9 | 🎨 Nano Banana Pro | `nano-banana-pro` | 31.6K | 见 [docs/skills/](skills/) | 对话框直接生图/改图，支持 4K |
+| 10 | ⏰ Proactive Agent | `proactive-agent` | 49.2K | 见 [docs/skills/](skills/) | AI 从被动应答变为主动服务 |
 
 > 💡 以上 10 个 Skill 与本清单其他章节有重叠，此处按 **日常使用场景** 重新排列。
 
@@ -158,18 +233,49 @@
 
 ## 二C. 补充推荐 (按需安装)
 
-| # | Skill | ClawHub/来源 | 类别 | 安装命令 | 说明 |
+| # | Skill | ClawHub/来源 | 类别 | 安装方式 | 说明 |
 |---|-------|-------------|------|----------|------|
-| 1 | [Research Skills](https://clawhub.ai/skills/research-skills) | ClawHub | 搜索 | `clawhub install research-skills` | 多源研究工作流 (论文/文档/网页) |
-| 2 | [NotebookLM Skill](https://clawhub.ai/skills/notebooklm-skill) | ClawHub | 知识 | `clawhub install notebooklm-skill` | Google NotebookLM 集成，知识库问答 |
-| 3 | [UI/UX Pro Max](https://clawhub.ai/skills/ui-ux-pro-max-skill) | ClawHub | 设计 | `clawhub install ui-ux-pro-max-skill` | UI 设计智库，配色/字体/组件/交互规范 |
-| 4 | [CSV Data Summarizer](https://clawhub.ai/skills/csv-data-summarizer) | ClawHub | 数据 | `clawhub install csv-data-summarizer` | CSV 文件智能分析与摘要 |
-| 5 | [File Organizer](https://clawhub.ai/skills/file-organizer) | ClawHub | 工具 | `clawhub install file-organizer` | 文件自动分类整理 |
-| 6 | [Video Downloader](https://clawhub.ai/skills/video-downloader) | ClawHub | 媒体 | `clawhub install video-downloader` | 视频下载 (YouTube/B站/抖音等) |
-| 7 | [AI Content Operator](https://clawhub.ai/skills/ai-content-operator) | ClawHub | 内容 | `clawhub install ai-content-operator` | AI 内容生产运营助手 |
-| 8 | [Awesome Claude Skills](https://clawhub.ai/skills/awesome-claude-skill) | ClawHub | 工具 | `clawhub install awesome-claude-skill` | Claude 精选 Skill 合集导航 |
-| 9 | [Skill Creator](https://clawhub.ai/skills/skill-creator) | ClawHub | 工具 | `clawhub install skill-creator` | 把工作流打包成可复用 Skill |
-| 10 | [Docx Skill](https://clawhub.ai/skills/docx-skill) | ClawHub | 文档 | `clawhub install docx-skill` | Word 文档读写/生成/编辑 |
+| 1 | [Anthropic Docs Suite](https://clawhub.ai/skills/anthropic-docs-skill) | Anthropic 官方 | 文档 | [安装文档](skills/04-document/anthropic-docs-skill.md) | AI 读写 Word/PPT/Excel/PDF，论文速读 + PPT 生成 |
+| 2 | [UI/UX Pro Max](https://clawhub.ai/skills/ui-ux-pro-max-skill) | ClawHub | 设计 | [安装文档](skills/06-design/ui-ux-pro-max-skill.md) | UI 设计智库，配色/字体/组件/交互规范，输出高质感设计 |
+| 3 | [Humanizer ZH](https://clawhub.ai/skills/humanizer-zh) | ClawHub | 写作 | [安装文档](skills/04-document/humanizer-zh.md) | 中文去 AI 痕迹写作，4 类 24 项扫描优化，更像真人表达 |
+| 4 | [Remotion Dev](https://clawhub.ai/skills/remotion-dev) | ClawHub | 视频 | [安装文档](skills/06-design/remotion-dev.md) | 代码生成产品发布动画视频，文字排版/转场/自定义渲染 |
+| 5 | [Research Skills](https://clawhub.ai/skills/research-skills) | ClawHub | 搜索 | [安装文档](skills/08-research/research-skills.md) | 多源研究工作流 (论文/文档/网页) |
+| 6 | [NotebookLM Skill](https://clawhub.ai/skills/notebooklm-skill) | ClawHub | 知识 | ❌ 不适合国内 | Google NotebookLM 被墙 |
+| 7 | [CSV Data Summarizer](https://clawhub.ai/skills/csv-data-summarizer) | ClawHub | 数据 | [安装文档](skills/09-tools/csv-data-summarizer.md) | CSV 文件智能分析与摘要 |
+| 8 | [File Organizer](https://clawhub.ai/skills/file-organizer) | ClawHub | 工具 | [安装文档](skills/09-tools/file-organizer.md) | 文件自动分类整理 |
+| 9 | [Video Downloader](https://clawhub.ai/skills/video-downloader) | ClawHub | 媒体 | [安装文档](skills/05-media/video-downloader.md) | 视频下载 (YouTube/B站/抖音等) |
+| 10 | [AI Content Operator](https://clawhub.ai/skills/ai-content-operator) | ClawHub | 内容 | 见 [docs/skills/](skills/) | AI 内容生产运营助手 |
+| 11 | [Awesome Claude Skills](https://clawhub.ai/skills/awesome-claude-skill) | ClawHub | 工具 | 见 [docs/skills/](skills/) | Claude 精选 Skill 合集导航 |
+| 12 | [Docx Skill](https://clawhub.ai/skills/docx-skill) | ClawHub | 文档 | 见 [docs/skills/](skills/) | Word 文档读写/生成/编辑 |
+
+> ⚠️ **已去重**：Skill Creator / Agent Browser / Find Skills / Superpowers / Humanizer (英文版) 已在其他章节，此处不重复。
+
+---
+
+## 二D. 不适合中国大陆使用 (需梯子或服务不可达)
+
+以下 Skill 依赖被墙或国内无法访问的服务，**不建议安装**：
+
+| Skill | 原因 | 替代方案 |
+|-------|------|----------|
+| `tavily-search` | 需海外 API Key，国内延迟高 | `baidu-search` / `multi-search-engine` |
+| `brave-search` | 需海外 API Key | `baidu-search` / `multi-search-engine` |
+| `gog` (Google Workspace) | Google 服务被墙 | 无直接替代，可用 `notion` |
+| `gmail` | Gmail 被墙 | `himalaya` / `imap-smtp-email` (配国内邮箱) |
+| `gemini` | Google API 被墙 | 直接用 OpenCode 内置模型 |
+| `youtube-watcher` | YouTube 被墙 | `video-downloader` (B站/抖音) |
+| `youtube-api-skill` | YouTube API 被墙 | 同上 |
+| `youtube-ultimate` | YouTube 被墙 | 同上 |
+| `reddit-search` | Reddit 被墙 | `blogwatcher` (RSS 订阅替代) |
+| `whatsapp-business` | WhatsApp 被墙 | 无直接替代 |
+| `polymarketodds` | Polymarket 被墙 | 无直接替代 |
+| `sonoscli` | 依赖 Sonos 硬件 (国内少见) | 无 |
+| `notebooklm-skill` | Google NotebookLM 被墙 | `obsidian` + `research-skills` |
+| `slack` | 国内团队不用 Slack | 无 |
+| `free-ride` | OpenRouter 国内不稳定 | 直接用 OpenCode 内置模型 |
+| `lnbits-with-qrcode` | 闪电网络，国内无场景 | 无 |
+
+> 💡 **替代原则**：搜索用 `baidu-search`，邮箱用 `imap-smtp-email`，知识库用 `obsidian`，文档用 `anthropic-docs-skill`。
 
 ---
 
@@ -222,7 +328,9 @@
 | P1 推荐 | agent-browser | ClawHub | 浏览器自动化 |
 | P1 推荐 | playwright-mcp | ClawHub | 浏览器自动化 (备选) |
 | P1 推荐 | skill-creator | ClawHub | 自定义 Skill 打包 |
-| P1 推荐 | humanizer | ClawHub | 去 AI 痕迹写作 |
+| P1 推荐 | humanizer | ClawHub | 去 AI 痕迹写作 (英文版) |
+| P1 推荐 | humanizer-zh | ClawHub | 去 AI 痕迹写作 (中文版) |
+| P1 推荐 | anthropic-docs-skill | Anthropic 官方 | Word/PPT/Excel/PDF 四件套 |
 | P2 推荐 | nano-pdf | ClawHub | PDF 编辑 |
 | P2 推荐 | nano-banana-pro | ClawHub | AI 生图/改图 |
 | P2 推荐 | proactive-agent | ClawHub | 主动式 Agent |
@@ -232,6 +340,7 @@
 | P2 推荐 | ai-daily-briefing | ClawHub | 每日晨报 |
 | P2 推荐 | elite-longterm-memory | ClawHub | 长期记忆 |
 | P3 可选 | notebooklm-skill | ClawHub | NotebookLM 知识库 |
+| P3 可选 | remotion-dev | ClawHub | 代码生成动画视频 |
 | P3 可选 | ui-ux-pro-max-skill | ClawHub | UI 设计 |
 | P3 可选 | csv-data-summarizer | ClawHub | CSV 数据分析 |
 | P3 可选 | video-downloader | ClawHub | 视频下载 |
@@ -280,6 +389,7 @@ description: Use when [触发条件] - [功能描述]
 
 | 来源 | 链接 | 说明 |
 |------|------|------|
+| 🎬 什么是大模型 Skill | https://www.bilibili.com/video/BV1dz6oBWEWx/ | 10 分钟入门，什么是 Skill、怎么用、底层原理 (隔壁的程序员老王) |
 | ClawHub Skills 排行 | https://clawhub.ai/skills?sort=downloads | TOP 50 数据来源 |
 | Top ClawHub Skills API | https://topclawhubskills.com/api/top-downloads?limit=50 | 实时下载量 API |
 | Superpowers (GitHub) | https://github.com/obra/superpowers | 已安装，15 个内置 Skill |
@@ -289,3 +399,4 @@ description: Use when [触发条件] - [功能描述]
 | Firecrawl 最佳 Skills | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
 | ClawHub Skills Lib | https://www.clawhub-skills.com/blog | Skill 使用教程 |
 | LobeHub Skills | https://lobehub.com/skills | 100K+ Skills 市场 |
+| **本地 Skill 文档** | [docs/skills/](./skills/) | 30 个可用 Skill 详细使用指南 |
