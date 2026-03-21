@@ -149,33 +149,13 @@ mod day2_examples {
 /// 练习：实现支持嵌套的 my_vec! 宏
 #[macro_export]
 macro_rules! my_vec {
-    // 基础情况：空 vec
+    // 空 vec
     () => {
         Vec::new()
     };
 
-    // 单个元素
-    ($elem:expr) => {
-        {
-            let mut v = Vec::new();
-            v.push($elem);
-            v
-        }
-    };
-
-    // 多个元素
+    // 多个元素（包括单个元素情况）
     ( $( $x:expr ),* $(,)? ) => {
-        {
-            let mut v = Vec::new();
-            $(
-                v.push($x);
-            )*
-            v
-        }
-    };
-
-    // 嵌套 vec：[1, [2, 3], 4]
-    ( $( $x:expr ),+ ) => {
         {
             let mut v = Vec::new();
             $(
