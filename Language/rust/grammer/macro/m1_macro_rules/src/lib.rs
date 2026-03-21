@@ -1,6 +1,19 @@
 //! # M1: macro_rules! 基础
 //!
 //! 本模块演示 Rust 声明宏的基础语法和用法。
+//!
+//! ## 宏 2.0 模块化导出示例
+//!
+//! ```ignore
+//! // macros.rs
+//! macro_rules! my_macro {
+//!     () => { /* ... */ };
+//! }
+//! pub(crate) use my_macro;  // 通过 use 暴露宏
+//!
+//! // main.rs
+//! use crate::macros::my_macro;  // 像函数一样导入
+//! ```
 
 // ============================================================================
 // Day 1: 宏的概念与基本语法
@@ -27,6 +40,7 @@ macro_rules! hello {
 /// 示例：输出问候语
 #[cfg(test)]
 mod day1_examples {
+    use super::*;
 
     #[test]
     fn test_hello_macro() {
@@ -95,16 +109,27 @@ macro_rules! hashmap {
 
 #[cfg(test)]
 mod day2_examples {
+    use super::*;
+    use std::collections::HashMap;
 
     #[test]
     fn test_hashmap_macro() {
+        // 测试字符串键值对
         let map = hashmap! {
             "name" => "Alice",
-            "role" => "Developer",
+            "city" => "Beijing",
         };
         assert_eq!(map.get("name"), Some(&"Alice"));
-        assert_eq!(map.get("role"), Some(&"Developer"));
+        assert_eq!(map.get("city"), Some(&"Beijing"));
         assert_eq!(map.len(), 2);
+
+        // 测试整数键值对（不同类型的 HashMap）
+        let map2 = hashmap! {
+            "x" => 10,
+            "y" => 20,
+        };
+        assert_eq!(map2.get("x"), Some(&10));
+        assert_eq!(map2.get("y"), Some(&20));
     }
 
     /// 示例：片段说明符 expr 的使用
@@ -146,21 +171,33 @@ mod day2_examples {
 // Day 3: 综合练习 - my_vec! 完整版
 // ============================================================================
 
-/// 练习：实现支持嵌套的 my_vec! 宏
+/// 练习：实现支持多种模式的 my_vec! 宏
+///
+/// 宏 2.0 风格思考：使用模块化导出时，可以通过 `pub(crate) use my_vec;`
+/// 精确控制宏的可见性，避免全局命名空间污染。
 #[macro_export]
 macro_rules! my_vec {
-    // 空 vec
+    // 基础情况：空 vec
     () => {
         Vec::new()
     };
 
-    // 多个元素（包括单个元素情况）
-    ( $( $x:expr ),* $(,)? ) => {
+    // 单个元素
+    ($elem:expr) => {
+        {
+            let mut v = Vec::new();
+            v.push($elem);
+            v
+        }
+    };
+
+    // 多个元素，支持尾逗号
+    ( $( $x:expr ),+ $(,)? ) => {
         {
             let mut v = Vec::new();
             $(
                 v.push($x);
-            )*
+            )+
             v
         }
     };
@@ -168,6 +205,7 @@ macro_rules! my_vec {
 
 #[cfg(test)]
 mod day3_examples {
+    use super::*;
 
     #[test]
     fn test_my_vec_empty() {

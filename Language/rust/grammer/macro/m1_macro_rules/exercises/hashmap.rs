@@ -10,6 +10,10 @@
 //! 提示：
 //! - 使用 std::collections::HashMap
 //! - 使用 $( $key:expr => $val:expr ),* 匹配键值对
+//!
+//! 宏 2.0 风格提示：
+//! 使用 `::std::collections::HashMap` 而非相对路径，
+//! 确保宏在任何上下文中都能正确工作。
 
 // TODO: 实现 hashmap! 宏
 

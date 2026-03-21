@@ -13,10 +13,16 @@
 //! 2. 使用不同的片段说明符（literal, expr, tt）
 //! 3. 参考 serde_json::json! 的实现（但不要直接复制）
 //!
+//! 宏 2.0 风格提示：
+//! 使用 `::serde_json::` 开头的绝对路径，确保宏在任何上下文中都能找到正确的类型。
+//! 这是宏 2.0 统一命名空间的重要特性。
+//!
 //! 练习步骤：
 //! 1. 先实现支持字面量的版本
 //! 2. 添加对对象和数组的支持
 //! 3. 测试嵌套结构
+
+use serde_json::Value;
 
 // TODO: 实现你的 json! 宏
 
@@ -30,6 +36,18 @@ mod tests {
 
     /*
     #[test]
+    fn test_json_null() {
+        let value = json!(null);
+        assert!(value.is_null());
+    }
+
+    #[test]
+    fn test_json_bool() {
+        let value = json!(true);
+        assert_eq!(value, Value::Bool(true));
+    }
+
+    #[test]
     fn test_json_string() {
         let value = json!("hello");
         assert_eq!(value, Value::String("hello".to_string()));
@@ -42,18 +60,29 @@ mod tests {
     }
 
     #[test]
-    fn test_json_object() {
-        let value = json!({ "name": "Alice", "age": 30 });
-        assert_eq!(value["name"], "Alice");
-        assert_eq!(value["age"], 30);
+    fn test_json_array() {
+        let value = json!([1, 2, 3]);
+        assert!(value.is_array());
+        assert_eq!(value[0], 1);
     }
 
     #[test]
-    fn test_json_array() {
-        let value = json!([1, 2, 3]);
-        assert_eq!(value[0], 1);
-        assert_eq!(value[1], 2);
-        assert_eq!(value[2], 3);
+    fn test_json_object() {
+        let value = json!({ "name": "Alice", "age": 30 });
+        assert!(value.is_object());
+        assert_eq!(value["name"], "Alice");
+    }
+
+    #[test]
+    fn test_json_nested() {
+        let value = json!({
+            "user": {
+                "name": "Alice",
+                "tags": ["rust", "macro"]
+            }
+        });
+        assert!(value["user"].is_object());
+        assert!(value["user"]["tags"].is_array());
     }
     */
 }
