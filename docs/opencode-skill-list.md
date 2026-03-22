@@ -313,6 +313,7 @@ Week 4+: 按需补充
 | 资源 | 链接 | 说明 |
 |------|------|------|
 | 🎬 视频入门 | https://www.bilibili.com/video/BV1dz6oBWEWx/ | 10分钟弄懂 Skill |
+| 🎬 封装教程 | https://www.bilibili.com/video/BV1i2wbzhEL9/ | 保姆级 Agent Skill 封装教程（PM刘搞定） |
 | OpenClaw 推荐 | https://help.apiyi.com/en/openclaw-skill-recommendations-2026-en.html | 社区推荐 TOP 10 |
 | Firecrawl 评测 | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
 
