@@ -1,12 +1,16 @@
 # OpenCode Skill 清单
 
-> 适用人群: Linux 嵌入式底层程序员 (C/Rust/Python, 内核/效率工具/防护网)
+> **适用人群**: Linux 嵌入式底层程序员 (C/Rust/Python, 内核/效率工具/防护网)
 >
-> 更新时间: 2026-03-21
->
-> 数据来源: [ClawHub](https://clawhub.ai/skills?sort=downloads) TOP 50 下载排名
->
-> **本清单覆盖 80+ Skills，按 6 大维度分类，含 4 级安装优先级**
+> **更新时间**: 2026-03-22
+
+---
+
+## 筛选标准
+
+1. ✅ 是不是真的能装进 opencode
+2. ✅ 会不会高频用到
+3. ✅ 能不能明显提升结果，而不只是看起来很酷
 
 ---
 
@@ -18,16 +22,7 @@
 
 **Skill = 高级提示词 + 模块化能力 + 可复用 + 可控**
 
-### 普通 Prompt vs Skill
-
-| 维度 | 普通 Prompt | Skill |
-|------|-------------|-------|
-| 颗粒度 | 粗糙，一句话指令 | 精细，数千字步骤拆解 |
-| 稳定性 | 碰运气，容易"幻觉" | 像工厂流水线稳定输出 |
-| 复用性 | 复制粘贴，很麻烦 | 一键调用，无缝衔接 |
-| 形象类比 | 临时抓壮丁 | 请了一位带手册的专家 |
-
-### Skill 本质：岗位 SOP
+### Skill 本质
 
 如果大模型是一个高智商的"通用人才"，Skill 就是为它配备的**"岗位 SOP（标准作业程序）"**。
 
@@ -49,354 +44,377 @@ description: Use when [触发条件] - [功能描述]
 [数千字的步骤拆解、规则定义、工具调用说明]
 ```
 
-### 渐进式披露架构 (Progressive Disclosure)
+---
 
-| 层级 | 组件 | 加载策略 | 作用 |
-|------|------|----------|------|
-| L0 | 目录 | Always-On (始终加载) | 告诉模型有哪些 Skill 可用 |
-| L1 | 元数据 | On-Demand | 判断是否需要调用此 Skill |
-| L2 | 指令 | On-Demand (命中后加载) | 定义具体业务处理逻辑与 SOP |
-| L3 | 引用 | On-Demand | 外部知识库、参考资料 |
-| L4 | 脚本 | Execution (执行时) | 实际的自动化脚本和工具调用 |
+## 一、学习路径（按优先级）
 
-### Skill 生态层级
+### 第一梯队：必须掌握（高频 + 明显提升效率）
 
+| 顺序 | Skill | 适用场景 | 学习时间 | 安装命令 |
+|:----:|-------|----------|:--------:|----------|
+| 1 | **skill-vetter** | 装其他 skill 前的安全审计，防止恶意代码 | 5min | ClawHub |
+| 2 | **find-skills** | 发现并安装需要的 skill，解决"不知道有什么" | 10min | ClawHub |
+| 3 | **tmux** | 远程开发板调试、交叉编译长任务、内核日志观察 | 15min | `npx skills add steipete/clawdis@tmux -g -y` |
+| 4 | **summarize** | 读内核文档、驱动文档、RFC、patch 描述 | 10min | ClawHub |
+| 5 | **planning-with-files** | 长任务规划持久化，上下文压缩不丢失 | 10min | GitHub |
+| 6 | **self-improving-agent** | 跨会话记住调试经验、编译错误修正 | 15min | ClawHub |
+
+**为什么这 6 个必学？**
+- `skill-vetter` + `find-skills`：工具准备，装其他 skill 的前置条件
+- `tmux`：嵌入式/远程开发的核心能力，没有它无法跑长任务
+- `summarize`：信息压缩能力，读文档/补丁的核心
+- `planning-with-files`：长任务不丢失状态，避免"做到一半忘了在干嘛"
+- `self-improving-agent`：跨会话记忆，调试过的错误不再犯
+
+---
+
+### 第二梯队：开发核心（显著提升代码质量）
+
+| 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
+|:----:|-------|----------|:--------:|------|
+| 7 | **systematic-debugging** | 内核 Oops/panic 分析、驱动调试 | 内置 | Superpowers |
+| 8 | **code-review** | 补丁审查、内核补丁检查 | 20min | Anthropic 官方 |
+| 9 | **code-simplifier** | 驱动代码简化、合并重复逻辑 | 15min | Anthropic 官方 |
+| 10 | **code-refactoring** | 驱动重构、代码结构调整 | 20min | `npx skills add supercent-io/skills-template --skill code-refactoring -g -y` |
+| 11 | **changelog-maintenance** | commit 规范、changelog 生成 | 10min | `npx skills add supercent-io/skills-template@changelog-maintenance -g -y` |
+| 12 | **trailofbits-security** | CodeQL/Semgrep 静态分析，漏洞检测 | 30min | GitHub |
+
+**适用场景**：
+- 内核补丁提交前审查
+- 驱动代码重构简化
+- 安全漏洞静态分析
+- commit message 规范化
+
+---
+
+### 第三梯队：效率增强（中频使用）
+
+| 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
+|:----:|-------|----------|:--------:|------|
+| 13 | **github** | PR/issue 管理、内核补丁提交 | 15min | ClawHub |
+| 14 | **ralph-loop** | 强制完成复杂任务，避免半途而废 | 10min | 社区 |
+| 15 | **mcp-builder** | 自定义 MCP Server（如连接开发板） | 30min | Anthropic 官方 |
+| 16 | **markitdown** | PDF/PPT/Word/Excel/HTML → Markdown 转换 | 5min | `pip install markitdown[all]` |
+| 17 | **dev-agent-skills** | Git/GitHub 工作流完整支持 | 15min | GitHub |
+
+---
+
+### 第四梯队：按需安装
+
+| Skill | 适用场景 | 建议时机 |
+|-------|----------|----------|
+| skill-creator | 沉淀内核调试工作流 | 学完核心 skill 后再学 |
+| ontology | 结构化记忆知识图谱 | 长期使用后再考虑 |
+| agent-browser | 访问厂商文档、下载驱动 | 偶尔需要时再装 |
+| obsidian | 知识库管理笔记 | 有笔记习惯再考虑 |
+| proactive-agent | 主动预测需求执行 | 有需求再装 |
+
+---
+
+## 新增补充
+
+### markitdown（Microsoft 官方）
+
+**用途**：将各种文档格式转换为 Markdown，供 LLM 消费
+
+**支持格式**：
+- PDF / PowerPoint / Word / Excel
+- 图片（EXIF + OCR）
+- 音频（EXIF + 语音转录）
+- HTML / CSV / JSON / XML
+- ZIP 文件 / EPub / YouTube URLs
+
+**安装**：
+```bash
+pip install 'markitdown[all]'
 ```
-大模型 (嘴) ──→ 我问你答
-    ↓
-智能体 Agent (模板) ──→ 套模板复用
-    ↓
-工作流 Workflow (生产线) ──→ 串联多步
-    ↓
-Skill (经验) ──→ 用我的方法做，带知识库
-    ↓
-龙虾助理 Lobster (手) ──→ 帮你动手干，跨软件操作
+
+**使用**：
+```bash
+markitdown document.pdf > output.md
+markitdown presentation.pptx > output.md
 ```
 
-### 类比理解
+**MCP Server**：`markitdown-mcp` 可集成到 Claude Desktop
 
-| 角色 | 类比 | 能力 |
-|------|------|------|
-| 大模型 | 万事通 | 随叫随到回答问题 |
-| 智能体 | 熟练工 | 专干某一类活 |
-| 工作流 | 生产线 | 串联多步智能体 |
-| **Skill** | **带手册的专家** | **封装经验和知识，可复用** |
-| 龙虾助理 | 私人秘书 | 操作设备，跨软件执行 |
+**来源**：https://github.com/microsoft/markitdown
 
 ---
 
-## 一、ClawHub TOP 50 Skills (按用途分类)
+### dev-agent-skills
 
-### 🔧 1. 开发工具 (Development)
+**用途**：Git/GitHub 工作流完整支持
 
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [self-improving-agent](https://clawhub.ai/skills/self-improving-agent) | 87.6K | 1061 | Agent 自学习记忆系统，跨会话持续改进 |
-| 2 | [github](https://clawhub.ai/skills/github) | 61.6K | 208 | GitHub CLI 集成 (issue/pr/run/api) |
-| 3 | [skill-creator](https://clawhub.ai/skills/skill-creator) | 21.9K | 84 | 自定义 Skill 创建指南 |
-| 4 | [byterover](https://clawhub.ai/skills/byterover) | 23.4K | 71 | Agent 知识管理，项目模式存储检索 |
-| 5 | [elite-longterm-memory](https://clawhub.ai/skills/elite-longterm-memory) | 19.3K | 89 | 长期记忆系统 (WAL + vector search + git-notes) |
-| 6 | [proactive-agent](https://clawhub.ai/skills/proactive-agent) | 49.2K | 327 | 主动式 Agent，预测需求自主执行 |
-| 7 | [mcporter](https://clawhub.ai/skills/mcporter) | 26.4K | 78 | MCP 服务器工具调用管理 |
-| 8 | [frontend-design](https://clawhub.ai/skills/frontend-design) | 20.2K | 160 | 高质量前端界面生成，告别 AI 模板感 |
-| 9 | [clawddocs](https://clawhub.ai/skills/clawddocs) | 21.5K | 211 | Clawdbot 文档专家，配置代码速查 |
-| 10 | [auto-updater](https://clawhub.ai/skills/auto-updater) | 24.0K | 178 | 自动更新 Agent 和已装 Skills |
-| 11 | [model-usage](https://clawhub.ai/skills/model-usage) | 18.9K | 63 | 模型用量/成本统计 |
-| 12 | [skill-vetter](https://clawhub.ai/skills/skill-vetter) | 12.3K | — | 安全审计 Skill (安装前检查 20+ 危险信号) |
+**功能**：
+- Git 操作自动化
+- GitHub PR/Issue 管理
+- Skill authoring 工作流
+
+**安装**：
+```bash
+npx skills add fvadicamo/dev-agent-skills -g -y
+```
+
+**来源**：https://github.com/fvadicamo/dev-agent-skills
+| github (gh CLI) | GitHub 工作流 | 开源贡献频繁再装 |
 
 ---
 
-### 🔍 2. 搜索与信息获取 (Search & Research)
+## 二、Superpowers 已安装（内置 15 Skill）
 
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [tavily-search](https://clawhub.ai/skills/tavily-search) | 76.3K | 345 | AI 优化的网页搜索 API |
-| 2 | [find-skills](https://clawhub.ai/skills/find-skills) | 72.3K | 320 | 智能发现并安装可用 Skills |
-| 3 | [agent-browser](https://clawhub.ai/skills/agent-browser) | 61.1K | 321 | Rust 无头浏览器自动化 (点击/输入/截图) |
-| 4 | [brave-search](https://clawhub.ai/skills/brave-search) | 25.1K | 111 | Brave Search API 文档/事实搜索 |
-| 5 | [baidu-search](https://clawhub.ai/skills/baidu-search) | 19.8K | 39 | 百度 AI 搜索引擎集成 |
-| 6 | [browser-use](https://clawhub.ai/skills/browser-use) | 17.2K | 44 | 浏览器交互自动化 (测试/表单/数据提取) |
-| 7 | [youtube-watcher](https://clawhub.ai/skills/youtube-watcher) | 21.3K | 163 | YouTube 视频转录获取与摘要 |
-| 8 | [playwright-mcp](https://clawhub.ai/skills/playwright-mcp) | 12.7K | — | Playwright MCP 浏览器自动化 (导航/交互/截图) |
-| 9 | [playwright-scraper-skill](https://clawhub.ai/skills/playwright-scraper-skill) | 15.2K | 30 | Playwright 反爬虫抓取 (支持 Cloudflare 绕过) |
+> 这些 skill 已内置，无需安装，直接可用。
 
----
-
-### 📄 3. 文档与内容处理 (Document & Content)
-
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [summarize](https://clawhub.ai/skills/summarize) | 66.4K | 309 | 智能摘要 (网页/PDF/图片/音频/YouTube) |
-| 2 | [humanizer](https://clawhub.ai/skills/humanizer) | 28.6K | 261 | 去 AI 痕迹写作，让文字更自然 |
-| 3 | [nano-pdf](https://clawhub.ai/skills/nano-pdf) | 32.9K | 78 | 自然语言编辑 PDF |
-| 4 | [nano-banana-pro](https://clawhub.ai/skills/nano-banana-pro) | 31.6K | 144 | AI 图片生成/编辑 (Gemini 3 Pro) |
-| 5 | [humanize-ai-text](https://clawhub.ai/skills/humanize-ai-text) | 24.5K | 102 | AI 文本人性化改写，绕过检测器 |
-| 6 | [obsidian](https://clawhub.ai/skills/obsidian) | 30.9K | 129 | Obsidian 知识库管理 (Markdown 笔记) |
-| 7 | [openai-whisper](https://clawhub.ai/skills/openai-whisper) | 28.4K | 149 | 本地语音转文字 (无需 API Key) |
-| 8 | [video-frames](https://clawhub.ai/skills/video-frames) | 18.3K | 51 | ffmpeg 视频帧/片段提取 |
+| Skill | 用途 | 嵌入式场景 |
+|-------|------|------------|
+| brainstorming | 需求澄清、方案设计 | 驱动架构设计 |
+| writing-plans | 生成实施计划 | 开发任务分解 |
+| executing-plans | 按计划执行开发 | 自动执行计划 |
+| test-driven-development | 红绿 TDD 开发 | 驱动单元测试 |
+| **systematic-debugging** | **系统性调试定位** | **内核 Oops 分析** ⭐ |
+| dispatching-parallel-agents | 多 Agent 并行任务 | 多模块并行开发 |
+| subagent-driven-development | 子 Agent 驱动开发 | 复杂任务分解 |
+| requesting-code-review | 请求代码审查 | 补丁提交前自查 |
+| receiving-code-review | 接收代码审查反馈 | 处理 review 意见 |
+| verification-before-completion | 完成前验证 | 确保任务完成 |
+| finishing-a-development-branch | 分支合并/清理 | 补丁合并流程 |
+| using-git-worktrees | Git worktree 隔离开发 | 多版本并行开发 |
+| writing-skills | 自定义 Skill 打包 | 沉淀工作流 |
 
 ---
 
-### 📧 4. 通讯与社交 (Communication)
+## 三、暂时不需要浪费精力的 Skills
 
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [himalaya](https://clawhub.ai/skills/himalaya) | 21.3K | 41 | CLI 邮件管理 (IMAP/SMTP，多账户) |
-| 2 | [slack](https://clawhub.ai/skills/slack) | 20.2K | 79 | Slack 消息/频道/置顶管理 |
-| 3 | [gmail](https://clawhub.ai/skills/gmail) | 19.4K | 50 | Gmail API (OAuth) 邮件/标签/草稿 |
-| 4 | [imap-smtp-email](https://clawhub.ai/skills/imap-smtp-email) | 16.9K | 37 | IMAP/SMTP 邮件收发 (含附件) |
-| 5 | [outlook-api](https://clawhub.ai/skills/outlook-api) | 17.7K | 28 | Microsoft Outlook (Graph API) 集成 |
-| 6 | [whatsapp-business](https://clawhub.ai/skills/whatsapp-business) | 17.0K | 38 | WhatsApp Business API 消息管理 |
-| 7 | [youtube-api-skill](https://clawhub.ai/skills/youtube-api-skill) | 20.5K | 103 | YouTube Data API (视频/播放列表/评论) |
+### ❌ 前端/设计类（完全不适用）
 
----
+| Skill | 原因 |
+|-------|------|
+| frontend-design | React/Tailwind 前端设计 |
+| ui-ux-pro-max-skill | UI/UX 设计，67种风格161套配色 |
+| webapp-testing | Playwright 前端测试 |
+| web-artifacts-builder | HTML artifacts 构建 |
+| canvas-design | 视觉艺术设计 |
+| algorithmic-art | p5.js 生成艺术 |
+| frontend-slides | HTML 演示文稿 |
+| shadcn/ui skills | React 组件 |
 
-### ☁️ 5. 云服务与平台集成 (Cloud & Integration)
+### ❌ 媒体/内容类（低频）
 
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [gog](https://clawhub.ai/skills/gog) | 77.7K | 607 | Google Workspace 全家桶 (Gmail/Calendar/Drive/Docs/Sheets/Contacts) |
-| 2 | [notion](https://clawhub.ai/skills/notion) | 35.9K | 131 | Notion API 页面/数据库/块管理 |
-| 3 | [api-gateway](https://clawhub.ai/skills/api-gateway) | 31.2K | 149 | 100+ API 统一网关 (OAuth 管理) |
-| 4 | [trello](https://clawhub.ai/skills/trello) | 18.0K | 86 | Trello 看板/列表/卡片管理 |
-| 5 | [stripe-api](https://clawhub.ai/skills/stripe-api) | 17.5K | 22 | Stripe 支付/订阅/发票管理 |
-| 6 | [shopify](https://clawhub.ai/skills/shopify) | 16.5K | 2 | Shopify 电商集成 (维护中) |
-| 7 | [xero](https://clawhub.ai/skills/xero) | 16.4K | 8 | Xero 财务 API (联系人/发票/报表) |
+| Skill | 原因 |
+|-------|------|
+| remotion-dev | 代码生成动画视频 |
+| video-downloader | 视频下载 |
+| video-frames | 视频帧提取 |
+| ai-content-operator | AI 内容运营 |
+| nano-banana-pro | AI 生图/改图 |
 
----
+### ❌ 通讯/社交类（低频）
 
-### 🤖 6. Agent 能力增强 (Agent Enhancement)
+| Skill | 原因 |
+|-------|------|
+| slack | 团队不用 Slack |
+| gmail / outlook-api | 邮件 API |
+| whatsapp-business | WhatsApp |
+| youtube-* | YouTube 被墙 |
 
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [free-ride](https://clawhub.ai/skills/free-ride) | 26.1K | 190 | OpenRouter 免费模型管理，自动排名/降级 |
-| 2 | [gemini](https://clawhub.ai/skills/gemini) | 17.0K | 35 | Gemini CLI 问答/摘要/生成 |
-| 3 | [desktop-control](https://clawhub.ai/skills/desktop-control) | 16.3K | 125 | 桌面自动化 (鼠标/键盘/屏幕控制) |
+### ❌ 生活/娱乐类
 
----
+| Skill | 原因 |
+|-------|------|
+| weather | 偶尔用，不是核心 |
+| stock-analysis | 股票分析 |
+| polymarketodds | 预测市场 |
+| sonoscli | Sonos 音箱 |
 
-### 🌤️ 7. 生活与工具 (Lifestyle & Utility)
-
-| # | Skill | 下载量 | ⭐ | 说明 |
-|---|-------|--------|-----|------|
-| 1 | [weather](https://clawhub.ai/skills/weather) | 52.2K | 185 | 天气查询与预报 (无需 API Key) |
-| 2 | [polymarketodds](https://clawhub.ai/skills/polymarketodds) | 50.7K | 128 | Polymarket 预测市场查询 (赔率/趋势/告警) |
-| 3 | [sonoscli](https://clawhub.ai/skills/sonoscli) | 44.6K | 30 | Sonos 音箱控制 (发现/播放/音量/分组) |
-| 4 | [stock-analysis](https://clawhub.ai/skills/stock-analysis) | 20.8K | 111 | 股票/加密货币分析 (Yahoo Finance) |
-| 5 | [blogwatcher](https://clawhub.ai/skills/blogwatcher) | 18.8K | 25 | RSS/Atom 博客监控更新 |
-| 6 | [lnbits-with-qrcode](https://clawhub.ai/skills/lnbits-with-qrcode) | 19.2K | 4 | LNbits 闪电网络钱包管理 |
-| 7 | [automation-workflows](https://clawhub.ai/skills/automation-workflows) | 19.4K | 82 | 自动化工作流设计 (Zapier/Make/n8n) |
-
----
-
-## 二、重点推荐 (近期上手清单)
-
-以下 10 个 Skill 经过筛选，覆盖开发全链路：
-
-| Skill | 类别 | 下载量 | 安装命令 | 一句话 |
-|-------|------|--------|----------|--------|
-| [Self-Improving Agent](https://clawhub.ai/skills/self-improving-agent) | 记忆 | 87.6K | [安装文档](skills/03-dev-memory/self-improving-agent.md) | Agent 自学习，跨会话记住错误和修正 |
-| [Find Skills](https://clawhub.ai/skills/find-skills) | 搜索 | 72.3K | [安装文档](skills/02-search/find-skills.md) | 你说需求，它帮你找并装好 Skill |
-| [Skill Vetter](https://clawhub.ai/skills/skill-vetter) | 安全 | 12.3K | [安装文档](skills/01-security/skill-vetter.md) | 安装前审计 Skill，检测 20+ 危险信号 |
-| [Focus Mode](https://clawhub.ai/skills/focus-mode) | 效率 | 新兴 | 见 [docs/skills/](skills/) | 专注模式，屏蔽干扰，深度工作 |
-| [Agent Browser](https://clawhub.ai/skills/agent-browser) | 浏览器 | 61.1K | [安装文档](skills/02-search/agent-browser.md) | Rust 无头浏览器自动化 (点击/输入/截图) |
-| [AI Daily Briefing](https://clawhub.ai/skills/ai-daily-briefing) | 效率 | 新兴 | [安装文档](skills/07-productivity/ai-daily-briefing.md) | 每日晨报：任务/日历/优先级一览 |
-| [Multi Search Engine](https://clawhub.ai/skills/multi-search-engine) | 搜索 | 13.7K | [安装文档](skills/02-search/multi-search-engine.md) | 17 搜索引擎集成 (8 国内 + 9 国际) |
-| [YouTube Ultimate](https://clawhub.ai/skills/youtube-ultimate) | 内容 | 新兴 | ❌ 不适合国内 | YouTube 被墙，不建议安装 |
-| [OpenClaw Feeds](https://clawhub.ai/skills/openclaw-feeds) | 信息 | 新兴 | 见 [docs/skills/](skills/) | RSS/Twitter/HN/Reddit 信息流聚合 |
-| [Reddit Search](https://clawhub.ai/skills/reddit-search) | 搜索 | 新兴 | ❌ 不适合国内 | Reddit 被墙，不建议安装 |
-
-> 💡 **建议安装顺序**: Skill Vetter → Find Skills → Self-Improving Agent → Agent Browser → Multi Search Engine → AI Daily Briefing → Focus Mode → OpenClaw Feeds → YouTube Ultimate → Reddit Search
->
-> 先装 `skill-vetter` 做安全审计，再装其他 Skill 时用它检查一遍。
-
----
-
-## 二B. 生产力必备 TOP 10 (用户精选)
-
-| # | Skill | ClawHub 名 | 下载量 | 安装方式 | 一句话 |
-|---|-------|------------|--------|----------|--------|
-| 1 | 🥇 Skill Vet | `skill-vetter` | 12.3K | [安装文档](skills/01-security/skill-vetter.md) | 安全守门员，安装前自动扫描恶意行为 |
-| 2 | 🔍 Find Skills | `find-skills` | 72.3K | [安装文档](skills/02-search/find-skills.md) | 打字描述需求，自动搜索并安装 Skill |
-| 3 | 🧠 Memory Setup | `elite-longterm-memory` | 19.3K | [安装文档](skills/03-dev-memory/elite-longterm-memory.md) | 解决 AI 鱼的记忆，记住使用习惯 |
-| 4 | 📝 Self-Improving | `self-improving-agent` | 87.6K | [安装文档](skills/03-dev-memory/self-improving-agent.md) | 纠错后自动记录，下次不再犯 |
-| 5 | 📄 Summarize | `summarize` | 66.4K | [安装文档](skills/04-document/summarize.md) | 链接/PDF/视频几秒提炼核心摘要 |
-| 6 | 🌐 Web Content | `agent-browser` | 61.1K | [安装文档](skills/02-search/agent-browser.md) | 绕过限制抓取网页，输出干净 Markdown |
-| 7 | ✏️ NanoPDF | `nano-pdf` | 32.9K | [安装文档](skills/04-document/nano-pdf.md) | 自然语言编辑 PDF，告别 Adobe |
-| 8 | 🗣️ Humanizer | `humanizer` | 28.6K | [安装文档](skills/04-document/humanizer.md) | 去 AI 味，让文字更像真人说话 |
-| 9 | 🎨 Nano Banana Pro | `nano-banana-pro` | 31.6K | 见 [docs/skills/](skills/) | 对话框直接生图/改图，支持 4K |
-| 10 | ⏰ Proactive Agent | `proactive-agent` | 49.2K | 见 [docs/skills/](skills/) | AI 从被动应答变为主动服务 |
-
-> 💡 以上 10 个 Skill 与本清单其他章节有重叠，此处按 **日常使用场景** 重新排列。
-
----
-
-## 二C. 补充推荐 (按需安装)
-
-| # | Skill | ClawHub/来源 | 类别 | 安装方式 | 说明 |
-|---|-------|-------------|------|----------|------|
-| 1 | [Anthropic Docs Suite](https://clawhub.ai/skills/anthropic-docs-skill) | Anthropic 官方 | 文档 | [安装文档](skills/04-document/anthropic-docs-skill.md) | AI 读写 Word/PPT/Excel/PDF，论文速读 + PPT 生成 |
-| 2 | [UI/UX Pro Max](https://clawhub.ai/skills/ui-ux-pro-max-skill) | ClawHub | 设计 | [安装文档](skills/06-design/ui-ux-pro-max-skill.md) | UI 设计智库，配色/字体/组件/交互规范，输出高质感设计 |
-| 3 | [Humanizer ZH](https://clawhub.ai/skills/humanizer-zh) | ClawHub | 写作 | [安装文档](skills/04-document/humanizer-zh.md) | 中文去 AI 痕迹写作，4 类 24 项扫描优化，更像真人表达 |
-| 4 | [Remotion Dev](https://clawhub.ai/skills/remotion-dev) | ClawHub | 视频 | [安装文档](skills/06-design/remotion-dev.md) | 代码生成产品发布动画视频，文字排版/转场/自定义渲染 |
-| 5 | [Research Skills](https://clawhub.ai/skills/research-skills) | ClawHub | 搜索 | [安装文档](skills/08-research/research-skills.md) | 多源研究工作流 (论文/文档/网页) |
-| 6 | [NotebookLM Skill](https://clawhub.ai/skills/notebooklm-skill) | ClawHub | 知识 | ❌ 不适合国内 | Google NotebookLM 被墙 |
-| 7 | [CSV Data Summarizer](https://clawhub.ai/skills/csv-data-summarizer) | ClawHub | 数据 | [安装文档](skills/09-tools/csv-data-summarizer.md) | CSV 文件智能分析与摘要 |
-| 8 | [File Organizer](https://clawhub.ai/skills/file-organizer) | ClawHub | 工具 | [安装文档](skills/09-tools/file-organizer.md) | 文件自动分类整理 |
-| 9 | [Video Downloader](https://clawhub.ai/skills/video-downloader) | ClawHub | 媒体 | [安装文档](skills/05-media/video-downloader.md) | 视频下载 (YouTube/B站/抖音等) |
-| 10 | [AI Content Operator](https://clawhub.ai/skills/ai-content-operator) | ClawHub | 内容 | 见 [docs/skills/](skills/) | AI 内容生产运营助手 |
-| 11 | [Awesome Claude Skills](https://clawhub.ai/skills/awesome-claude-skill) | ClawHub | 工具 | 见 [docs/skills/](skills/) | Claude 精选 Skill 合集导航 |
-| 12 | [Docx Skill](https://clawhub.ai/skills/docx-skill) | ClawHub | 文档 | 见 [docs/skills/](skills/) | Word 文档读写/生成/编辑 |
-
-> ⚠️ **已去重**：Skill Creator / Agent Browser / Find Skills / Superpowers / Humanizer (英文版) 已在其他章节，此处不重复。
-
----
-
-## 二D. 不适合中国大陆使用 (需梯子或服务不可达)
-
-以下 Skill 依赖被墙或国内无法访问的服务，**不建议安装**：
+### ❌ 国内受限服务
 
 | Skill | 原因 | 替代方案 |
 |-------|------|----------|
-| `tavily-search` | 需海外 API Key，国内延迟高 | `baidu-search` / `multi-search-engine` |
-| `brave-search` | 需海外 API Key | `baidu-search` / `multi-search-engine` |
-| `gog` (Google Workspace) | Google 服务被墙 | 无直接替代，可用 `notion` |
-| `gmail` | Gmail 被墙 | `himalaya` / `imap-smtp-email` (配国内邮箱) |
-| `gemini` | Google API 被墙 | 直接用 OpenCode 内置模型 |
-| `youtube-watcher` | YouTube 被墙 | `video-downloader` (B站/抖音) |
-| `youtube-api-skill` | YouTube API 被墙 | 同上 |
-| `youtube-ultimate` | YouTube 被墙 | 同上 |
-| `reddit-search` | Reddit 被墙 | `blogwatcher` (RSS 订阅替代) |
-| `whatsapp-business` | WhatsApp 被墙 | 无直接替代 |
-| `polymarketodds` | Polymarket 被墙 | 无直接替代 |
-| `sonoscli` | 依赖 Sonos 硬件 (国内少见) | 无 |
-| `notebooklm-skill` | Google NotebookLM 被墙 | `obsidian` + `research-skills` |
-| `slack` | 国内团队不用 Slack | 无 |
-| `free-ride` | OpenRouter 国内不稳定 | 直接用 OpenCode 内置模型 |
-| `lnbits-with-qrcode` | 闪电网络，国内无场景 | 无 |
-
-> 💡 **替代原则**：搜索用 `baidu-search`，邮箱用 `imap-smtp-email`，知识库用 `obsidian`，文档用 `anthropic-docs-skill`。
+| tavily-search | 海外 API 延迟高 | baidu-search |
+| brave-search | 海外 API | baidu-search |
+| gog (Google Workspace) | Google 被墙 | notion |
+| gemini | Google API 被墙 | 内置模型 |
+| notebooklm-skill | NotebookLM 被墙 | obsidian |
+| free-ride | OpenRouter 国内不稳定 | 内置模型 |
 
 ---
 
-## 三、Super Powers 已安装 (内置 15 Skill)
+## 四、推荐自定义开发（Embedded/Linux 专用）
 
-| Skill | 用途 |
-|-------|------|
-| brainstorming | 需求澄清、方案设计 |
-| writing-plans | 生成实施计划 |
-| executing-plans | 按计划执行开发 |
-| test-driven-development | 红绿 TDD 开发 |
-| systematic-debugging | 系统性调试定位 |
-| dispatching-parallel-agents | 多 Agent 并行任务 |
-| subagent-driven-development | 子 Agent 驱动开发 |
-| requesting-code-review | 请求代码审查 |
-| receiving-code-review | 接收代码审查反馈 |
-| verification-before-completion | 完成前验证 |
-| finishing-a-development-branch | 分支合并/清理 |
-| using-git-worktrees | Git worktree 隔离开发 |
-| writing-skills | 自定义 Skill 打包 |
-| using-superpowers | 技能使用指南 |
+针对你的技术栈，建议创建以下 Skill：
+
+| Skill 名称 | 用途 | 优先级 | 场景 |
+|------------|------|:------:|------|
+| kernel-module-debugging | 内核模块调试、dmesg 分析、Oops/panic 处理 | ⭐⭐⭐ | 驱动开发调试 |
+| cross-compilation | 交叉编译环境管理、Yocto/Buildroot 集成 | ⭐⭐⭐ | 嵌入式编译 |
+| performance-profiling | perf/ftrace 使用、内存泄漏检测、实时性分析 | ⭐⭐⭐ | 性能优化 |
+| bpf-development | eBPF 程序开发、libbpf/bcc 工作流 | ⭐⭐⭐ | 内核观测 |
+| device-driver-development | 驱动开发模板、设备树分析 | ⭐⭐ | 驱动开发 |
+| security-hardening | 内核安全加固、漏洞扫描、权限最小化 | ⭐⭐ | 安全加固 |
+| rust-embedded | Rust 嵌入式开发工作流 (no_std/async HAL) | ⭐⭐ | Rust 嵌入式 |
+
+**创建方法**：使用 `skill-creator` 或手动创建 `~/.config/opencode/skills/<skill-name>/SKILL.md`
 
 ---
 
-## 四、推荐自定义开发 (Embedded/Linux 专用)
+## 五、学习计划
 
-针对你的技术栈 (Linux 内核/效率工具/防护网)，建议创建以下 Skill：
+```
+Week 1: 第一梯队（安全 + 基础能力）
+├── Day 1-2: skill-vetter + find-skills（工具准备）
+├── Day 3-4: tmux（远程开发必备）
+└── Day 5-6: summarize + planning-with-files（信息处理）
 
-| Skill 名称 | 用途 | 优先级 |
-|------------|------|--------|
-| kernel-module-debugging | 内核模块调试、dmesg 分析、Oops/panic 处理 | ⭐⭐⭐ |
-| cross-compilation | 交叉编译环境管理、Yocto/Buildroot 集成 | ⭐⭐⭐ |
-| device-driver-development | 驱动开发模板、设备树分析 | ⭐⭐ |
-| performance-profiling | perf/ftrace 使用、内存泄漏检测、实时性分析 | ⭐⭐⭐ |
-| security-hardening | 内核安全加固、漏洞扫描、权限最小化 | ⭐⭐ |
-| rust-embedded | Rust 嵌入式开发工作流 (no_std/async HAL) | ⭐⭐ |
-| bpf-development | eBPF 程序开发、libbpf/bcc 工作流 | ⭐⭐⭐ |
+Week 2: 第二梯队（代码质量）
+├── systematic-debugging（Superpowers 已内置）
+├── code-review + code-simplifier + code-refactoring
+├── changelog-maintenance
+└── trailofbits-security（安全分析）
 
----
+Week 3: 第三梯队（效率增强）
+├── github + ralph-loop
+└── mcp-builder（如需自定义 MCP）
 
-## 五、安装优先级建议 (含重点推荐)
-
-| 阶段 | Skill | 来源 | 说明 |
-|------|-------|------|------|
-| P0 已装 | Superpowers (15个) | git plugin | 核心开发工作流 |
-| P1 必装 | skill-vetter | ClawHub | 安装其他 Skill 前先审计 |
-| P1 必装 | find-skills | ClawHub | 智能发现可用 Skills |
-| P1 必装 | self-improving-agent | ClawHub | Agent 自学习记忆 |
-| P1 推荐 | summarize | ClawHub | 文档/网页/视频摘要 |
-| P1 推荐 | agent-browser | ClawHub | 浏览器自动化 |
-| P1 推荐 | playwright-mcp | ClawHub | 浏览器自动化 (备选) |
-| P1 推荐 | skill-creator | ClawHub | 自定义 Skill 打包 |
-| P1 推荐 | humanizer | ClawHub | 去 AI 痕迹写作 (英文版) |
-| P1 推荐 | humanizer-zh | ClawHub | 去 AI 痕迹写作 (中文版) |
-| P1 推荐 | anthropic-docs-skill | Anthropic 官方 | Word/PPT/Excel/PDF 四件套 |
-| P2 推荐 | nano-pdf | ClawHub | PDF 编辑 |
-| P2 推荐 | nano-banana-pro | ClawHub | AI 生图/改图 |
-| P2 推荐 | proactive-agent | ClawHub | 主动式 Agent |
-| P2 推荐 | tavily-search | ClawHub | AI 搜索 |
-| P2 推荐 | github | ClawHub | GitHub 工作流 |
-| P2 推荐 | multi-search-engine | ClawHub | 多引擎搜索 |
-| P2 推荐 | ai-daily-briefing | ClawHub | 每日晨报 |
-| P2 推荐 | elite-longterm-memory | ClawHub | 长期记忆 |
-| P3 可选 | notebooklm-skill | ClawHub | NotebookLM 知识库 |
-| P3 可选 | remotion-dev | ClawHub | 代码生成动画视频 |
-| P3 可选 | ui-ux-pro-max-skill | ClawHub | UI 设计 |
-| P3 可选 | csv-data-summarizer | ClawHub | CSV 数据分析 |
-| P3 可选 | video-downloader | ClawHub | 视频下载 |
-| P3 可选 | ai-content-operator | ClawHub | AI 内容运营 |
-| P3 可选 | docx-skill | ClawHub | Word 文档处理 |
-| P3 可选 | research-skills | ClawHub | 研究工作流 |
-| P3 可选 | file-organizer | ClawHub | 文件整理 |
-| P3 可选 | gog | ClawHub | Google Workspace |
-| P3 可选 | notion | ClawHub | 笔记管理 |
-| P3 可选 | api-gateway | ClawHub | 多 API 统一入口 |
-| P4 创建 | kernel-module-debugging | 自定义 | 内核调试 |
-| P4 创建 | bpf-development | 自定义 | eBPF 开发 |
-| P4 创建 | performance-profiling | 自定义 | 性能分析 |
-| P4 创建 | kernel-module-debugging | 自定义 | 内核调试 |
-| P4 创建 | bpf-development | 自定义 | eBPF 开发 |
-| P4 创建 | performance-profiling | 自定义 | 性能分析 |
+Week 4+: 按需补充
+├── skill-creator（开始沉淀自己的工作流）
+└── 创建嵌入式专用 skill
+```
 
 ---
 
-## 六、自定义 Skill 快速参考
+## 六、Skill 目录结构
 
 ```
 ~/.config/opencode/skills/
 ├── brainstorming/          (Superpowers)
 ├── systematic-debugging/   (Superpowers)
 ├── writing-plans/          (Superpowers)
+├── code-refactoring/       (已安装)
 └── kernel-debug/           (自定义)
     └── SKILL.md
 ```
 
-**SKILL.md 模板：**
-```markdown
----
-name: skill-name
-description: Use when [触发条件] - [功能描述]
 ---
 
-# Skill Title
+## 数据源与参考
 
-[工作流内容]
-```
-
----
-
-## 参考 (References)
+### 数据来源
 
 | 来源 | 链接 | 说明 |
 |------|------|------|
-| 🎬 什么是大模型 Skill | https://www.bilibili.com/video/BV1dz6oBWEWx/ | 10 分钟入门，什么是 Skill、怎么用、底层原理 (隔壁的程序员老王) |
-| ClawHub Skills 排行 | https://clawhub.ai/skills?sort=downloads | TOP 50 数据来源 |
-| Top ClawHub Skills API | https://topclawhubskills.com/api/top-downloads?limit=50 | 实时下载量 API |
-| Superpowers (GitHub) | https://github.com/obra/superpowers | 已安装，15 个内置 Skill |
-| oh-my-opencode | https://www.npmjs.com/package/oh-my-opencode | Oracle + Librarian Agent |
-| ClawHub 安全审计 | https://clawhub.ai/skills/skill-vetter | Skill 安装前审计 |
-| OpenClaw Skills 推荐 | https://help.apiyi.com/en/openclaw-skill-recommendations-2026-en.html | 社区推荐 TOP 10 |
-| Firecrawl 最佳 Skills | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
-| ClawHub Skills Lib | https://www.clawhub-skills.com/blog | Skill 使用教程 |
-| LobeHub Skills | https://lobehub.com/skills | 100K+ Skills 市场 |
-| **本地 Skill 文档** | [docs/skills/](./skills/) | 30 个可用 Skill 详细使用指南 |
+| ClawHub | https://clawhub.ai/skills?sort=downloads | TOP 50 下载排名 |
+| skills.sh | https://skills.sh/ | Skill 安装工具 (`npx skills add`) |
+| Awesome Claude Skills | https://github.com/travisvn/awesome-claude-skills | 社区精选清单 |
+| Anthropic 官方 | https://github.com/anthropics/skills | 官方 Skills 仓库 |
+| Superpowers | https://github.com/obra/superpowers | 已安装，15 个内置 Skill |
+| Trail of Bits | https://github.com/trailofbits/skills | 安全研究 Skills |
+
+### 学习资源
+
+| 资源 | 链接 | 说明 |
+|------|------|------|
+| 🎬 视频入门 | https://www.bilibili.com/video/BV1dz6oBWEWx/ | 10分钟弄懂 Skill |
+| OpenClaw 推荐 | https://help.apiyi.com/en/openclaw-skill-recommendations-2026-en.html | 社区推荐 TOP 10 |
+| Firecrawl 评测 | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
+
+---
+
+## 一句话总结
+
+**核心原则**：先装能帮你**干活**的（tmux、summarize、code-review），再装帮你**提质**的（code-simplifier、trailofbits-security），最后装帮你**扩展**的（mcp-builder、skill-creator）。
+
+**避坑原则**：前端/设计/媒体/社交类 skill 对嵌入式开发几乎没有价值，不要被"看起来很酷"诱惑。
+
+---
+
+## 七、低优先级 Skills 完整列表（按需查阅）
+
+> 以下 Skills 对嵌入式开发优先级较低，但保留完整列表供查阅。
+
+### 开发工具类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| byterover | Agent 知识管理，项目模式存储检索 | ClawHub |
+| elite-longterm-memory | 长期记忆系统 (WAL + vector search + git-notes) | ClawHub |
+| mcporter | MCP 服务器工具调用管理 | ClawHub |
+| clawddocs | Clawdbot 文档专家，配置代码速查 | ClawHub |
+| auto-updater | 自动更新 Agent 和已装 Skills | ClawHub |
+| model-usage | 模型用量/成本统计 | ClawHub |
+| ffuf-web-fuzzing | Web 模糊测试渗透测试 | GitHub |
+| claude-scientific-skills | 科学计算库与数据库操作技能 | GitHub |
+
+### 搜索与信息获取类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| agent-browser | Rust 无头浏览器自动化 (点击/输入/截图) | ClawHub |
+| browser-use | 浏览器交互自动化 (测试/表单/数据提取) | ClawHub |
+| playwright-mcp | Playwright MCP 浏览器自动化 | ClawHub |
+| playwright-scraper-skill | Playwright 反爬虫抓取 | ClawHub |
+| multi-search-engine | 17 搜索引擎集成 (8 国内 + 9 国际) | ClawHub |
+| baidu-search | 百度 AI 搜索引擎集成 | ClawHub |
+
+### 文档与内容处理类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| humanizer | 去 AI 痕迹写作，让文字更自然 | ClawHub |
+| humanizer-zh | 中文去 AI 痕迹写作 | ClawHub |
+| humanize-ai-text | AI 文本人性化改写，绕过检测器 | ClawHub |
+| nano-pdf | 自然语言编辑 PDF | ClawHub |
+| openai-whisper | 本地语音转文字 (无需 API Key) | ClawHub |
+| anthropic-docs-skill | AI 读写 Word/PPT/Excel/PDF | ClawHub |
+| docx-skill | Word 文档读写/生成/编辑 | ClawHub |
+
+### Anthropic 官方文档 Skills
+
+| Skill | 说明 | 安装 |
+|-------|------|------|
+| docx | Word 文档，支持修订/批注/格式保留 | `/plugin install docx` |
+| pdf | PDF 工具包，提取/创建/合并/拆分/表单 | `/plugin install pdf` |
+| pptx | PPT 生成/编辑，支持母版/模板/图表 | `/plugin install pptx` |
+| xlsx | Excel 表格，公式/格式/数据分析/可视化 | `/plugin install xlsx` |
+
+### 通讯与社交类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| himalaya | CLI 邮件管理 (IMAP/SMTP，多账户) | ClawHub |
+| imap-smtp-email | IMAP/SMTP 邮件收发 (含附件) | ClawHub |
+
+### 云服务与平台集成类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| notion | Notion API 页面/数据库/块管理 | ClawHub |
+| api-gateway | 100+ API 统一网关 (OAuth 管理) | ClawHub |
+| trello | Trello 看板/列表/卡片管理 | ClawHub |
+| stripe-api | Stripe 支付/订阅/发票管理 | ClawHub |
+| shopify | Shopify 电商集成 | ClawHub |
+| xero | Xero 财务 API | ClawHub |
+
+### Agent 能力增强类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| desktop-control | 桌面自动化 (鼠标/键盘/屏幕控制) | ClawHub |
+
+### 生活与工具类
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| blogwatcher | RSS/Atom 博客监控更新 | ClawHub |
+| automation-workflows | 自动化工作流设计 (Zapier/Make/n8n) | ClawHub |
+| csv-data-summarizer | CSV 文件智能分析与摘要 | ClawHub |
+| file-organizer | 文件自动分类整理 | ClawHub |
+| research-skills | 多源研究工作流 (论文/文档/网页) | ClawHub |
+
+### 更多社区 Skills
+
+| Skill | 说明 | 来源 |
+|-------|------|------|
+| ios-simulator-skill | iOS app building, navigation, and testing | GitHub |
+| claude-d3js-skill | Visualizations in d3.js | GitHub |
+| web-asset-generator | Generates web assets like favicons, app icons | GitHub |
+| loki-mode | Multi-agent autonomous startup system (37 agents) | GitHub |
+| awesome-claude-skill | Claude 精选 Skill 合集导航 | ClawHub |
