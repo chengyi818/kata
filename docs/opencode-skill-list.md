@@ -2,7 +2,7 @@
 
 > **适用人群**: Linux 嵌入式底层程序员 (C/Rust/Python, 内核/效率工具/防护网)
 >
-> **更新时间**: 2026-03-22
+> **更新时间**: 2026-03-29
 
 ---
 
@@ -112,6 +112,109 @@ description: Use when [触发条件] - [功能描述]
 ---
 
 ## 新增补充
+
+### next-ai-draw-io ⭐ MCP Server
+
+**用途**：AI 驱动的架构图/流程图生成（基于 draw.io）
+
+**功能**：
+- 自然语言生成 AWS/GCP/Azure 架构图
+- 图片/截图转可编辑图表（OCR + 重建）
+- PDF/文档自动提取生成图表
+- 交互式对话迭代优化图表
+- 支持多模型：Claude、GPT-4、DeepSeek 等
+
+**安装**（MCP Server 方式）：
+```bash
+# 方式1：OpenCode MCP 添加
+opencode mcp add
+# 配置：npx @next-ai-drawio/mcp-server@latest
+
+# 方式2：直接 npx
+npx @next-ai-drawio/mcp-server@latest
+```
+
+**在线体验**：https://next-ai-drawio.jiang.jp/
+
+**来源**：https://github.com/DayuanJiang/next-ai-draw-io (23.7k ⭐)
+
+**适用场景**：
+- 嵌入式系统架构设计
+- 内核模块依赖关系图
+- 驱动流程图/状态机图
+- 云原生部署架构
+
+---
+
+### deer-flow ⭐ ByteDance SuperAgent 框架
+
+**用途**：开源长时程超级 Agent 协调框架，支持研究、编程、创作复杂任务（分钟到小时级）
+
+**功能**：
+- **子 Agent 协调** - LangGraph 驱动，动态工具加载，任务委派
+- **沙盒执行** - Docker 隔离容器，完整文件系统 + bash 命令执行
+- **长期记忆** - 持久化记忆 + 事实提取 + 上下文摘要
+- **渐进式技能** - 按需加载自定义能力，保持上下文精简
+- **MCP 集成** - 通过 Model Context Protocol 连接外部工具（支持 OAuth）
+- **多模型支持** - 兼容任何 OpenAI 兼容 LLM（支持视觉和推理）
+
+**安装**（Docker 方式，推荐）：
+```bash
+# 1. 克隆仓库
+git clone https://github.com/bytedance/deer-flow.git
+cd deer-flow
+
+# 2. 配置模型
+make config
+# 编辑 config.yaml 添加 API key
+
+# 3. 启动服务
+make docker-init      # 首次拉取沙盒镜像
+make docker-start     # 启动所有服务
+# 访问 http://localhost:2026
+```
+
+**本地开发安装**：
+```bash
+make dev
+```
+
+**配置示例**（`config.yaml`）：
+```yaml
+models:
+  - name: gpt-4
+    display_name: GPT-4
+    use: langchain_openai:ChatOpenAI
+    model: gpt-4
+    api_key: $OPENAI_API_KEY
+    max_tokens: 4096
+```
+
+**注意**：
+- ⚠️ **非传统 Skill** - DeerFlow 是独立 Agent 框架，不是 OpenCode/Claude 的 Skill
+- 可通过 **MCP 协议** 与 OpenCode/Cursor/Claude 集成
+- 需要 Docker 环境（沙盒执行依赖）
+- 支持多语言界面：中/英/日/法/俄
+
+**来源**：
+- GitHub: https://github.com/bytedance/deer-flow (51.5k ⭐)
+- 文档: https://bytedance-deer-flow.mintlify.app/
+- 趋势: GitHub Trending #1 (2026.02 发布后)
+
+**适用场景**：
+- 复杂内核模块开发（多文件协调、长时编译）
+- 自动化安全审计（代码扫描 + 漏洞验证）
+- 多步骤设备驱动移植（分析→修改→测试→验证）
+- 长时程性能优化（perf 分析 + 多轮调优）
+
+**与 OpenCode 关系**：
+DeerFlow 是 **独立运行** 的 SuperAgent 平台，与 OpenCode 是互补关系：
+- OpenCode: 即时对话式编程助手
+- DeerFlow: 长时程自主任务执行（小时级）
+
+可通过 MCP Server 让 OpenCode 调用 DeerFlow 能力。
+
+---
 
 ### markitdown（Microsoft 官方）
 
