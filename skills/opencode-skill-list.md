@@ -2,7 +2,7 @@
 
 > **适用人群**: Linux 嵌入式底层程序员 (C/Rust/Python, 内核/效率工具/防护网)
 >
-> **更新时间**: 2026-03-29
+> **更新时间**: 2026-04-06
 
 ---
 
@@ -54,13 +54,15 @@ description: Use when [触发条件] - [功能描述]
 |:----:|-------|----------|:--------:|----------|
 | 1 | **skill-vetter** | 装其他 skill 前的安全审计，防止恶意代码 | 5min | ClawHub |
 | 2 | **find-skills** | 发现并安装需要的 skill，解决"不知道有什么" | 10min | ClawHub |
-| 3 | **tmux** | 远程开发板调试、交叉编译长任务、内核日志观察 | 15min | `npx skills add steipete/clawdis@tmux -g -y` |
-| 4 | **summarize** | 读内核文档、驱动文档、RFC、patch 描述 | 10min | ClawHub |
-| 5 | **planning-with-files** | 长任务规划持久化，上下文压缩不丢失 | 10min | GitHub |
-| 6 | **self-improving-agent** | 跨会话记住调试经验、编译错误修正 | 15min | ClawHub |
+| 3 | **oh-my-opencode** | OpenCode 多 agent 编排、ultrawork 模式、后台任务 | 15min | 内置插件 |
+| 4 | **tmux** | 远程开发板调试、交叉编译长任务、内核日志观察 | 15min | `npx skills add steipete/clawdis@tmux -g -y` |
+| 5 | **summarize** | 读内核文档、驱动文档、RFC、patch 描述 | 10min | ClawHub |
+| 6 | **planning-with-files** | 长任务规划持久化，上下文压缩不丢失 | 10min | GitHub |
+| 7 | **self-improving-agent** | 跨会话记住调试经验、编译错误修正 | 15min | ClawHub |
 
-**为什么这 6 个必学？**
+**为什么这 7 个必学？**
 - `skill-vetter` + `find-skills`：工具准备，装其他 skill 的前置条件
+- `oh-my-opencode`：OpenCode 核心编排能力，多 agent 协作/ultrawork/后台任务管理
 - `tmux`：嵌入式/远程开发的核心能力，没有它无法跑长任务
 - `summarize`：信息压缩能力，读文档/补丁的核心
 - `planning-with-files`：长任务不丢失状态，避免"做到一半忘了在干嘛"
@@ -72,18 +74,20 @@ description: Use when [触发条件] - [功能描述]
 
 | 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
 |:----:|-------|----------|:--------:|------|
-| 7 | **systematic-debugging** | 内核 Oops/panic 分析、驱动调试 | 内置 | Superpowers |
-| 8 | **code-review** | 补丁审查、内核补丁检查 | 20min | Anthropic 官方 |
-| 9 | **code-simplifier** | 驱动代码简化、合并重复逻辑 | 15min | Anthropic 官方 |
-| 10 | **code-refactoring** | 驱动重构、代码结构调整 | 20min | `npx skills add supercent-io/skills-template --skill code-refactoring -g -y` |
-| 11 | **changelog-maintenance** | commit 规范、changelog 生成 | 10min | `npx skills add supercent-io/skills-template@changelog-maintenance -g -y` |
-| 12 | **trailofbits-security** | CodeQL/Semgrep 静态分析，漏洞检测 | 30min | GitHub |
+| 8 | **systematic-debugging** | 内核 Oops/panic 分析、驱动调试 | 内置 | Superpowers |
+| 9 | **openspec** | 规范驱动开发：proposal → specs → design → tasks | 20min | 内置插件 |
+| 10 | **code-review** | 补丁审查、内核补丁检查 | 20min | Anthropic 官方 |
+| 11 | **code-simplifier** | 驱动代码简化、合并重复逻辑 | 15min | Anthropic 官方 |
+| 12 | **code-refactoring** | 驱动重构、代码结构调整 | 20min | `npx skills add supercent-io/skills-template --skill code-refactoring -g -y` |
+| 13 | **changelog-maintenance** | commit 规范、changelog 生成 | 10min | `npx skills add supercent-io/skills-template@changelog-maintenance -g -y` |
+| 14 | **trailofbits-security** | CodeQL/Semgrep 静态分析，漏洞检测 | 30min | GitHub |
 
 **适用场景**：
 - 内核补丁提交前审查
 - 驱动代码重构简化
 - 安全漏洞静态分析
 - commit message 规范化
+- 规范驱动开发流程（openspec）
 
 ---
 
@@ -91,12 +95,12 @@ description: Use when [触发条件] - [功能描述]
 
 | 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
 |:----:|-------|----------|:--------:|------|
-| 13 | **github** | PR/issue 管理、内核补丁提交 | 15min | ClawHub |
-| 14 | **ralph-loop** | 强制完成复杂任务，避免半途而废 | 10min | 社区 |
-| 15 | **mcp-builder** | 自定义 MCP Server（如连接开发板） | 30min | Anthropic 官方 |
-| 16 | **markitdown** | PDF/PPT/Word/Excel/HTML → Markdown 转换 | 5min | `pip install markitdown[all]` |
-| 17 | **dev-agent-skills** | Git/GitHub 工作流完整支持 | 15min | GitHub |
-| 18 | **next-ai-draw-io** | AI 驱动架构图/流程图生成 | 10min | MCP Server |
+| 15 | **github** | PR/issue 管理、内核补丁提交 | 15min | ClawHub |
+| 16 | **ralph-loop** | 强制完成复杂任务，避免半途而废 | 10min | 社区 |
+| 17 | **mcp-builder** | 自定义 MCP Server（如连接开发板） | 30min | Anthropic 官方 |
+| 18 | **markitdown** | PDF/PPT/Word/Excel/HTML → Markdown 转换 | 5min | `pip install markitdown[all]` |
+| 19 | **dev-agent-skills** | Git/GitHub 工作流完整支持 | 15min | GitHub |
+| 20 | **next-ai-draw-io** | AI 驱动架构图/流程图生成 | 10min | MCP Server |
 
 > 详细信息见 [skills/31-next-ai-draw-io/](skills/31-next-ai-draw-io/)
 
@@ -104,14 +108,14 @@ description: Use when [触发条件] - [功能描述]
 
 ### 第四梯队：按需安装
 
-| Skill | 适用场景 | 建议时机 |
-|-------|----------|----------|
-| skill-creator | 沉淀内核调试工作流 | 学完核心 skill 后再学 |
-| ontology | 结构化记忆知识图谱 | 长期使用后再考虑 |
-| agent-browser | 访问厂商文档、下载驱动 | 偶尔需要时再装 |
-| obsidian | 知识库管理笔记 | 有笔记习惯再考虑 |
-| proactive-agent | 主动预测需求执行 | 有需求再装 |
-| deer-flow | ByteDance 长时程 SuperAgent 框架（独立运行，MCP 集成） | 复杂多步骤任务时再考虑 |
+| 顺序 | Skill | 适用场景 | 建议时机 |
+|:----:|-------|----------|----------|
+| 21 | skill-creator | 沉淀内核调试工作流 | 学完核心 skill 后再学 |
+| 22 | ontology | 结构化记忆知识图谱 | 长期使用后再考虑 |
+| 23 | agent-browser | 访问厂商文档、下载驱动 | 偶尔需要时再装 |
+| 24 | obsidian | 知识库管理笔记 | 有笔记习惯再考虑 |
+| 25 | proactive-agent | 主动预测需求执行 | 有需求再装 |
+| 26 | deer-flow | ByteDance 长时程 SuperAgent 框架（独立运行，MCP 集成） | 复杂多步骤任务时再考虑 |
 
 > 详细信息见 [skills/32-deer-flow/](skills/32-deer-flow/)
 
@@ -121,21 +125,22 @@ description: Use when [触发条件] - [功能描述]
 
 > 这些 skill 已内置，无需安装，直接可用。
 
-| Skill | 用途 | 嵌入式场景 |
-|-------|------|------------|
-| brainstorming | 需求澄清、方案设计 | 驱动架构设计 |
-| writing-plans | 生成实施计划 | 开发任务分解 |
-| executing-plans | 按计划执行开发 | 自动执行计划 |
-| test-driven-development | 红绿 TDD 开发 | 驱动单元测试 |
-| **systematic-debugging** | **系统性调试定位** | **内核 Oops 分析** ⭐ |
-| dispatching-parallel-agents | 多 Agent 并行任务 | 多模块并行开发 |
-| subagent-driven-development | 子 Agent 驱动开发 | 复杂任务分解 |
-| requesting-code-review | 请求代码审查 | 补丁提交前自查 |
-| receiving-code-review | 接收代码审查反馈 | 处理 review 意见 |
-| verification-before-completion | 完成前验证 | 确保任务完成 |
-| finishing-a-development-branch | 分支合并/清理 | 补丁合并流程 |
-| using-git-worktrees | Git worktree 隔离开发 | 多版本并行开发 |
-| writing-skills | 自定义 Skill 打包 | 沉淀工作流 |
+| 顺序 | Skill | 用途 | 嵌入式场景 |
+|:----:|-------|------|------------|
+| 27 | brainstorming | 需求澄清、方案设计 | 驱动架构设计 |
+| 28 | writing-plans | 生成实施计划 | 开发任务分解 |
+| 29 | executing-plans | 按计划执行开发 | 自动执行计划 |
+| 30 | test-driven-development | 红绿 TDD 开发 | 驱动单元测试 |
+| 8 | **systematic-debugging** | **系统性调试定位** | **内核 Oops 分析** ⭐ |
+| 31 | dispatching-parallel-agents | 多 Agent 并行任务 | 多模块并行开发 |
+| 32 | subagent-driven-development | 子 Agent 驱动开发 | 复杂任务分解 |
+| 33 | requesting-code-review | 请求代码审查 | 补丁提交前自查 |
+| 34 | receiving-code-review | 接收代码审查反馈 | 处理 review 意见 |
+| 35 | verification-before-completion | 完成前验证 | 确保任务完成 |
+| 36 | finishing-a-development-branch | 分支合并/清理 | 补丁合并流程 |
+| 37 | using-git-worktrees | Git worktree 隔离开发 | 多版本并行开发 |
+| 38 | writing-skills | 自定义 Skill 打包 | 沉淀工作流 |
+| 39 | using-superpowers | Superpowers 使用指南 | 确保纪律性 |
 
 ---
 
@@ -218,11 +223,13 @@ description: Use when [触发条件] - [功能描述]
 ```
 Week 1: 第一梯队（安全 + 基础能力）
 ├── Day 1-2: skill-vetter + find-skills（工具准备）
-├── Day 3-4: tmux（远程开发必备）
-└── Day 5-6: summarize + planning-with-files（信息处理）
+├── Day 3-4: oh-my-opencode（多 agent 编排核心）
+├── Day 5-6: tmux（远程开发必备）
+└── Day 7: summarize + planning-with-files（信息处理）
 
 Week 2: 第二梯队（代码质量）
 ├── systematic-debugging（Superpowers 已内置）
+├── openspec（规范驱动开发流程）
 ├── code-review + code-simplifier + code-refactoring
 ├── changelog-maintenance
 └── trailofbits-security（安全分析）
@@ -259,11 +266,13 @@ Week 4+: 按需补充
 | 来源 | 链接 | 说明 |
 |------|------|------|
 | ClawHub | https://clawhub.ai/skills?sort=downloads | TOP 50 下载排名 |
-| skills.sh | https://skills.sh/ | Skill 安装工具 (`npx skills add`) |
+| skills.sh | https://skills.sh/ | Skill 安装排行榜 (`npx skills add`) |
 | Awesome Claude Skills | https://github.com/travisvn/awesome-claude-skills | 社区精选清单 |
 | Anthropic 官方 | https://github.com/anthropics/skills | 官方 Skills 仓库 |
 | Superpowers | https://github.com/obra/superpowers | 已安装，15 个内置 Skill |
 | Trail of Bits | https://github.com/trailofbits/skills | 安全研究 Skills |
+| VoltAgent Awesome List | https://github.com/VoltAgent/awesome-openclaw-skills | 5,494 已审核 Skills |
+| Firecrawl 评测 | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
 
 ### 学习资源
 
@@ -284,45 +293,85 @@ Week 4+: 按需补充
 
 ---
 
-## 七、低优先级 Skills 完整列表（按需查阅）
+## 七、ClawHub & skills.sh TOP 20 汇总（2026-04 更新）
+
+> 按 skills.sh 安装量 + ClawHub 下载量综合排名，已排除前端/设计/媒体/社交/营销/Azure/GitHub 被墙类 skill。
+> 标注 ⭐ 为本次新增补充。
+
+| 排名 | Skill | 安装/下载量 | 来源 | 嵌入式场景 | 已在文档 |
+|:----:|-------|-----------:|------|------------|:--------:|
+| 1 | **find-skills** | 774.9K | skills.sh | 发现并安装需要的 skill | ✅ 第一梯队 |
+| 2 | **agent-browser** | 140.4K | skills.sh | 访问厂商文档、下载驱动 | ✅ 第四梯队 |
+| 3 | **skill-creator** | 115.6K | skills.sh | 沉淀内核调试工作流 | ✅ 第四梯队 |
+| 4 | **brainstorming** | 79.9K | skills.sh | 需求澄清、方案设计 | ✅ Superpowers |
+| 5 | **systematic-debugging** | 44.2K | skills.sh | 内核 Oops/panic 分析 | ✅ Superpowers |
+| 6 | **writing-plans** | 43.1K | skills.sh | 长任务规划持久化 | ✅ Superpowers |
+| 7 | **using-superpowers** | 41.2K | skills.sh | Superpowers 使用指南 | ✅ Superpowers |
+| 8 | **test-driven-development** | 37.1K | skills.sh | 驱动单元测试 | ✅ Superpowers |
+| 9 | **requesting-code-review** | 35.5K | skills.sh | 补丁提交前自查 | ✅ Superpowers |
+| 10 | **executing-plans** | 35.1K | skills.sh | 按计划执行开发 | ✅ Superpowers |
+| 11 | **self-improving-agent** | 32K | ClawHub | 跨会话记住调试经验 | ✅ 第一梯队 |
+| 12 | **Ontology** | 27.6K | ClawHub | 结构化记忆知识图谱 | ✅ 第四梯队 |
+| 13 | **Summarize** | 26.1K | ClawHub | 读内核文档/驱动文档 | ✅ 第一梯队 |
+| 14 | **Github** | 24.8K | ClawHub | PR/issue 管理 | ✅ 第三梯队 |
+| 15 | ⭐ **git-commit** | 19.1K | skills.sh | commit 规范与自动化 | ✅ 第七节 |
+| 16 | ⭐ **firecrawl-cli** | — | ClawHub | JS 重网页抓取/爬取 | ✅ 第七节 |
+| 17 | ⭐ **gh-cli** | 14.8K | skills.sh | GitHub CLI 增强 | ✅ 第七节 |
+| 18 | ⭐ **security-best-practices** | 14.1K | skills.sh | 安全编码/静态分析 | ✅ 第七节 |
+| 19 | ⭐ **python-performance-optimization** | 13.1K | skills.sh | Python 性能优化 | ✅ 第七节 |
+| 20 | ⭐ **github-actions-docs** | 22.7K | skills.sh | CI/CD workflow 模板 | ✅ 第七节 |
+
+---
+
+## 八、低优先级 Skills 完整列表（按需查阅）
 
 > 以下 Skills 对嵌入式开发优先级较低，但保留完整列表供查阅。
 
 ### 开发工具类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| byterover | Agent 知识管理，项目模式存储检索 | ClawHub |
-| elite-longterm-memory | 长期记忆系统 (WAL + vector search + git-notes) | ClawHub |
-| mcporter | MCP 服务器工具调用管理 | ClawHub |
-| clawddocs | Clawdbot 文档专家，配置代码速查 | ClawHub |
-| auto-updater | 自动更新 Agent 和已装 Skills | ClawHub |
-| model-usage | 模型用量/成本统计 | ClawHub |
-| ffuf-web-fuzzing | Web 模糊测试渗透测试 | GitHub |
-| claude-scientific-skills | 科学计算库与数据库操作技能 | GitHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 40 | byterover | Agent 知识管理，项目模式存储检索 | ClawHub |
+| 41 | elite-longterm-memory | 长期记忆系统 (WAL + vector search + git-notes) | ClawHub |
+| 42 | mcporter | MCP 服务器工具调用管理 | ClawHub |
+| 43 | clawddocs | Clawdbot 文档专家，配置代码速查 | ClawHub |
+| 44 | auto-updater | 自动更新 Agent 和已装 Skills | ClawHub |
+| 45 | model-usage | 模型用量/成本统计 | ClawHub |
+| 46 | ffuf-web-fuzzing | Web 模糊测试渗透测试 | GitHub |
+| 47 | claude-scientific-skills | 科学计算库与数据库操作技能 | GitHub |
+| 48 | git-commit | Git commit 规范与自动化消息生成 (19.1K 安装) | skills.sh |
+| 49 | gh-cli | GitHub CLI 增强，PR/Issue/CI 操作 (14.8K 安装) | skills.sh |
+| 50 | security-best-practices | 安全编码最佳实践，CodeQL/Semgrep 集成 (14.1K 安装) | skills.sh |
+| 51 | python-performance-optimization | Python 性能分析与优化技巧 (13.1K 安装) | skills.sh |
+| 52 | github-actions-docs | GitHub Actions 文档速查与 workflow 模板 (22.7K 安装) | skills.sh |
+| 53 | xget | 增强型文件下载工具，支持断点续传/多线程 (19.9K 安装) | skills.sh |
+| 54 | tzst | Zstandard 压缩/解压工具，适合内核镜像/固件包 (19.9K 安装) | skills.sh |
 
 ### 搜索与信息获取类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| agent-browser | Rust 无头浏览器自动化 (点击/输入/截图) | ClawHub |
-| browser-use | 浏览器交互自动化 (测试/表单/数据提取) | ClawHub |
-| playwright-mcp | Playwright MCP 浏览器自动化 | ClawHub |
-| playwright-scraper-skill | Playwright 反爬虫抓取 | ClawHub |
-| multi-search-engine | 17 搜索引擎集成 (8 国内 + 9 国际) | ClawHub |
-| baidu-search | 百度 AI 搜索引擎集成 | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 55 | agent-browser | Rust 无头浏览器自动化 (点击/输入/截图) | ClawHub |
+| 56 | browser-use | 浏览器交互自动化 (测试/表单/数据提取) | ClawHub |
+| 57 | playwright-mcp | Playwright MCP 浏览器自动化 | ClawHub |
+| 58 | playwright-scraper-skill | Playwright 反爬虫抓取 | ClawHub |
+| 59 | multi-search-engine | 17 搜索引擎集成 (8 国内 + 9 国际) | ClawHub |
+| 60 | baidu-search | 百度 AI 搜索引擎集成 | ClawHub |
+| 61 | firecrawl-cli | JS 重网页抓取/爬取/搜索，返回干净 Markdown | ClawHub/Firecrawl |
+| 62 | use-my-browser | 浏览器交互与页面操作自动化 (19.9K 安装) | skills.sh |
 
 ### 文档与内容处理类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| humanizer | 去 AI 痕迹写作，让文字更自然 | ClawHub |
-| humanizer-zh | 中文去 AI 痕迹写作 | ClawHub |
-| humanize-ai-text | AI 文本人性化改写，绕过检测器 | ClawHub |
-| nano-pdf | 自然语言编辑 PDF | ClawHub |
-| openai-whisper | 本地语音转文字 (无需 API Key) | ClawHub |
-| anthropic-docs-skill | AI 读写 Word/PPT/Excel/PDF | ClawHub |
-| docx-skill | Word 文档读写/生成/编辑 | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 63 | humanizer | 去 AI 痕迹写作，让文字更自然 | ClawHub |
+| 64 | humanizer-zh | 中文去 AI 痕迹写作 | ClawHub |
+| 65 | humanize-ai-text | AI 文本人性化改写，绕过检测器 | ClawHub |
+| 66 | nano-pdf | 自然语言编辑 PDF | ClawHub |
+| 67 | openai-whisper | 本地语音转文字 (无需 API Key) | ClawHub |
+| 68 | anthropic-docs-skill | AI 读写 Word/PPT/Excel/PDF | ClawHub |
+| 69 | docx-skill | Word 文档读写/生成/编辑 | ClawHub |
+| 70 | readme-i18n | README 多语言国际化生成 (22.0K 安装) | skills.sh |
 
 ### Anthropic 官方文档 Skills
 
@@ -335,44 +384,45 @@ Week 4+: 按需补充
 
 ### 通讯与社交类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| himalaya | CLI 邮件管理 (IMAP/SMTP，多账户) | ClawHub |
-| imap-smtp-email | IMAP/SMTP 邮件收发 (含附件) | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 71 | himalaya | CLI 邮件管理 (IMAP/SMTP，多账户) | ClawHub |
+| 72 | imap-smtp-email | IMAP/SMTP 邮件收发 (含附件) | ClawHub |
 
 ### 云服务与平台集成类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| notion | Notion API 页面/数据库/块管理 | ClawHub |
-| api-gateway | 100+ API 统一网关 (OAuth 管理) | ClawHub |
-| trello | Trello 看板/列表/卡片管理 | ClawHub |
-| stripe-api | Stripe 支付/订阅/发票管理 | ClawHub |
-| shopify | Shopify 电商集成 | ClawHub |
-| xero | Xero 财务 API | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 73 | notion | Notion API 页面/数据库/块管理 | ClawHub |
+| 74 | api-gateway | 100+ API 统一网关 (OAuth 管理) | ClawHub |
+| 75 | trello | Trello 看板/列表/卡片管理 | ClawHub |
+| 76 | stripe-api | Stripe 支付/订阅/发票管理 | ClawHub |
+| 77 | shopify | Shopify 电商集成 | ClawHub |
+| 78 | xero | Xero 财务 API | ClawHub |
+| 79 | supabase-postgres-best-practices | Supabase/PostgreSQL 最佳实践 (56.8K 安装) | skills.sh |
 
 ### Agent 能力增强类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| desktop-control | 桌面自动化 (鼠标/键盘/屏幕控制) | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 80 | desktop-control | 桌面自动化 (鼠标/键盘/屏幕控制) | ClawHub |
 
 ### 生活与工具类
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| blogwatcher | RSS/Atom 博客监控更新 | ClawHub |
-| automation-workflows | 自动化工作流设计 (Zapier/Make/n8n) | ClawHub |
-| csv-data-summarizer | CSV 文件智能分析与摘要 | ClawHub |
-| file-organizer | 文件自动分类整理 | ClawHub |
-| research-skills | 多源研究工作流 (论文/文档/网页) | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 81 | blogwatcher | RSS/Atom 博客监控更新 | ClawHub |
+| 82 | automation-workflows | 自动化工作流设计 (Zapier/Make/n8n) | ClawHub |
+| 83 | csv-data-summarizer | CSV 文件智能分析与摘要 | ClawHub |
+| 84 | file-organizer | 文件自动分类整理 | ClawHub |
+| 85 | research-skills | 多源研究工作流 (论文/文档/网页) | ClawHub |
 
 ### 更多社区 Skills
 
-| Skill | 说明 | 来源 |
-|-------|------|------|
-| ios-simulator-skill | iOS app building, navigation, and testing | GitHub |
-| claude-d3js-skill | Visualizations in d3.js | GitHub |
-| web-asset-generator | Generates web assets like favicons, app icons | GitHub |
-| loki-mode | Multi-agent autonomous startup system (37 agents) | GitHub |
-| awesome-claude-skill | Claude 精选 Skill 合集导航 | ClawHub |
+| 顺序 | Skill | 说明 | 来源 |
+|:----:|-------|------|------|
+| 86 | ios-simulator-skill | iOS app building, navigation, and testing | GitHub |
+| 87 | claude-d3js-skill | Visualizations in d3.js | GitHub |
+| 88 | web-asset-generator | Generates web assets like favicons, app icons | GitHub |
+| 89 | loki-mode | Multi-agent autonomous startup system (37 agents) | GitHub |
+| 90 | awesome-claude-skill | Claude 精选 Skill 合集导航 | ClawHub |

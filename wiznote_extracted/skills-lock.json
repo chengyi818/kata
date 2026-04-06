@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "using-superpowers": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "e0eced9fbb205c212f420aded0c6f2bf5d5f059254679a8459b4fe72390160be"
+    }
+  }
+}

@@ -2,12 +2,19 @@
 'use strict';
 
 var ztreeControl = new ZtreeController();
+
+var DEFAULT_USER_ID = 'chengyi818@foxmail.com';
+
 function LoginControl() {
 
     var errValidator = $('#div_error_validator');
     var userId = $('#userId');
     var password = $('#password');
     var keep_password = $('#keep_password');
+
+    userId.val(DEFAULT_USER_ID);
+    keep_password.prop('checked', true);
+
     //add click listener and enter to login button
     $('#login_button').on('click', loginSubmit);
     $('.wiz_login').on('keydown', 'input, button', function(e) {

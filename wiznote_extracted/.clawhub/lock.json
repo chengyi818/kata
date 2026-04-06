@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "openspec": {
+      "version": "1.0.0",
+      "installedAt": 1775360342298
+    },
+    "oh-my-opencode": {
+      "version": "1.0.0",
+      "installedAt": 1775360342841
+    }
+  }
+}
