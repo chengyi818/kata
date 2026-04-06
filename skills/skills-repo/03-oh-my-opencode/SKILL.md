@@ -23,7 +23,8 @@ OpenCode 默认是单 agent 交互模式。oh-my-opencode 提供多 agent 编排
 
 ## 安装方法
 
-OpenCode 内置插件，无需额外安装。配置 `~/.config/opencode/oh-my-opencode.json` 即可使用。
+Install and configure oh-my-opencode by following the instructions here:
+https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
 
 ## 使用方法
 
@@ -41,3 +42,15 @@ OpenCode 内置插件，无需额外安装。配置 `~/.config/opencode/oh-my-op
 ## 相关 Skill
 
 参考 [opencode-skill-list.md](../opencode-skill-list.md) 获取完整清单和学习路径。
+
+
+## Ref
+github source
+https://github.com/code-yeongyu/oh-my-openagent
+
+oh-my-opencode实战：多模型Agent编排与LSP语义感知解析
+https://www.bilibili.com/video/BV1ZBiRBrErU/?spm_id_from=333.337.search-card.all.click&vd_source=bec559a776e1e9c135e695d86d6252cb
+
+一人抵一个开发团队！OpenCode最强插件Oh My OpenCode让你拥有GPT 5.2+Gemini 3 Pro+Claude Opus 4.5组合
+https://www.bilibili.com/video/BV1SYrTBMEzB/?spm_id_from=333.337.search-card.all.click&vd_source=bec559a776e1e9c135e695d86d6252cb
+
