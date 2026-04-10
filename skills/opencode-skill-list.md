@@ -426,3 +426,45 @@ Week 4+: 按需补充
 | 88 | web-asset-generator | Generates web assets like favicons, app icons | GitHub |
 | 89 | loki-mode | Multi-agent autonomous startup system (37 agents) | GitHub |
 | 90 | awesome-claude-skill | Claude 精选 Skill 合集导航 | ClawHub |
+
+---
+
+## 九、Everything Claude Code (ECC)
+
+> [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 140K+ stars | Anthropic 黑客松获胜作品
+
+**核心组件**: 181+ Skills, 36 个 Agents, 47 个 Commands, Rules, Hooks
+
+**嵌入式推荐**:
+| Skill | 用途 |
+|-------|------|
+| cpp-coding-standards | C++ 内核模块规范 |
+| rust-reviewer | Rust 代码审查 |
+| perl-patterns | 内核脚本模式 |
+| security-scan | AgentShield 安全审计 |
+| search-first | 先调研再编码 |
+
+**安装**:
+```bash
+/plugin marketplace add affaan-m/everything-claude-code
+/plugin install ecc@ecc
+```
+
+**详细文档**: 见 [`skills-repo/ecc/`](skills-repo/ecc/README.md)
+
+---
+
+## 数据来源
+
+| 来源 | 链接 |
+|------|------|
+| ClawHub | https://clawhub.ai/skills?sort=downloads |
+| skills.sh | https://skills.sh/ |
+| ECC | https://github.com/affaan-m/everything-claude-code |
+| Superpowers | https://github.com/obra/superpowers |
+
+---
+
+**一句话总结**: 先装能帮你**干活**的（tmux、summarize），再装帮你**提质**的（code-review、security-scan），最后装帮你**扩展**的（skill-creator）。前端/设计类 skill 对嵌入式开发价值低。
+
+**最后更新**: 2026-04
