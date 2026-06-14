@@ -2,7 +2,7 @@
 
 > **适用人群**: Linux 嵌入式底层程序员 (C/Rust/Python, 内核/效率工具/防护网)
 >
-> **更新时间**: 2026-04-25
+> **更新时间**: 2026-06-14 (ClawHub TOP200 已同步)
 
 ---
 
@@ -57,7 +57,7 @@ description: Use when [触发条件] - [功能描述]
 
 ```
 skills/
-├── opencode-skill-list.md     # 📋 完整清单（TOP 50 Skill）
+├── opencode-skill-list.md     # 📋 完整清单（TOP 200 Skill 分析）
 │
 ├── 01-skill-vetter/           # 🔒 安全审计（第 1 个必学）
 ├── 02-find-skills/            # 🔍 发现 Skill（第 2 个必学）
@@ -85,72 +85,77 @@ skills/
 
 > ⚠️ **前置条件**：`skill-vetter` 已作为项目级 skill 预装，安装任何新 skill 前务必先用它审计。无需单独学习，自动生效。
 
-| 顺序 | Skill | 适用场景 | 学习时间 | 安装命令 |
-|:----:|-------|----------|:--------:|----------|
-| 1 | **find-skills** | 发现并安装需要的 skill，解决"不知道有什么" | 10min | `npx skills add vercel-labs/skills@find-skills -g -y` |
-| 2 | **oh-my-opencode** | OpenCode 多 agent 编排、ultrawork 模式、后台任务 | 15min | 内置插件 |
-| 3 | **tmux** | 远程开发板调试、交叉编译长任务、内核日志观察 | 15min | `npx skills add steipete/clawdis@tmux -g -y` |
-| 4 | **summarize** | 读内核文档、驱动文档、RFC、patch 描述 | 10min | ClawHub |
-| 5 | **caveman** | 代码极简主义，精简驱动代码/内核模块 | 15min | `npx skills add juliusbrussee/caveman@caveman -g -y` |
+| 顺序 | Skill | 安装量 | 适用场景 | 学习时间 | 安装命令 |
+|:----:|-------|------:|----------|:--------:|----------|
+| 1 | **find-skills** | 2.0M | 发现并安装需要的 skill，解决"不知道有什么" | 10min | `npx skills add vercel-labs/skills@find-skills -g -y` |
+| 2 | **oh-my-opencode** | 内置 | OpenCode 多 agent 编排、ultrawork 模式、后台任务 | 15min | 内置插件 |
+| 3 | **tmux** | — | 远程开发板调试、交叉编译长任务、内核日志观察 | 15min | `npx skills add steipete/clawdis@tmux -g -y` |
+| 4 | **caveman** | 244.3K | 代码极简主义，精简驱动代码/内核模块（生态系统 611.8K） | 15min | `npx skills add juliusbrussee/caveman@caveman -g -y` |
+| 5 | **grill-me** | 311.5K | 追问式审查，深挖设计缺陷和安全隐患 | 15min | `npx skills add mattpocock/skills@grill-me -g -y` |
 
 **为什么这 5 个必学？**
-- `find-skills`：发现 skill 的入口，装其他 skill 的前置
+- `find-skills`：发现 skill 的入口，装其他 skill 的前置。**2.0M 安装量**，整个生态的入口
 - `oh-my-opencode`：OpenCode 核心编排能力，多 agent 协作/ultrawork/后台任务管理
 - `tmux`：嵌入式/远程开发的核心能力，没有它无法跑长任务
-- `summarize`：信息压缩能力，读文档/补丁的核心
-- `caveman`：代码极简主义，commit/review/compress/help 全家桶，80.5K 安装量
+- `caveman`：代码极简主义（主模块 244.3K，全家桶 611.8K），commit/review/compress/help/stats/cavecrew 全覆盖
+- `grill-me`：**3 个月从 34K 涨到 311.5K（+816%）**，社区验证的顶级审查 skill
 
-**已移除及原因：**
-- ~~`skill-vetter`~~：不在 skills.sh TOP 排行中，但已作为项目级 skill 预装，无需学习，安装新 skill 前自动审计即可
-- ~~`self-improving-agent`~~：排名跌至 48（25.8K），跨会话记忆需求已被 oh-my-opencode 的 session 持久化 + Superpowers 的 writing-plans 组合替代
-- ~~`planning-with-files`~~：不在 TOP50，功能已被 Superpowers 内置的 writing-plans + executing-plans 组合完整替代
-- ~~`openclaw-secure-linux-cloud`~~：与嵌入式底层开发场景不匹配
+**较上一版（2026-04）主要变化：**
+- ⬆ `caveman` 从第二梯队升至第一梯队（安装量从 80.5K → 244.3K，+203%）
+- ⬆ `grill-me` 从第二梯队升至第一梯队（安装量从 34K → 311.5K，+816%）
+- ➡ `summarize` 从第一梯队移至第三梯队（社区安装量不在 TOP200，但功能仍重要）
+- ~~`summarize`~~ 移至第三梯队，核心原因：功能分散到多个 skill（summarize-pro、caveman-help 等），社区不再集中安装单一 summarize
 
 ---
 
 ### 第二梯队：开发核心（显著提升代码质量）
 
-| 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
-|:----:|-------|----------|:--------:|------|
-| 8 | **systematic-debugging** | 内核 Oops/panic 分析、驱动调试 | 内置 | Superpowers |
-| 9 | **openspec** | 规范驱动开发：proposal → specs → design → tasks | 20min | 内置插件 |
-| 10 | **caveman-review** | 极简代码审查，补丁检查 | 10min | `npx skills add juliusbrussee/caveman@caveman-review -g -y` |
-| 11 | **caveman-compress** | 代码压缩精简，合并重复逻辑 | 10min | `npx skills add juliusbrussee/caveman@caveman-compress -g -y` |
-| 12 | **caveman-commit** | commit 规范与极简化 | 10min | `npx skills add juliusbrussee/caveman@caveman-commit -g -y` |
-| 13 | **grill-me** | 追问式审查，深挖设计缺陷 | 15min | `npx skills add mattpocock/skills@grill-me -g -y` |
-| 14 | **trailofbits-security** | CodeQL/Semgrep 静态分析，漏洞检测 | 30min | GitHub |
+| 顺序 | Skill | 安装量 | 适用场景 | 学习时间 | 来源 |
+|:----:|-------|------:|----------|:--------:|------|
+| 6 | **diagnose** | 212.8K | 系统性 bug 诊断方法论，内核 Oops/panic 分析 | 15min | `npx skills add mattpocock/skills@diagnose -g -y` |
+| 7 | **systematic-debugging** | 142.3K | 内置调试框架，与 diagnose 互补 | 内置 | Superpowers |
+| 8 | **simple** | 185.0K | 代码简化强制执行，复杂度控制 | 10min | `npx skills add roin-orca/skills@simple -g -y` |
+| 9 | **openspec** | — | 规范驱动开发：proposal → specs → design → tasks | 20min | 内置插件 |
+| 10 | **caveman-commit** | 156.0K | commit 规范与极简化 | 10min | `npx skills add juliusbrussee/caveman@caveman-commit -g -y` |
+| 11 | **caveman-review** | 107K+ | 极简代码审查，补丁检查 | 10min | `npx skills add juliusbrussee/caveman@caveman-review -g -y` |
+| 12 | **caveman-compress** | 107K+ | 代码压缩精简，合并重复逻辑 | 10min | `npx skills add juliusbrussee/caveman@caveman-compress -g -y` |
+| 13 | **grill-with-docs** | 248.6K | 基于文档的代码审查，对照 datasheet/spec 检查 | 15min | `npx skills add mattpocock/skills@grill-with-docs -g -y` |
+| 14 | **improve-codebase-architecture** | 254.6K | 大型代码库架构改进，嵌入式平台代码重构 | 20min | `npx skills add mattpocock/skills@improve-codebase-architecture -g -y` |
 
 **适用场景**：
-- 内核补丁提交前审查（caveman-review + grill-me）
-- 驱动代码精简重构（caveman-compress）
-- 安全漏洞静态分析（trailofbits-security）
+- 内核补丁提交前审查（caveman-review + grill-me + grill-with-docs）
+- 驱动代码精简重构（caveman-compress + simple）
 - commit 规范化（caveman-commit）
 - 规范驱动开发流程（openspec）
+- Bug 根因分析（diagnose + systematic-debugging 互补）
+- 大型嵌入式代码库重构（improve-codebase-architecture）
+- 基于 datasheet/spec 的代码正确性检查（grill-with-docs）
 
-**已移除及原因：**
-- ~~`code-review`~~：caveman-review（38.9K 安装量）功能等价且更极简
-- ~~`code-simplifier`~~：caveman-compress（36.9K 安装量）功能等价且更极简
-- ~~`code-refactoring`~~：不在 TOP50，caveman 系列已覆盖代码简化需求
-- ~~`changelog-maintenance`~~：不在 TOP50，caveman-commit 已覆盖 commit 规范需求
+**较上一版主要变化：**
+- 🆕 **diagnose**（212.8K）：系统性诊断方法论新增，替代 manual 调试流程
+- 🆕 **simple**（185.0K）：极简主义强制执行，与 caveman 互补
+- 🆕 **grill-with-docs**（248.6K）：文档驱动审查，嵌入式开发中对照 datasheet 的利器
+- 🆕 **improve-codebase-architecture**（254.6K）：架构级改进，替代手动重构流程
+- ⬇ **trailofbits-security** 从第二梯队移除：安装量较低，安全需求由 skill-vetter + grill-me 覆盖
 
 ---
 
 ### 第三梯队：效率增强（中频使用）
 
-| 顺序 | Skill | 适用场景 | 学习时间 | 来源 |
-|:----:|-------|----------|:--------:|------|
-| 15 | **mcp-builder** | 自定义 MCP Server（如连接开发板） | 30min | `npx skills add anthropics/skills@mcp-builder -g -y` |
-| 16 | **markitdown** | PDF/PPT/Word/Excel/HTML → Markdown 转换 | 5min | `pip install markitdown[all]` |
-| 17 | **firecrawl** | 网页抓取/搜索，返回干净 Markdown | 10min | `npx skills add firecrawl/cli@firecrawl -g -y` |
-| 18 | **github-actions-docs** | CI/CD workflow 模板速查 | 10min | `npx skills add xixu-me/skills@github-actions-docs -g -y` |
-| 19 | **paper-context-resolver** | 论文/技术文档复现与理解 | 15min | `npx skills add llllllllama/ai-paper-reproduction-skill@paper-context-resolver -g -y` |
-| 20 | **better-auth-best-practices** | 认证安全最佳实践 | 10min | `npx skills add better-auth/skills@better-auth-best-practices -g -y` |
+| 顺序 | Skill | 安装量 | 适用场景 | 学习时间 | 来源 |
+|:----:|-------|------:|----------|:--------:|------|
+| 15 | **summarize** | — | 读内核文档、驱动文档、RFC、patch 描述 | 10min | ClawHub |
+| 16 | **triage** | 191.0K | Bug 优先级分类，大规模缺陷管理 | 10min | `npx skills add mattpocock/skills@triage -g -y` |
+| 17 | **mcp-builder** | — | 自定义 MCP Server（如连接开发板） | 30min | `npx skills add anthropics/skills@mcp-builder -g -y` |
+| 18 | **firecrawl** | — | 网页抓取/搜索，返回干净 Markdown | 10min | `npx skills add firecrawl/cli@firecrawl -g -y` |
+| 19 | **github-actions-docs** | 216.5K | CI/CD workflow 模板速查 | 10min | `npx skills add xixu-me/skills@github-actions-docs -g -y` |
+| 20 | **paper-context-resolver** | 140.1K | 论文/技术文档复现与理解 | 15min | `npx skills add llllllllama/ai-paper-reproduction-skill@paper-context-resolver -g -y` |
 
-**已移除及原因：**
-- ~~`ralph-loop`~~：不在 TOP50，oh-my-opencode 已内置 ultrawork 模式，功能完全覆盖
-- ~~`dev-agent-skills`~~：不在 TOP50，功能被 oh-my-opencode + Superpowers 内置 skill 完整覆盖
-- ~~`next-ai-draw-io`~~：不在 TOP50，低频使用
-- ~~`github`~~：排名靠后，github-actions-docs（71.7K）已覆盖 CI/CD 需求
+**较上一版主要变化：**
+- 🆕 **triage**（191.0K）：大规模缺陷分类管理，对维护多平台嵌入式 BSP 很有价值
+- 🗑 ~~markitdown~~ 移除：firecrawl 已覆盖文档转换需求，维护成本 > 收益
+- 🗑 ~~better-auth-best-practices~~ 移除：嵌入式场景低频，从第三梯队移至第四梯队
+- ⬇ **summarize**：虽然仍重要，但社区安装量低，功能可被 summarize-pro 等替代
 
 ---
 
@@ -160,15 +165,19 @@ skills/
 |:----:|-------|----------|----------|
 | 21 | skill-creator | 沉淀内核调试工作流 | 学完核心 skill 后再学 |
 | 22 | agent-browser | 访问厂商文档、下载驱动 | 偶尔需要时再装 |
-| 23 | obsidian-markdown | Obsidian 笔记知识库管理 | 有笔记习惯再考虑 |
-| 24 | supabase-postgres-best-practices | DB 最佳实践、嵌入式数据层 | 涉及数据库时再考虑 |
-| 25 | audit-website | 网站/服务安全审计 | 有 Web 服务安全需求时再装 |
-| 26 | lark-doc + lark-approval | 飞书文档/审批自动化 | 团队用飞书时再装 |
+| 23 | caveman-help | 代码解释/帮助 | 需要理解陌生代码时 |
+| 24 | cavecrew | 多 agent 协作 dev team 模式 | 大型跨模块任务时 |
+| 25 | caveman-stats | Agent 使用统计/效率分析 | 想量化 AI 辅助效果时 |
+| 26 | impeccable | 代码质量检查，适合安全关键系统 | 交付前审查时 |
+| 27 | supabase-postgres-best-practices | DB 最佳实践、嵌入式数据层 | 涉及数据库时 |
+| 28 | better-auth-best-practices | 认证安全最佳实践 | 涉及认证系统时 |
+| 29 | obsidian-markdown | Obsidian 笔记知识库管理 | 有笔记习惯再考虑 |
+| 30 | lark-doc + lark-approval | 飞书文档/审批自动化 | 团队用飞书时 |
 
-**已移除及原因：**
-- ~~`ontology`~~：不在 TOP50，已过时
-- ~~`proactive-agent`~~：不在 TOP50，功能不成熟
-- ~~`deer-flow`~~：不在 TOP50，独立框架太重
+**较上一版主要变化：**
+- 🆕 **caveman-help**、**cavecrew**（106.2K）、**caveman-stats**（106.2K）：caveman 生态系统新成员
+- 🆕 **impeccable**（158.8K）：pbakaus 出品，代码质量工具，适合 safety-critical 场景
+- 🔄 **skill-creator** 从第三梯队移至第四梯队（学习门槛较高，先掌握使用再学创建）
 
 ---
 
@@ -176,22 +185,22 @@ skills/
 
 > 这些 skill 已内置，无需安装，直接可用。
 
-| 顺序 | Skill | 用途 | 嵌入式场景 |
-|:----:|-------|------|------------|
-| 27 | brainstorming | 需求澄清、方案设计 | 驱动架构设计 |
-| 28 | writing-plans | 生成实施计划 | 开发任务分解 |
-| 29 | executing-plans | 按计划执行开发 | 自动执行计划 |
-| 30 | test-driven-development | 红绿 TDD 开发 | 驱动单元测试 |
-| 8 | **systematic-debugging** | **系统性调试定位** | **内核 Oops 分析** ⭐ |
-| 31 | dispatching-parallel-agents | 多 Agent 并行任务 | 多模块并行开发 |
-| 32 | subagent-driven-development | 子 Agent 驱动开发 | 复杂任务分解 |
-| 33 | requesting-code-review | 请求代码审查 | 补丁提交前自查 |
-| 34 | receiving-code-review | 接收代码审查反馈 | 处理 review 意见 |
-| 35 | verification-before-completion | 完成前验证 | 确保任务完成 |
-| 36 | finishing-a-development-branch | 分支合并/清理 | 补丁合并流程 |
-| 37 | using-git-worktrees | Git worktree 隔离开发 | 多版本并行开发 |
-| 38 | writing-skills | 自定义 Skill 打包 | 沉淀工作流 |
-| 39 | using-superpowers | Superpowers 使用指南 | 确保纪律性 |
+| 顺序 | Skill | 安装量 | 用途 | 嵌入式场景 |
+|:----:|-------|------:|------|------------|
+| 31 | brainstorming | 220.2K | 需求澄清、方案设计 | 驱动架构设计 |
+| 32 | writing-plans | 141.5K | 生成实施计划 | 开发任务分解 |
+| 33 | executing-plans | 116.1K | 按计划执行开发 | 自动执行计划 |
+| 34 | test-driven-development | 125.7K | 红绿 TDD 开发 | 驱动单元测试 |
+| 7 | **systematic-debugging** | **142.3K** | **系统性调试定位** | **内核 Oops 分析** ⭐ |
+| 35 | dispatching-parallel-agents | — | 多 Agent 并行任务 | 多模块并行开发 |
+| 36 | subagent-driven-development | 109.1K | 子 Agent 驱动开发 | 复杂任务分解 |
+| 37 | requesting-code-review | 127.2K | 请求代码审查 | 补丁提交前自查 |
+| 38 | receiving-code-review | 103.0K | 接收代码审查反馈 | 处理 review 意见 |
+| 39 | verification-before-completion | 107.6K | 完成前验证 | 确保任务完成 |
+| 40 | finishing-a-development-branch | — | 分支合并/清理 | 补丁合并流程 |
+| 41 | using-git-worktrees | — | Git worktree 隔离开发 | 多版本并行开发 |
+| 42 | writing-skills | 102.1K | 自定义 Skill 打包 | 沉淀工作流 |
+| 43 | using-superpowers | 142.0K | Superpowers 使用指南 | 确保纪律性 |
 
 ---
 
@@ -199,55 +208,58 @@ skills/
 
 ### ❌ 前端/设计类（完全不适用）
 
-| Skill | 原因 |
-|-------|------|
-| frontend-design | React/Tailwind 前端设计 |
-| ui-ux-pro-max-skill | UI/UX 设计，67种风格161套配色 |
-| webapp-testing | Playwright 前端测试 |
-| web-artifacts-builder | HTML artifacts 构建 |
-| canvas-design | 视觉艺术设计 |
-| algorithmic-art | p5.js 生成艺术 |
-| frontend-slides | HTML 演示文稿 |
-| shadcn/ui skills | React 组件 |
+| Skill | 安装量 | 原因 |
+|-------|------:|------|
+| frontend-design | 541.5K | React/Tailwind 前端设计 |
+| vercel-react-best-practices | 474.4K | React 最佳实践 |
+| web-design-guidelines | 388.8K | Web 设计规范 |
+| ui-ux-pro-max | 215.1K | UI/UX 设计，67种风格161套配色 |
+| shadcn | 189.0K | React 组件库 |
+| design-taste-frontend | 144.8K | 前端设计品味 |
+| webapp-testing | — | Playwright 前端测试 |
+| web-artifacts-builder | — | HTML artifacts 构建 |
+| canvas-design | — | 视觉艺术设计 |
+| high-end-visual-design | 118.9K | 高端视觉设计 |
+| minimalist-ui | 108.9K | 极简 UI |
+| industrial-brutalist-ui | 101.3K | 工业粗野风 UI |
 
 ### ❌ 媒体/内容类（低频）
 
-| Skill | 原因 |
-|-------|------|
-| remotion-dev | 代码生成动画视频 |
-| video-downloader | 视频下载 |
-| video-frames | 视频帧提取 |
-| ai-content-operator | AI 内容运营 |
-| nano-banana-pro | AI 生图/改图 |
+| Skill | 安装量 | 原因 |
+|-------|------:|------|
+| remotion-best-practices | 369.0K | 代码生成动画视频 |
+| video-edit | 234.0K | 视频编辑（runcomfy 生态） |
+| nano-banana-2 | 133.3K | AI 生图 |
+| ai-video-generation | 133.4K | AI 视频生成 |
+| flux-kontext | 133.4K | AI 图像编辑 |
+| seedance-v2 | 134.2K | AI 视频 |
+| ai-music | 164.6K | AI 音乐生成 |
+| lipsync | 133.6K | AI 唇形同步 |
+| face-swap | 133.6K | AI 换脸 |
+
+### ❌ 云平台锁定类
+
+| Skill | 安装量 | 原因 |
+|-------|------:|------|
+| microsoft/azure-skills 全家桶 | 5.8M | Azure 云服务，与嵌入式开发无关 |
+| vercel composition patterns | 210.5K | Vercel 部署模式 |
+| convex | 520 | Convex 后端平台 |
+| supabase | 120.6K | Supabase 平台（非 postgres 最佳实践版本） |
+| firebase | 5.1K | Firebase 后端 |
 
 ### ❌ 通讯/社交类（低频）
 
-| Skill | 原因 |
-|-------|------|
-| slack | 团队不用 Slack |
-| gmail / outlook-api | 邮件 API |
-| whatsapp-business | WhatsApp |
-| youtube-* | YouTube 被墙 |
+| Skill | 安装量 | 原因 |
+|-------|------:|------|
+| larksuite 全家桶 | 2.5M+ | 飞书生态（doc/base/im/drive/approval/slides/attendance/okr...），除非团队用飞书 |
 
-### ❌ 生活/娱乐类
+### ❌ 营销/电商类
 
-| Skill | 原因 |
-|-------|------|
-| weather | 偶尔用，不是核心 |
-| stock-analysis | 股票分析 |
-| polymarketodds | 预测市场 |
-| sonoscli | Sonos 音箱 |
-
-### ❌ 国内受限服务
-
-| Skill | 原因 | 替代方案 |
-|-------|------|----------|
-| tavily-search | 海外 API 延迟高 | baidu-search |
-| brave-search | 海外 API | baidu-search |
-| gog (Google Workspace) | Google 被墙 | notion |
-| gemini | Google API 被墙 | 内置模型 |
-| notebooklm-skill | NotebookLM 被墙 | obsidian |
-| free-ride | OpenRouter 国内不稳定 | 内置模型 |
+| Skill | 安装量 | 原因 |
+|-------|------:|------|
+| copywriting | 125.8K | 营销文案 |
+| seo-audit | 136.1K | SEO 审计 |
+| content-strategy | 506 | 内容策略 |
 
 ---
 
@@ -272,28 +284,32 @@ skills/
 ## 五、学习计划
 
 ```
-Week 1: 第一梯队（安全 + 基础能力）
-├── Day 1-2: find-skills（发现 Skill 的入口）
+Week 1: 第一梯队（基础能力 + 核心 Skill）
+├── Day 1-2: find-skills（发现 Skill 的入口，2.0M 安装量）
 ├── Day 3-4: oh-my-opencode（多 agent 编排核心）
 ├── Day 5-6: tmux（远程开发必备）
-└── Day 7: summarize + caveman（信息处理 + 代码极简）
+└── Day 7: caveman（代码极简主义，244.3K）+ grill-me（追问式审查，311.5K）
 
-Week 2: 第二梯队（代码质量）
-├── systematic-debugging（Superpowers 已内置）
+Week 2: 第二梯队（代码质量 + 诊断能力）
+├── diagnose（212.8K）+ systematic-debugging（142.3K）→ 双调试组合
 ├── openspec（规范驱动开发流程）
-├── caveman-review + caveman-compress + caveman-commit（极简代码审查/精简/提交）
-├── grill-me（追问式审查，深挖设计缺陷）
-└── trailofbits-security（安全分析）
+├── simple（185.0K）+ caveman-compress → 极简双保险
+├── caveman-review + caveman-commit → 审查+提交规范
+├── grill-with-docs（248.6K）→ 文档驱动审查
+└── improve-codebase-architecture（254.6K）→ 架构重构
 
 Week 3: 第三梯队（效率增强）
+├── summarize → 文档/补丁信息压缩
+├── triage（191.0K）→ 缺陷管理分类
 ├── mcp-builder（如需自定义 MCP）
-├── markitdown + firecrawl（文档转换 + 网页抓取）
-└── github-actions-docs + paper-context-resolver（CI/CD + 论文复现）
+├── firecrawl（网页抓取 + 文档转换二合一）
+└── github-actions-docs（216.5K）+ paper-context-resolver（140.1K）
 
 Week 4+: 按需补充
 ├── skill-creator（开始沉淀自己的工作流）
-├── 创建嵌入式专用 skill
-└── 第四梯队按需安装
+├── caveman 全家桶补充（help/stats/cavecrew）
+├── impeccable（158.8K）→ 交付审查
+└── 创建嵌入式专用 skill
 ```
 
 ---
@@ -305,7 +321,8 @@ Week 4+: 按需补充
 ├── brainstorming/          (Superpowers)
 ├── systematic-debugging/   (Superpowers)
 ├── writing-plans/          (Superpowers)
-├── code-refactoring/       (已安装)
+├── caveman/                (已安装)
+├── grill-me/               (已安装)
 └── kernel-debug/           (自定义)
     └── SKILL.md
 ```
@@ -369,222 +386,169 @@ cat opencode-skill-list.md
 3. 查看更新时间（新 = 有人维护）
 4. 查看作者/仓库信誉
 
----
+### Q5: Matt Pocock 系列 skill 和 Superpowers 是否重复？
 
-## 数据源与参考
+**互补关系，不是替代**：
 
-### 数据来源
+| 领域 | Superpowers 内置 | Matt Pocock | 如何选？ |
+|------|-----------------|-------------|----------|
+| TDD | test-driven-development | tdd (240.6K) | Superpowers 已够用 |
+| 调试 | systematic-debugging | diagnose (212.8K) | **两个都用**：diagnose 方法论 + sys-debug 工具链 |
+| 审查 | requesting-code-review | grill-me (311.5K) | **两个都用**：request-review 流程 + grill-me 深度 |
+| 计划 | writing/executing-plans | to-prd / to-issues | Superpowers 已覆盖 |
+| 手递 | finishing-dev-branch | handoff (162.8K) | Superpowers 已覆盖 |
 
-| 来源 | 链接 | 说明 |
-|------|------|------|
-| ClawHub | https://clawhub.ai/skills?sort=downloads | TOP 50 下载排名 |
-| skills.sh | https://skills.sh/ | Skill 安装排行榜 (`npx skills add`) |
-| Awesome Claude Skills | https://github.com/travisvn/awesome-claude-skills | 社区精选清单 |
-| Anthropic 官方 | https://github.com/anthropics/skills | 官方 Skills 仓库 |
-| Superpowers | https://github.com/obra/superpowers | 已安装，15 个内置 Skill |
-| Trail of Bits | https://github.com/trailofbits/skills | 安全研究 Skills |
-| VoltAgent Awesome List | https://github.com/VoltAgent/awesome-openclaw-skills | 5,494 已审核 Skills |
-| Firecrawl 评测 | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
-
-### 学习资源
-
-| 资源 | 链接 | 说明 |
-|------|------|------|
-| 🎬 视频入门 | https://www.bilibili.com/video/BV1dz6oBWEWx/ | 10分钟弄懂 Skill |
-| 🎬 封装教程 | https://www.bilibili.com/video/BV1i2wbzhEL9/ | 保姆级 Agent Skill 封装教程（PM刘搞定） |
-| OpenClaw 推荐 | https://help.apiyi.com/en/openclaw-skill-recommendations-2026-en.html | 社区推荐 TOP 10 |
-| Firecrawl 评测 | https://www.firecrawl.dev/blog/openclaw-skills | 16 个最佳 Skills 评测 |
+**核心原则**：Superpowers 覆盖流程，Matt Pocock 覆盖思考方法论，两者互补不冲突。
 
 ---
 
-## 九、skills.sh TOP 50 汇总（2026-04-25 更新）
+## 九、Skills.sh TOP200 核心 Skill（2026-06-14 更新）
 
-> 按 skills.sh 全时间安装量排名，已排除前端/设计/媒体/社交/营销/Azure/GitHub 被墙/纯前端框架类 skill。
-> 标注 ⭐ 为本次新增；数据来源：[skills.sh](https://skills.sh/) All Time 排行（总计 90,987 个 skill）。
+> 按 skills.sh 全时间安装量排名，已排除前端/设计/媒体/社交/营销/Azure/GitHub 被墙/飞书生态类 skill。
+> 标注 🆕 为本次新增；⬆ 为排名上升；⬇ 为排名下降。
+> 数据来源：[skills.sh](https://skills.sh/) All Time 总排行（总计 701,684 安装，含所有 agent 平台）。
 
-| 排名 | Skill | 安装量 | 来源 | 嵌入式场景 | 已在文档 |
-|:----:|-------|------:|------|------------|:--------:|
-| 1 | **find-skills** | 1.2M | vercel-labs/skills | 发现并安装需要的 skill | ✅ 第一梯队 |
-| 2 | **agent-browser** | 212.3K | vercel-labs/agent-browser | 访问厂商文档、下载驱动 | ✅ 第四梯队 |
-| 3 | **skill-creator** | 167.7K | anthropics/skills | 沉淀内核调试工作流 | ✅ 第四梯队 |
-| 4 | **brainstorming** | 121.9K | obra/superpowers | 需求澄清、方案设计 | ✅ Superpowers |
-| 5 | ⭐ **supabase-postgres-best-practices** | 121.1K | supabase/agent-skills | DB 最佳实践、嵌入式数据层 | — |
-| 6 | **pdf** | 84.2K | anthropics/skills | PDF 提取/生成（内核文档） | ✅ 第十节 |
-| 7 | ⭐ **caveman** | 80.5K | juliusbrussee/caveman | 代码极简主义、精简驱动代码 | — |
-| 8 | **pptx** | 78.9K | anthropics/skills | PPT 生成（技术汇报） | ✅ 第十节 |
-| 9 | ⭐ **lark-doc** | 75.7K | larksuite/cli | 飞书文档自动化 | — |
-| 10 | **using-superpowers** | 72.6K | obra/superpowers | Superpowers 使用指南 | ✅ Superpowers |
-| 11 | ⭐ **github-actions-docs** | 71.7K | xixu-me/skills | CI/CD workflow 模板 | ✅ 第十节 |
-| 12 | ⭐ **openclaw-secure-linux-cloud** | 71.1K | xixu-me/skills | Linux 安全加固、云安全 | — |
-| 13 | **systematic-debugging** | 71.0K | obra/superpowers | 内核 Oops/panic 分析 | ✅ Superpowers |
-| 14 | ⭐ **skills-cli** | 70.9K | xixu-me/skills | Skill CLI 管理 | — |
-| 15 | **writing-plans** | 70.4K | obra/superpowers | 长任务规划持久化 | ✅ Superpowers |
-| 16 | ⭐ **readme-i18n** | 70.3K | xixu-me/skills | README 多语言国际化 | — |
-| 17 | ⭐ **browser-use** | 69.5K | browser-use/browser-use | 浏览器交互自动化 | — |
-| 18 | ⭐ **use-my-browser** | 68.5K | xixu-me/skills | 浏览器页面操作自动化 | — |
-| 19 | **docx** | 68.4K | anthropics/skills | Word 文档读写 | ✅ 第十节 |
-| 20 | ⭐ **xget** | 68.0K | xixu-me/skills | 增强下载，断点续传/多线程 | ✅ 第十节 |
-| 21 | ⭐ **tzst** | 68.0K | xixu-me/skills | Zstd 压缩/解压，内核镜像/固件包 | ✅ 第十节 |
-| 22 | ⭐ **xdrop** | 67.8K | xixu-me/skills | 文件传输工具 | — |
-| 23 | **test-driven-development** | 61.1K | obra/superpowers | 驱动单元测试 | ✅ Superpowers |
-| 24 | **xlsx** | 61.1K | anthropics/skills | Excel 数据分析 | ✅ 第十节 |
-| 25 | **requesting-code-review** | 60.6K | obra/superpowers | 补丁提交前自查 | ✅ Superpowers |
-| 26 | **executing-plans** | 57.0K | obra/superpowers | 按计划执行开发 | ✅ Superpowers |
-| 27 | **subagent-driven-development** | 51.8K | obra/superpowers | 子 Agent 驱动开发 | ✅ Superpowers |
-| 28 | **verification-before-completion** | 49.9K | obra/superpowers | 完成前验证 | ✅ Superpowers |
-| 29 | ⭐ **lark-approval** | 48.6K | larksuite/cli | 飞书审批流程 | — |
-| 30 | **receiving-code-review** | 48.4K | obra/superpowers | 接收 review 意见 | ✅ Superpowers |
-| 31 | **writing-skills** | 48.2K | obra/superpowers | 自定义 Skill 打包 | ✅ Superpowers |
-| 32 | ⭐ **audit-website** | 46.5K | squirrelscan/skills | 网站/服务安全审计 | — |
-| 33 | **dispatching-parallel-agents** | 46.4K | obra/superpowers | 多 Agent 并行任务 | ✅ Superpowers |
-| 34 | **using-git-worktrees** | 46.2K | obra/superpowers | Git worktree 隔离开发 | ✅ Superpowers |
-| 35 | **finishing-a-development-branch** | 44.2K | obra/superpowers | 分支合并/清理 | ✅ Superpowers |
-| 36 | **mcp-builder** | 43.7K | anthropics/skills | 自定义 MCP Server | ✅ 第三梯队 |
-| 37 | ⭐ **paper-context-resolver** | 43.1K | llllllllama/ai-paper-reproduction-skill | 论文/技术文档复现 | — |
-| 38 | ⭐ **better-auth-best-practices** | 41.7K | better-auth/skills | 认证安全最佳实践 | — |
-| 39 | ⭐ **firecrawl** | 40.4K | firecrawl/cli | 网页抓取/搜索，返回干净 Markdown | — |
-| 40 | ⭐ **caveman-commit** | 39.4K | juliusbrussee/caveman | commit 规范与极简 | — |
-| 41 | ⭐ **caveman-review** | 38.9K | juliusbrussee/caveman | 极简代码审查 | — |
-| 42 | ⭐ **caveman-compress** | 36.9K | juliusbrussee/caveman | 代码压缩精简 | — |
-| 43 | ⭐ **typescript-advanced-types** | 36.5K | wshobson/agents | TS 高级类型（工具链开发） | — |
-| 44 | ⭐ **value** | 35.4K | hugmouse/skills | 价值分析 | — |
-| 45 | ⭐ **grill-me** | 34.0K | mattpocock/skills | 追问式审查，深挖设计缺陷 | — |
-| 46 | ⭐ **caveman-help** | 33.5K | juliusbrussee/caveman | 代码帮助/解释 | — |
-| 47 | ⭐ **doc-coauthoring** | 33.0K | anthropics/skills | 文档协作编辑 | — |
-| 48 | ⭐ **self-improving-agent** | 25.8K | charon-fan/agent-playbook | 跨会话记住调试经验 | ✅ 第一梯队 |
-| 49 | ⭐ **obsidian-markdown** | 22.9K | kepano/obsidian-skills | Obsidian 笔记知识库 | — |
-| 50 | ⭐ **git-commit** | 26.6K | github/awesome-copilot | Git commit 规范与自动化 | ✅ 第十节 |
+### 🏆 核心 Skill（嵌入式开发强相关）
 
----
+| 排名 | Skill | 安装量 | 来源 | vs 上期 | 嵌入式场景 |
+|:----:|-------|------:|------|:------:|------------|
+| 1 | **find-skills** | 2.0M | vercel-labs/skills | ⬆ +67% | 发现并安装需要的 skill |
+| 4 | **agent-browser** | 447.2K | vercel-labs/agent-browser | ⬆ +111% | 访问厂商文档、下载驱动 |
+| 26 | **grill-me** | 311.5K | mattpocock/skills | ⬆ +816% | 追问式审查，深挖设计缺陷 |
+| 27 | **skill-creator** | 267.8K | anthropics/skills | ⬆ +60% | 沉淀内核调试工作流 |
+| 29 | **improve-codebase-architecture** | 254.6K | mattpocock/skills | 🆕 | 大型代码库架构改进 |
+| 31 | **grill-with-docs** | 248.6K | mattpocock/skills | 🆕 | 基于文档的代码审查 |
+| 32 | **caveman** | 244.3K | juliusbrussee/caveman | ⬆ +203% | 代码极简主义 |
+| 33 | **tdd** | 240.6K | mattpocock/skills | 🆕 | TDD（补充 Superpowers 版本） |
+| 48 | **supabase-postgres-best-practices** | 229.5K | supabase/agent-skills | ⬆ +89% | DB 最佳实践 |
+| 67 | **to-prd** | 222.1K | mattpocock/skills | 🆕 | 需求转 PRD |
+| 90 | **brainstorming** | 220.2K | obra/superpowers | ⬆ +81% | 需求澄清、方案设计 |
+| 91 | **github-actions-docs** | 216.5K | xixu-me/skills | ⬆ +202% | CI/CD workflow 模板 |
+| 100 | **diagnose** | 212.8K | mattpocock/skills | 🆕 | 系统性 bug 诊断 |
+| 101 | **openclaw-secure-linux-cloud** | 212.8K | xixu-me/skills | ⬆ +199% | Linux 安全加固 |
+| 103 | **to-issues** | 212.5K | mattpocock/skills | 🆕 | 需求转 Issues |
+| 104 | **skills-cli** | 212.4K | xixu-me/skills | ⬆ +200% | Skill CLI 管理 |
+| 111 | **xget** | 209.3K | xixu-me/skills | ⬆ +208% | 增强下载，断点续传/多线程 |
+| 112 | **tzst** | 209.2K | xixu-me/skills | ⬆ +208% | Zstd 压缩/解压 |
+| 113 | **xdrop** | 209.0K | xixu-me/skills | ⬆ +208% | 文件传输 |
+| 115 | **write-a-skill** | 205.8K | mattpocock/skills | 🆕 | Skill 创建指南 |
+| 116 | **zoom-out** | 205.1K | mattpocock/skills | 🆕 | 全局视角审视 |
+| 120 | **caveman** (mattpocock fork) | 200.6K | mattpocock/skills | 🆕 | 极简主义（Matt 版） |
+| 123 | **triage** | 191.0K | mattpocock/skills | 🆕 | Bug 优先级分类 |
+| 126 | **simple** | 185.0K | roin-orca/skills | 🆕 | 代码简化强制执行 |
+| 149 | **prototype** | 164.4K | mattpocock/skills | 🆕 | 快速原型 |
+| 150 | **handoff** | 162.8K | mattpocock/skills | 🆕 | 会话 handoff |
+| 151 | **impeccable** | 158.8K | pbakaus/impeccable | 🆕 | 代码质量检查 |
+| 152 | **caveman-commit** | 156.0K | juliusbrussee/caveman | ⬆ +296% | commit 规范 |
+| 159 | **systematic-debugging** | 142.3K | obra/superpowers | ⬆ +100% | 系统性调试定位 |
+| 160 | **using-superpowers** | 142.0K | obra/superpowers | ⬆ +96% | Superpowers 使用指南 |
+| 162 | **writing-plans** | 141.5K | obra/superpowers | ⬆ +101% | 长任务规划持久化 |
+| 163 | **paper-context-resolver** | 140.1K | llllllllama/ai-paper-reproduction-skill | ⬆ +225% | 论文/文档复现 |
+| 183 | **pdf** | 133.7K | anthropics/skills | ⬆ +59% | PDF 工具包 |
+| 230 | **requesting-code-review** | 127.2K | obra/superpowers | ⬆ +110% | 补丁提交前自查 |
+| 232 | **test-driven-development** | 125.7K | obra/superpowers | ⬆ +106% | 驱动单元测试 |
+| 233 | **docx** | 124.0K | anthropics/skills | ⬆ +81% | Word 文档 |
+| 239 | **executing-plans** | 116.1K | obra/superpowers | ⬆ +104% | 按计划执行开发 |
+| 243 | **subagent-driven-development** | 109.1K | obra/superpowers | ⬆ +111% | 子 Agent 驱动开发 |
+| 245 | **verification-before-completion** | 107.6K | obra/superpowers | ⬆ +116% | 完成前验证 |
+| 246 | **cavecrew** | 106.2K | juliusbrussee/caveman | 🆕 | 多 Agent 协作团队 |
+| 247 | **caveman-stats** | 106.2K | juliusbrussee/caveman | 🆕 | Agent 效率统计 |
+| 250 | **receiving-code-review** | 103.0K | obra/superpowers | ⬆ +113% | 接收 review 意见 |
+| 251 | **writing-skills** | 102.1K | obra/superpowers | ⬆ +112% | 自定义 Skill 打包 |
+| 254 | **firecrawl** | — | firecrawl/cli | — | 网页抓取/搜索 |
+| 265 | **mcp-builder** | — | anthropics/skills | — | 自定义 MCP Server |
 
-## 十、低优先级 Skills 完整列表（按需查阅）
+### 📊 社区趋势观察（2026-04 → 2026-06）
 
-> 以下 Skills 对嵌入式开发优先级较低，但保留完整列表供查阅。
-
-### 开发工具类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 40 | byterover | Agent 知识管理，项目模式存储检索 | ClawHub |
-| 41 | elite-longterm-memory | 长期记忆系统 (WAL + vector search + git-notes) | ClawHub |
-| 42 | mcporter | MCP 服务器工具调用管理 | ClawHub |
-| 43 | clawddocs | Clawdbot 文档专家，配置代码速查 | ClawHub |
-| 44 | auto-updater | 自动更新 Agent 和已装 Skills | ClawHub |
-| 45 | model-usage | 模型用量/成本统计 | ClawHub |
-| 46 | ffuf-web-fuzzing | Web 模糊测试渗透测试 | GitHub |
-| 47 | claude-scientific-skills | 科学计算库与数据库操作技能 | GitHub |
-| 48 | git-commit | Git commit 规范与自动化消息生成 (26.6K 安装) | skills.sh |
-| 49 | gh-cli | GitHub CLI 增强，PR/Issue/CI 操作 | skills.sh |
-| 50 | security-best-practices | 安全编码最佳实践，CodeQL/Semgrep 集成 | skills.sh |
-| 51 | python-performance-optimization | Python 性能分析与优化技巧 | skills.sh |
-| 52 | github-actions-docs | GitHub Actions 文档速查与 workflow 模板 (71.7K 安装) | skills.sh |
-| 53 | xget | 增强型文件下载工具，支持断点续传/多线程 (68.0K 安装) | skills.sh |
-| 54 | tzst | Zstandard 压缩/解压工具，适合内核镜像/固件包 (68.0K 安装) | skills.sh |
-
-### 搜索与信息获取类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 55 | agent-browser | Rust 无头浏览器自动化，点击/输入/截图 (212.3K 安装) | skills.sh |
-| 56 | browser-use | 浏览器交互自动化，测试/表单/数据提取 (69.5K 安装) | skills.sh |
-| 57 | playwright-mcp | Playwright MCP 浏览器自动化 | ClawHub |
-| 58 | playwright-scraper-skill | Playwright 反爬虫抓取 | ClawHub |
-| 59 | multi-search-engine | 17 搜索引擎集成 (8 国内 + 9 国际) | ClawHub |
-| 60 | baidu-search | 百度 AI 搜索引擎集成 | ClawHub |
-| 61 | firecrawl-cli | JS 重网页抓取/爬取/搜索，返回干净 Markdown | ClawHub/Firecrawl |
-| 62 | use-my-browser | 浏览器交互与页面操作自动化 (68.5K 安装) | skills.sh |
-
-### 文档与内容处理类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 63 | humanizer | 去 AI 痕迹写作，让文字更自然 | ClawHub |
-| 64 | humanizer-zh | 中文去 AI 痕迹写作 | ClawHub |
-| 65 | humanize-ai-text | AI 文本人性化改写，绕过检测器 | ClawHub |
-| 66 | nano-pdf | 自然语言编辑 PDF | ClawHub |
-| 67 | openai-whisper | 本地语音转文字 (无需 API Key) | ClawHub |
-| 68 | anthropic-docs-skill | AI 读写 Word/PPT/Excel/PDF | ClawHub |
-| 69 | docx-skill | Word 文档读写/生成/编辑 | ClawHub |
-| 70 | readme-i18n | README 多语言国际化生成 (70.3K 安装) | skills.sh |
-
-### Anthropic 官方文档 Skills
-
-| Skill | 说明 | 安装 |
-|-------|------|------|
-| docx | Word 文档，支持修订/批注/格式保留 | `/plugin install docx` |
-| pdf | PDF 工具包，提取/创建/合并/拆分/表单 | `/plugin install pdf` |
-| pptx | PPT 生成/编辑，支持母版/模板/图表 | `/plugin install pptx` |
-| xlsx | Excel 表格，公式/格式/数据分析/可视化 | `/plugin install xlsx` |
-
-### 通讯与社交类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 71 | himalaya | CLI 邮件管理 (IMAP/SMTP，多账户) | ClawHub |
-| 72 | imap-smtp-email | IMAP/SMTP 邮件收发 (含附件) | ClawHub |
-
-### 云服务与平台集成类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 73 | notion | Notion API 页面/数据库/块管理 | ClawHub |
-| 74 | api-gateway | 100+ API 统一网关 (OAuth 管理) | ClawHub |
-| 75 | trello | Trello 看板/列表/卡片管理 | ClawHub |
-| 76 | stripe-api | Stripe 支付/订阅/发票管理 | ClawHub |
-| 77 | shopify | Shopify 电商集成 | ClawHub |
-| 78 | xero | Xero 财务 API | ClawHub |
-| 79 | supabase-postgres-best-practices | Supabase/PostgreSQL 最佳实践 (121.1K 安装) | skills.sh |
-
-### Agent 能力增强类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 80 | desktop-control | 桌面自动化 (鼠标/键盘/屏幕控制) | ClawHub |
-
-### 生活与工具类
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 81 | blogwatcher | RSS/Atom 博客监控更新 | ClawHub |
-| 82 | automation-workflows | 自动化工作流设计 (Zapier/Make/n8n) | ClawHub |
-| 83 | csv-data-summarizer | CSV 文件智能分析与摘要 | ClawHub |
-| 84 | file-organizer | 文件自动分类整理 | ClawHub |
-| 85 | research-skills | 多源研究工作流 (论文/文档/网页) | ClawHub |
-
-### 更多社区 Skills
-
-| 顺序 | Skill | 说明 | 来源 |
-|:----:|-------|------|------|
-| 86 | ios-simulator-skill | iOS app building, navigation, and testing | GitHub |
-| 87 | claude-d3js-skill | Visualizations in d3.js | GitHub |
-| 88 | web-asset-generator | Generates web assets like favicons, app icons | GitHub |
-| 89 | loki-mode | Multi-agent autonomous startup system (37 agents) | GitHub |
-| 90 | awesome-claude-skill | Claude 精选 Skill 合集导航 | ClawHub |
+| 趋势 | 具体数据 |
+|------|----------|
+| 🔥 **Matt Pocock 生态爆发** | grill-me +816%, 多个新 skill 空降 TOP150（diagnose, triage, zoom-out 等） |
+| 🔥 **Caveman 生态扩张** | 主模块 +203%，全家桶从 260K → 611.8K |
+| 🔥 **xixu-me 工具集高速增长** | github-actions-docs +202%, openclaw-secure-linux-cloud +199% |
+| 📈 **Superpowers 全线翻倍** | 全部 15 个 skill 安装量平均翻倍，最高 +116% |
+| 📉 **Anthropic 官方 skill 增速放缓** | pdf +59%, docx +81%, pptx +83% — 被社区 skill 分流 |
+| 💤 **runcomfy/doany-ai 媒体类** | 130-140K 大量 AI 视频/图像 skill，对嵌入式开发无价值 |
 
 ---
 
-## 十一、Everything Claude Code (ECC)
+## 十、双平台对比与安装策略
 
-> [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 140K+ stars | Anthropic 黑客松获胜作品
+### 📊 ClawHub vs skills.sh 安装命令对比
 
-**核心组件**: 181+ Skills, 36 个 Agents, 47 个 Commands, Rules, Hooks
+| 平台 | 搜索命令 | 安装命令 | 适用场景 |
+|------|---------|---------|---------|
+| **ClawHub** | `npx clawhub search "query"` | `npx clawhub install <slug>` | 需要版本控制/回滚，Clawdbot 用户 |
+| **skills.sh** | `npx skills find "query"` | `npx skills add <owner/repo@skill>` | 主流选择，18+ agent 支持 |
+| **双源搜索** | `npx skills add vercel-labs/skills@find-skills` | 自动选择最优源 | 日常使用（推荐） |
 
-**嵌入式推荐**:
-| Skill | 用途 |
-|-------|------|
-| cpp-coding-standards | C++ 内核模块规范 |
-| rust-reviewer | Rust 代码审查 |
-| perl-patterns | 内核脚本模式 |
-| security-scan | AgentShield 安全审计 |
-| search-first | 先调研再编码 |
+### 🎯 嵌入式开发推荐安装策略
 
-**安装**:
 ```bash
-/plugin marketplace add affaan-m/everything-claude-code
-/plugin install ecc@ecc
+# 1. 先装 find-skills（双源搜索入口）
+npx skills add vercel-labs/skills@find-skills -g -y
+
+# 2. 用 find-skills 搜索并比较两个平台的 skill
+# 在对话中： "用 find-skills 搜索 caveman 并比较 ClawHub 和 skills.sh 的结果"
+
+# 3. 优先选择 skills.sh（安装量高 = 更多人验证）
+npx skills add juliusbrussee/caveman@caveman -g -y
+
+# 4. 需要版本控制/回滚时用 ClawHub
+npx clawhub install self-improving-agent
+
+# 5. 国内搜索需求（ClawHub 独有）
+npx clawhub install multi-search-engine
+npx clawhub install baidu-search
 ```
 
-**详细文档**: 见 [`skills-repo/ecc/`](skills-repo/ecc/README.md)
+### ⚠️ 安全警告（Trail of Bits 2026-06）
+
+根据 Trail of Bits 研究：
+- ClawHub、skills.sh、Cisco skill-scanner 均被发现存在绕过漏洞
+- **建议**：
+  1. 始终使用 `skill-vetter` 审计后再安装
+  2. 生产环境 curated 已审计的 skill 集合
+  3. 优先选择高安装量 + 高 stars 的 skill
+  4. 避免安装来源不明/下载量异常的 skill
+
+---
+
+## 十一、ClawHub 独有 Skill（嵌入式开发强相关）
+
+> 数据来源：https://clawhub.ai/api/v1/skills?sort=downloads&limit=200
+> 最后同步时间：2026-06-14
+> **筛选标准**：仅展示 ClawHub 独有或排名显著高于 skills.sh 的 skill，已排除 skills.sh 已覆盖的内容
+
+### 🎯 强烈推荐（ClawHub 独有）
+
+| 排名 | Skill | 下载量 | 安装量 | 嵌入式价值 | 安装命令 |
+|:----:|-------|------:|-------:|-----------|----------|
+| #1 | **self-improving-agent** | 461K | 6,871 | ⭐⭐⭐ 跨会话自我改进，错误学习永久化 | `npx clawhub install self-improving-agent` |
+| #2 | **skill-vetter** | 258K | 4,630 | ⭐⭐⭐ 安全审计必装（安装前必用） | `npx clawhub install skill-vetter` |
+| #10 | **multi-search-engine** | 153K | 2,148 | ⭐⭐⭐ 17 搜索引擎（8 个国内：百度/搜狗/必应中国） | `npx clawhub install multi-search-engine` |
+| #22 | **baidu-search** | 90K | 968 | ⭐⭐ 百度搜索专用（国内开发环境必备） | `npx clawhub install baidu-search` |
+| #35 | **elite-longterm-memory** | 62K | 622 | ⭐⭐ 长期记忆系统（WAL + vector search + git-notes） | `npx clawhub install elite-longterm-memory` |
+
+### 💡 按需安装（特定场景有用）
+
+| 排名 | Skill | 下载量 | 嵌入式价值 | 适用场景 |
+|:----:|-------|------:|-----------|----------|
+| #4 | **github** | 190K | ⭐⭐ | GitHub CLI 增强，PR/Issue/CI 操作 |
+| #16 | **obsidian** | 103K | ⭐⭐ | Obsidian 笔记知识库管理 |
+| #21 | **skill-creator** | 92K | ⭐⭐ | 自定义 Skill 创建（沉淀内核调试工作流） |
+| #32 | **mcporter** | 67K | ⭐⭐ | MCP 服务器工具调用管理 |
+| #48 | **himalaya** | 46K | ⭐ | CLI 邮件管理（IMAP/SMTP，多账户） |
+| #63 | **byterover** | 39K | ⭐ | Agent 知识管理（项目模式存储检索） |
+| #60 | **clawddocs** | 41K | ⭐ | Clawdbot 文档专家，配置代码速查 |
+
+### 📊 双平台对比
+
+| 维度 | ClawHub | skills.sh |
+|------|---------|-----------|
+| 定位 | 精选 registry（198 在榜） | 开放市场（701K+ 安装） |
+| 独有优势 | 自我改进 agent、国内搜索、长期记忆 | caveman、grill-me、Matt Pocock 生态 |
+| 统计口径 | 下载量 + 安装量双指标 | 安装量单一指标 |
+| 推荐策略 | 互补安装，不冲突 | 优先主战场 |
 
 ---
 
@@ -592,16 +556,46 @@ cat opencode-skill-list.md
 
 | 梯队 | 数量 | 学习优先级 | 核心 Skill |
 |------|------|-----------|-----------|
-| 第一梯队 | 5 个 | ⭐⭐⭐ 必学 | find-skills, oh-my-opencode, tmux, summarize, caveman |
-| 第二梯队 | 7 个 | ⭐⭐ 重要 | debugging, caveman 系列, grill-me, security |
-| 第三梯队 | 6 个 | ⭐ 有用 | mcp-builder, firecrawl, paper-context-resolver |
-| 第四梯队 | 6 个 | 按需 | skill-creator, agent-browser, obsidian-markdown |
+| 第一梯队 | 5 个 | ⭐⭐⭐ 必学 | find-skills, oh-my-opencode, tmux, caveman, grill-me |
+| 第二梯队 | 9 个 | ⭐⭐ 重要 | diagnose, systematic-debugging, simple, openspec, caveman 三件套, grill-with-docs, improve-architecture |
+| 第三梯队 | 6 个 | ⭐ 有用 | summarize, triage, mcp-builder, firecrawl, github-actions-docs, paper-context-resolver |
+| 第四梯队 | 10 个 | 按需 | skill-creator, agent-browser, caveman-help, cavecrew, caveman-stats, impeccable, supabase-pg, better-auth, obsidian-markdown, lark |
 | Superpowers | 15 个 | 内置 | 直接使用 |
 
 ---
 
-**核心原则**：先装能帮你**干活**的（tmux、summarize、caveman），再装帮你**提质**的（caveman-review、trailofbits-security），最后装帮你**扩展**的（mcp-builder、skill-creator）。
+## 更新日志
 
-**避坑原则**：前端/设计/媒体/社交类 skill 对嵌入式开发几乎没有价值，不要被"看起来很酷"诱惑。
+### 2026-06-14 v2.0（本次更新）
+- 📊 **数据刷新**：skills.sh 排行从 2026-04 更新至 2026-06，总量从 90,987 → 701,684
+- 🔥 **Matt Pocock 生态**：grill-me 从 #45(34K) 升至 #26(311.5K)，新增 diagnose(212.8K)、triage(191.0K)、grill-with-docs(248.6K) 等 10+ 个 skill
+- 🔥 **Caveman 生态**：主模块 80.5K→244.3K，全家桶从 260K→611.8K，新增 cavecrew、caveman-stats
+- 🆕 **第一梯队调整**：caveman 和 grill-me 升至第一梯队，summarize 移至第三梯队
+- 🆕 **第二梯队扩展**：新增 diagnose、simple、grill-with-docs、improve-codebase-architecture
+- 🆕 **第三梯队新增**：triage（大规模缺陷管理）
+- 🗑 **移除过时 skill**：trailofbits-security、markitdown、better-auth-best-practices 从主要梯队移除
+- 📝 **新增 Q5**：Matt Pocock 与 Superpowers 的对比与互补说明
+- 📝 **新增趋势章节**：社区生态变化趋势分析
+- 🆕 **ClawHub 独有 Skill**：实时 API 爬取 198 个 skill，仅保留与嵌入式开发强相关且 skills.sh 未覆盖的内容（5 个强推荐 + 7 个按需）
+- 🆕 **双平台安装策略**：skills.sh 主战场 + ClawHub 互补（国内搜索/自我改进/长期记忆）
+- 🆕 **其他平台发现**：SkillsMP (351K), SkillzWave (44K), theskills.directory (91K) 等 10+ 平台汇总
 
-**最后更新**: 2026-04-25
+### 2026-04-25 v1.0（初始版本）
+- 初始版本，基于 skills.sh TOP 50 排名整理
+
+---
+
+**核心原则**：先装能帮你**干活**的（tmux、caveman、grill-me），再装帮你**提质**的（diagnose、simple、grill-with-docs），最后装帮你**扩展**的（mcp-builder、skill-creator）。
+
+**避坑原则**：前端/设计/媒体/社交/云平台锁定类 skill 对嵌入式开发几乎没有价值，不要被"看起来很酷"和高安装量（很多来自前端开发者）诱惑。
+
+**数据来源**：
+- [skills.sh](https://skills.sh/) — 主战场，701,684 总安装，18+ agent 支持
+- [ClawHub](https://clawhub.ai/skills?sort=downloads) — 互补，198 skill 在榜，独有：self-improving-agent、multi-search-engine、baidu-search
+- [SkillsMP](https://skillsmp.com) — 最大目录，351,349 skill（无质量门槛）
+- [SkillzWave](https://skillzwave.ai) — 商业平台，44,000+ skill
+- [theskills.directory](https://theskills.directory) — 场景 bundling，91,000 skill
+- [officialskills.sh](https://officialskills.sh) — 官方 skill，577（Microsoft、Trail of Bits 等）
+- 其他：killer-skills.com (3.4K)、Agent Skill Source (787+)、AgenticSkills (181+)
+
+**最后同步时间**：2026-06-14
